@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.9.0.final using JasperReports Library version 6.9.0-cb8f9004be492ccc537180b49c026951f4220bf3  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Time Report" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" resourceBundle="translate" uuid="13acf49e-4913-4d1b-bccc-113817ad15d1">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<property name="net.sf.jasperreports.awt.ignore.missing.font" value="true"/>
+	<property name="net.sf.jasperreports.default.font.name" value="Roboto"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<import value="id.meier.timetracking.model.*"/>
+	<import value="java.util.*"/>
+	<import value="java.time.LocalDate"/>
+	<import value="id.meier.timetracking.util.DateTimeFormatter"/>
+	<import value="org.springframework.util.StringUtils"/>
+	<style name="Title" forecolor="#FFFFFF" fontSize="50" isBold="false"/>
+	<style name="SubTitle" forecolor="#CCCCCC" fontSize="18" isBold="false"/>
+	<style name="Column header" forecolor="#666666" fontSize="14" isBold="true"/>
+	<style name="Detail" mode="Transparent"/>
+	<style name="Row" mode="Transparent" pdfFontName="Roboto">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#F0EFEF"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="START_DATE" class="java.time.LocalDate"/>
+	<parameter name="START_TIME" class="java.time.LocalTime"/>
+	<parameter name="END_DATE" class="java.time.LocalDate"/>
+	<parameter name="END_TIME" class="java.time.LocalTime"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="endDate" class="java.time.LocalDate">
+		<fieldDescription><![CDATA[endDate]]></fieldDescription>
+	</field>
+	<field name="durationIndustrialHours" class="java.lang.Double">
+		<fieldDescription><![CDATA[durationIndustrialHours]]></fieldDescription>
+	</field>
+	<field name="startTime" class="java.time.LocalTime">
+		<fieldDescription><![CDATA[startTime]]></fieldDescription>
+	</field>
+	<field name="endTime" class="java.time.LocalTime">
+		<fieldDescription><![CDATA[endTime]]></fieldDescription>
+	</field>
+	<field name="startDate" class="java.time.LocalDate">
+		<fieldDescription><![CDATA[startDate]]></fieldDescription>
+	</field>
+	<variable name="daySumOfHours" class="java.lang.Double" resetType="Group" resetGroup="Day">
+		<variableExpression><![CDATA[$V{daySumOfHours} + $F{durationIndustrialHours}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0d]]></initialValueExpression>
+	</variable>
+	<variable name="totalSumOfIndustrialHours" class="java.lang.Double">
+		<variableExpression><![CDATA[$V{totalSumOfIndustrialHours} + $F{durationIndustrialHours}]]></variableExpression>
+	</variable>
+	<group name="Day" preventOrphanFooter="true">
+		<groupExpression><![CDATA[$F{startDate}]]></groupExpression>
+		<groupHeader>
+			<band height="19">
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<rectangle>
+					<reportElement x="0" y="0" width="800" height="18" forecolor="#D6D6D6" backcolor="#D6D6D6" uuid="3e94dfa2-40fa-4125-8554-ce7df5be2d75">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+				</rectangle>
+				<textField>
+					<reportElement x="5" y="0" width="250" height="15" uuid="34908f9b-ec60-41ae-9944-c6345ddc43ca">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<textElement markup="none">
+						<font fontName="Roboto" size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$R{time.tracking.report.footer.day.periods} + " " + (($F{startDate}==null)?$R{time.tracking.report.label.unknowndate}:DateTimeFormatter.formatDate($F{startDate}))]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="37">
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<textField>
+					<reportElement x="380" y="0" width="175" height="15" uuid="6e9cc4d2-8224-4222-9556-e5ad0fffd847">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<textElement>
+						<font fontName="Roboto"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{daySumOfHours}]]></textFieldExpression>
+				</textField>
+				<rectangle>
+					<reportElement x="0" y="0" width="800" height="18" forecolor="#D6D6D6" backcolor="#D6D6D6" uuid="3b0bb208-c34f-4d9b-bee5-0e127e22c858">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+				</rectangle>
+				<textField>
+					<reportElement x="5" y="0" width="250" height="15" uuid="3b4332cd-eeb7-432e-9326-502901f47ac7">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<textElement>
+						<font fontName="Roboto" size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$R{time.tracking.report.footer.day.periods} + " " + (($F{startDate}==null)?$R{time.tracking.report.label.unknown.date}:DateTimeFormatter.formatDate($F{startDate}))]]></textFieldExpression>
+				</textField>
+				<textField pattern="0.00">
+					<reportElement x="725" y="0" width="65" height="18" uuid="45bd7216-7ebf-4589-b1af-b6fca7614c7c">
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Right">
+						<font fontName="Roboto" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{daySumOfHours}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="72" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="800" height="66" backcolor="#D6D6D6" uuid="6c6ca4e1-17cd-4913-93d6-5e670ea9ae8a">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textField isBlankWhenNull="true">
+					<reportElement x="5" y="40" width="235" height="19" uuid="513a8466-6c8f-40cc-bc84-e993a7df6ed4">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Left">
+						<font fontName="Roboto" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[(($P{START_DATE}==null)?"Undefined date":DateTimeFormatter.formatDate($P{START_DATE})) + " " + 
+(($P{START_TIME}== null)?"Undefined time": DateTimeFormatter.formatTime($P{START_TIME})) + " " + 
+$R{time.tracking.report.subtitlelabel} + " " + 
+(($P{END_DATE}==null)?"Undefined date":DateTimeFormatter.formatDate($P{END_DATE})) + " " + 
+(($P{END_TIME}==null)?"Undefined time":DateTimeFormatter.formatTime($P{END_TIME}))]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="5" y="0" width="541" height="40" uuid="d879bb66-da44-45c0-ac2f-34fafbe10ca4">
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					</reportElement>
+					<textElement>
+						<font fontName="Roboto" size="30" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$R{time.tracking.report.title}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<image>
+				<reportElement stretchType="ContainerHeight" x="729" y="5" width="56" height="56" uuid="97705585-a0b5-4ec7-86f3-ae10c220e6af">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<imageExpression><![CDATA[this.getClass().getClassLoader().getResource("id/meier/timetracking/reports/hourglass.png");]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<textField pattern="0.00" isBlankWhenNull="true">
+				<reportElement x="725" y="0" width="65" height="15" uuid="e8f5754e-18ca-4ce0-ab3c-7771ee886b7f">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Roboto" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{durationIndustrialHours}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="5" y="0" width="250" height="15" uuid="43c74fbe-8c01-4754-8e0f-28a2625cda4c">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Roboto" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[DateTimeFormatter.formatDate($F{startDate}) + " " + DateTimeFormatter.formatTime($F{startTime}) + " - " + DateTimeFormatter.formatDate($F{endDate}) + " " + DateTimeFormatter.formatTime($F{endTime})]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="7" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="1133a906-5b71-476e-9f3e-bc97c97058c1"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="1" width="800" height="24" forecolor="#D0B48E" backcolor="#D6D6D6" uuid="729c3539-f946-4d0e-a0a7-bda2815ea1b0">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textField>
+					<reportElement style="Column header" x="680" y="0" width="110" height="20" forecolor="#000000" uuid="9825b46e-76f1-469a-abb8-a1cc27aad685">
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Roboto" size="9" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$R{time.tracking.report.footer.page.label}+$V{PAGE_NUMBER}+" of "+ $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="5" y="1" width="197" height="20" forecolor="#000000" uuid="137d38c7-1a83-4fc5-b156-9d5f1b1a0ddc">
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Roboto" size="9" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[DateTimeFormatter.formatDate(LocalDate.now())]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

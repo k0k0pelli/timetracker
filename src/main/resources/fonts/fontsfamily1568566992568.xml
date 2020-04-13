@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fontFamilies>
+	<fontFamily name="Roboto Condensed">
+		<normal><![CDATA[fonts/RobotoCondensed/RobotoCondensed-Regular.ttf]]></normal>
+		<bold><![CDATA[fonts/RobotoCondensed/RobotoCondensed-Bold.ttf]]></bold>
+		<italic><![CDATA[fonts/RobotoCondensed/RobotoCondensed-Italic.ttf]]></italic>
+		<boldItalic><![CDATA[fonts/RobotoCondensed/RobotoCondensed-BoldItalic.ttf]]></boldItalic>
+		<pdfEncoding><![CDATA[Identity-H]]></pdfEncoding>
+		<pdfEmbedded><![CDATA[true]]></pdfEmbedded>
+		<exportFonts/>
+	</fontFamily>
+	<fontFamily name="Roboto">
+		<normal><![CDATA[fonts/Roboto/Roboto-Light.ttf]]></normal>
+		<bold><![CDATA[fonts/Roboto/Roboto-Bold.ttf]]></bold>
+		<italic><![CDATA[fonts/Roboto/Roboto-Italic.ttf]]></italic>
+		<boldItalic><![CDATA[fonts/Roboto/Roboto-BoldItalic.ttf]]></boldItalic>
+		<pdfEncoding><![CDATA[Identity-H]]></pdfEncoding>
+		<pdfEmbedded><![CDATA[true]]></pdfEmbedded>
+		<exportFonts/>
+	</fontFamily>
+</fontFamilies>
