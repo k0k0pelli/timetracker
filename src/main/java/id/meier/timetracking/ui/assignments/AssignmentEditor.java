@@ -127,7 +127,7 @@ class AssignmentEditor extends VerticalLayout implements KeyNotifier, IAssignmen
         setVisible(false);
 
         this.getStyle().set("border", "1px solid LightGray");
-        valueChangeActive = false;
+        valueChangeActive = true;
     }
     
     private FormLayout createDateTimePanel() {
@@ -299,7 +299,7 @@ class AssignmentEditor extends VerticalLayout implements KeyNotifier, IAssignmen
         binder.setBean(assignment);
         setVisible(true);
         startTime.focus();
-        valueChangeActive = false;
+        valueChangeActive = true;
     }
 
     private void checkConsistency(Assignment a) {
