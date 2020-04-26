@@ -32,7 +32,7 @@ The TimeTracking application is a web application. In order to execute it,
 copy the jar file to a directory of your choice and execute
 
 ```shell script
-java -jar ./timetracking-0.6-SNAPSHOT.jar
+java -jar ./timetracking-0.8-SNAPSHOT.jar
 ```
 
 The server will startup on port 8080 @ localhost. The database is automatically created 
@@ -67,14 +67,14 @@ startup TimeTracker with authentication enbled, use the following command.
 ### Examples for Starting up TimeTracker
 
 ```shell script
-java -Dspring.profiles.active=authenticated -jar ./timetracking-0.6-SNAPSHOT.jar
+java -Dspring.profiles.active=authenticated -jar ./timetracking-0.8-SNAPSHOT.jar
 ```
 
 In this case, the user must authenticate with the default user and password which are actually `user` and `password`.
 It is recommended to change the credentials with the following startup command:
 
 ```shell script
-java -Dspring.profiles.active=authenticated -jar ./timetracking-0.6-SNAPSHOT.jar --spring.security.user.name=<username> --spring.security.user.password=<password>
+java -Dspring.profiles.active=authenticated -jar ./timetracking-0.8-SNAPSHOT.jar --spring.security.user.name=<username> --spring.security.user.password=<password>
 ```
 
 Substitute `<username>` and `<password>` with your own values.
