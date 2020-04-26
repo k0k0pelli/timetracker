@@ -1,5 +1,5 @@
 group = 'id.meier.timetracker'
-version = '0.0.1-SNAPSHOT'
+version = '0.8.0-SNAPSHOT'
 
 buildscript {
 	ext {
@@ -21,7 +21,6 @@ apply plugin: 'java'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: "com.github.gmazelier.jasperreports"
-
 
 repositories {
 	mavenLocal()
@@ -78,3 +77,23 @@ bootJar.dependsOn compileAllReports
 test {
 	useJUnitPlatform()
 }
+
+task copyScriptsToDistFiles(type: Copy) {
+	from 'scripts'
+	include '**/*.*'
+	into 'dist'
+	expand([
+			buildNumber: "${version}",
+	])
+	fileMode 0744
+}
+
+task copyJarToDistFiles(type: Copy) {
+	from 'build/libs'
+	include "**/*.*"
+	into 'dist'
+}
+
+
+bootJar.dependsOn copyScriptsToDistFiles
+bootJar.dependsOn copyJarToDistFiles
