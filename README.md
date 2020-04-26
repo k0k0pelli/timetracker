@@ -16,13 +16,13 @@ The reporting system uses [JasperReports]()
 git clone https://github.com/k0k0pelli/timetracker.git
 ```
 
-## Compiling with Maven
-Download and install [Apache Maven](https://maven.apache.org/).
+## Compiling with Gradle
+The project is configured to use Gradle wrapper for compiling creating the distribution package of the Project.
 
-Change to the directory where you cloned the GIT repo and execute Maven
+Change to the directory where you cloned the GIT repo and execute Gradle
 ```shell script
 cd git/timetracker
-mvn clean package
+./gradlew clean bootJar
 ```
 You will find find the package Spring Boot jar file in the target folder in the 
 subdirectory `target/timetracking-X.Y-SNAPSHOT.jar`, with X.Y denoting the release version.
