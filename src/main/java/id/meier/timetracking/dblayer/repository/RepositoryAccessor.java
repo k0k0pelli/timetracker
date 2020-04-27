@@ -2,9 +2,7 @@ package id.meier.timetracking.dblayer.repository;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.List;
+import java.util.*;
 
 
 import id.meier.timetracking.dblayer.repository.*;
@@ -59,11 +57,11 @@ public class RepositoryAccessor {
 	 }
 
 	 public List<Project> findProjectByPhase(Phase phase) {
-		return this.projectRepo.findByPhasesIn(phase);
+		return this.projectRepo.findByPhasesIn(Collections.singletonList(phase));
 	 }
 
 	public List<Phase> findProjectByPhase(Task task) {
-		return this.phaseRepo.findByTasksIn(task);
+		return this.phaseRepo.findByTasksIn(Collections.singletonList(task));
 	}
 
 	 public List<Phase> findPhasesByNameStartsWithIgnoreCase(String name) {

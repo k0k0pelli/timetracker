@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface PhaseRepository extends JpaRepository<Phase, Long> {
     List<Phase> findByNameStartsWithIgnoreCase(String name);
-    List<Phase> findByTasksIn(Task task);
+    List<Phase> findByTasksIn(List<Task> tasks);
 }

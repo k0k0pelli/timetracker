@@ -10,6 +10,6 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
 
     List<Project> findByNameStartsWithIgnoreCase(String name);
 
-    List<Project> findByPhasesIn(Phase phase);
+    List<Project> findByPhasesIn(List<Phase> phases);
 
 }
