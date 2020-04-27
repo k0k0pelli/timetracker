@@ -3,7 +3,7 @@ version = '0.8.0-SNAPSHOT'
 
 buildscript {
 	ext {
-		springBootVersion = '2.0.5.RELEASE'
+		springBootVersion = '2.2.0.RELEASE'
 	}
 	repositories {
 		mavenLocal()
@@ -22,6 +22,8 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: "com.github.gmazelier.jasperreports"
 
+sourceCompatibility = '1.8'
+
 repositories {
 	mavenLocal()
 	mavenCentral()
@@ -34,9 +36,7 @@ ext {
 
 dependencies {
 	implementation 'com.vaadin:vaadin-spring-boot-starter'
-	testImplementation('org.springframework.boot:spring-boot-starter-test') {
-		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-	}
+
 	implementation group: 'commons-beanutils', name: 'commons-beanutils', version: '1.9.4'
 	implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.10'
 	implementation group: 'org.springframework.security', name: 'spring-security-web'
@@ -49,7 +49,10 @@ dependencies {
 	implementation group: 'net.sf.jasperreports', name: 'jasperreports', version: '6.12.2'
 
 	testImplementation group: 'org.mockito', name: 'mockito-core', version: '3.2.4'
-
+	testImplementation('org.springframework.boot:spring-boot-starter-test')
+//			{
+//		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+//	}
 }
 
 dependencyManagement {
@@ -73,6 +76,7 @@ jasperreports {
 
 compileAllReports.dependsOn compileJava
 bootJar.dependsOn compileAllReports
+bootJar.dependsOn test
 
 test {
 	useJUnitPlatform()
