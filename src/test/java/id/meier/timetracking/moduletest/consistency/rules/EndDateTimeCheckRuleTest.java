@@ -4,11 +4,11 @@ import id.meier.timetracking.TestBase;
 import id.meier.timetracking.businesslayer.consistency.ConsistencyProblem;
 import id.meier.timetracking.businesslayer.consistency.IConsistencyMessage;
 import id.meier.timetracking.businesslayer.consistency.impl.rules.EndDateTimeCheckRule;
-import id.meier.timetracking.businesslayer.consistency.impl.rules.StartDateTimeCheckRule;
+
 import id.meier.timetracking.dblayer.repository.RepositoryAccessor;
 import id.meier.timetracking.model.Assignment;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.time.LocalDate;
@@ -43,7 +43,7 @@ public class EndDateTimeCheckRuleTest extends TestBase {
     }
 
     private Assignment createAssignment() {
-        return createAssignment(null, null, LocalDate.of(2019, 12, 31), LocalTime.of(13,0,0), null, null,  null, null, 1l);
+        return createAssignment(null, null, LocalDate.of(2019, 12, 31), LocalTime.of(13,0,0), null, null,  null, null, 1L);
     }
 
     private EndDateTimeCheckRule createTestee(RepositoryAccessor repositoryAccessor) {
@@ -61,7 +61,7 @@ public class EndDateTimeCheckRuleTest extends TestBase {
 
     private RepositoryAccessor createRepoAccessorMockForOverlappingAssignments() {
         List<Assignment> list = new ArrayList<>();
-        list.add(createAssignment(LocalDate.of(2019,12,31), LocalTime.of(13,0,0), null, null, null, null, null, null, 1l));
+        list.add(createAssignment(LocalDate.of(2019,12,31), LocalTime.of(13,0,0), null, null, null, null, null, null, 1L));
         RepositoryAccessor repositoryAccessor = Mockito.mock(RepositoryAccessor.class);
         when(repositoryAccessor.selectAssignmentsStartDateTimeAfterGivenDateTime(eq(LocalDate.of(2019,12,31)), eq(LocalTime.of(13,0,0))))
                 .thenReturn(list);

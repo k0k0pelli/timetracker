@@ -5,9 +5,9 @@ import id.meier.timetracking.businesslayer.consistency.ConsistencyProblem;
 import id.meier.timetracking.businesslayer.consistency.IConsistencyMessage;
 import id.meier.timetracking.businesslayer.consistency.impl.rules.DescriptionCheckRule;
 import id.meier.timetracking.model.Assignment;
-import org.assertj.core.api.Assertions;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 
 import java.util.List;
 
@@ -17,14 +17,14 @@ public class DescriptionCheckRuleTest extends TestBase {
 
     private DescriptionCheckRule testee;
 
-    @Before
+    @BeforeEach
     public void setup() {
         testee = new DescriptionCheckRule();
     }
 
     @Test
     public void testMissingDescription() {
-        Assignment a = createAssignment(null, null, null, null, null, null, null, null, 1l);
+        Assignment a = createAssignment(null, null, null, null, null, null, null, null, 1L);
         List<IConsistencyMessage> messages = testee.checkConsistency(a);
         assertThat(messages).hasSize(1);
         assertThat(messages).element(0)
@@ -34,7 +34,7 @@ public class DescriptionCheckRuleTest extends TestBase {
 
     @Test
     public void testHavingDescription() {
-        Assignment a = createAssignment(null, null, null, null, "test", null, null, null, 1l);
+        Assignment a = createAssignment(null, null, null, null, "test", null, null, null, 1L);
         List<IConsistencyMessage> messages = testee.checkConsistency(a);
         assertThat(messages).hasSize(0);
     }

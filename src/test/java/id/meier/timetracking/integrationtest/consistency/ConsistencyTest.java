@@ -33,12 +33,14 @@ import id.meier.timetracking.model.Phase;
 import id.meier.timetracking.model.Project;
 import id.meier.timetracking.model.Task;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
@@ -47,7 +49,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest
 @TestPropertySource(
 		locations = "classpath:application-integrationtest.properties")
@@ -82,24 +84,19 @@ public class ConsistencyTest extends TestBase {
         repositoryAccessor.save(phase);
         repositoryAccessor.save(project);
 
-        Assignment a1 = createAssignment(getDate(2019,12,1), getTime(12,30,00),
-                getDate(2019,12,1), getTime(15,30,00),
-                "test", project, phase, task, 1l);
+        Assignment a1 = createAssignment(getDate(2019,12,1), getTime(12,30, 0),
+                getDate(2019,12,1), getTime(15,30, 0),
+                "test", project, phase, task, 1L);
         repositoryAccessor.save(a1);
-        Assignment a2 = createAssignment(getDate(2019,12,1), getTime(12,30,00),
-                getDate(2019,12,1), getTime(15,00,00),"test",
-                project, phase, task, 2l);
+        Assignment a2 = createAssignment(getDate(2019,12,1), getTime(12,0, 30),
+                getDate(2019,12,1), getTime(15, 0, 0),"test",
+                project, phase, task, 2L);
         repositoryAccessor.save(a2);
 
         return a2;
     }
 
-	private List<Assignment> createAssignmentsTest1() {
-		List<Assignment> assignments = new ArrayList<>();
-		//assignments.add(createAssignment(dayOne(), timeOne(), dayOne(), timeTwo(), project(), phase(), task(), "description" ));
-		//assignments.add(createAssignment(dayOne(), timeTwo(), dayOne(), timeThree(), project(), phase(), task(), "description" ));
-		return assignments;
-	}
+
 
     public Project getProject() {
 	    return new Project();

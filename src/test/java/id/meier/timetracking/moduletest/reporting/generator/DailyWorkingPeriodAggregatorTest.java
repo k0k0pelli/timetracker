@@ -3,8 +3,8 @@ package id.meier.timetracking.moduletest.reporting.generator;
 import id.meier.timetracking.model.*;
 import id.meier.timetracking.reporting.generator.AssignmentStartDateTimeComparator;
 import id.meier.timetracking.reporting.generator.DailyWorkingPeriodAggregator;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.time.Duration;
 import java.time.LocalDate;
@@ -19,7 +19,7 @@ public class DailyWorkingPeriodAggregatorTest {
 
     private DailyWorkingPeriodAggregator testee;
 
-    @Before
+    @BeforeEach
     public void setup() {
         testee = new DailyWorkingPeriodAggregator(new AssignmentStartDateTimeComparator());
     }

@@ -50,9 +50,9 @@ dependencies {
 
 	testImplementation group: 'org.mockito', name: 'mockito-core', version: '3.2.4'
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
-//			{
-//		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-//	}
+			{
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
 }
 
 dependencyManagement {
