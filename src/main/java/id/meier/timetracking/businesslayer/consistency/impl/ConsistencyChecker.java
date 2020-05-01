@@ -15,7 +15,7 @@ import java.util.List;
 
 @Component
 public class ConsistencyChecker implements IConsistencyChecker {
-    private List<IConsistencyRule> rules;
+    private final List<IConsistencyRule> rules;
     public ConsistencyChecker(StartDateTimeCheckRule startCheck, EndDateTimeCheckRule endCheck,
                               ProjectPhaseTaskCheckRule projectPhaseTaskCheckRule, DescriptionCheckRule descriptionCheckRule) {
         rules = new ArrayList<>();

@@ -21,7 +21,7 @@ import java.util.Map;
 class MainMenuView extends HorizontalLayout {
 	private final String WIDTH = "15em";
 	private Component displayedComponent = null;
-	private Button selectedBtn=null;
+	private final Button selectedBtn=null;
 
 	private final AssignmentManagementView manageAssignments;
 	private final ProjectsManagementView manageProjects;

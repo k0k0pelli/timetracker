@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 @Component
 public class EndDateTimeCheckRule extends AbstractConsistencyRule {
-    private RepositoryAccessor repoAccessor;
+    private final RepositoryAccessor repoAccessor;
     public EndDateTimeCheckRule(RepositoryAccessor repoAccessor) {
         this.repoAccessor = repoAccessor;
     }

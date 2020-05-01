@@ -65,17 +65,17 @@ class AssignmentEditor extends VerticalLayout implements KeyNotifier, IAssignmen
     private final ComboBoxProvider<Phase> phaseProvider;
     private final ComboBoxProvider<Task> taskProvider;
 
-    private Button cancel;
+    private final Button cancel;
     private boolean newAssignment = false;
 	private boolean terminateOldAssignments = false;
-    private AssignmentCreator assignmentCreator;
+    private final AssignmentCreator assignmentCreator;
     
-    private Binder<Assignment> binder = new Binder<>(Assignment.class);
+    private final Binder<Assignment> binder = new Binder<>(Assignment.class);
     private ChangeHandler changeHandler;
 
-    private CommandsCollector commandsCollector;
-    private RepositoryAccessor repoAccessor;
-    private IConsistencyChecker consistencyChecker;
+    private final CommandsCollector commandsCollector;
+    private final RepositoryAccessor repoAccessor;
+    private final IConsistencyChecker consistencyChecker;
     private boolean valueChangeActive;
 
 	@Autowired

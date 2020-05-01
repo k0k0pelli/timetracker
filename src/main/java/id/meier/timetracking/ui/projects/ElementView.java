@@ -29,7 +29,7 @@ public abstract class ElementView<T extends DescribedElement>  extends VerticalL
 	final List<T> removedElements;
 	final List<T> addedElements;
 	List<T> allElements;
-	private List<ElementViewChangeListener<T>> changeListeners;
+	private final List<ElementViewChangeListener<T>> changeListeners;
 
 
 	ElementView(boolean horizontalLayout, CommandsCollector commandsCollector, Class<T> clazz, ElementEditor<T> editor) {

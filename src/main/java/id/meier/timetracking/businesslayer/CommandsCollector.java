@@ -13,7 +13,7 @@ import id.meier.timetracking.model.Task;
 
 public class CommandsCollector {
 	private final List<Command> commands;
-	private Context context;
+	private final Context context;
 
 	public CommandsCollector() {
 		this(null);

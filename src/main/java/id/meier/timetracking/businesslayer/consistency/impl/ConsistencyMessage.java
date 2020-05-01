@@ -9,9 +9,9 @@ import java.util.List;
 
 
 public class ConsistencyMessage implements IConsistencyMessage {
-    private Assignment assignement;
-    private List<ConsistencyProblem> problems;
-    private List<AdditionalMessageData<?>> additionalMessageData;
+    private final Assignment assignement;
+    private final List<ConsistencyProblem> problems;
+    private final List<AdditionalMessageData<?>> additionalMessageData;
 
     public ConsistencyMessage(Assignment assignment) {
         this.assignement = assignment;

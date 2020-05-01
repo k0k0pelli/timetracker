@@ -36,7 +36,7 @@ public class ReportDefinitionFactory {
 		TRANSLATION_MAP.put(TIME_TRACKING_REPORTING_WORKING_PERIOD_REPORT, TIME_TRACKER_REPORT_WORKING_PERIOD_FILENAME);
 	}
 	
-	private TranslationProvider translationProvider;
+	private final TranslationProvider translationProvider;
 	
 	public ReportDefinitionFactory(TranslationProvider translationProvider) {
 		this.translationProvider = translationProvider;

@@ -17,7 +17,7 @@
 package id.meier.timetracking.test;
 
 public class Topic {
-    private String topic;
+    private final String topic;
 
     public Topic(String a) {
         topic = a;

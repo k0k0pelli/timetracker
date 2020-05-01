@@ -15,25 +15,14 @@
  */
 
 package id.meier.timetracking.integrationtest.consistency;
-
-
 import id.meier.timetracking.TestBase;
-import id.meier.timetracking.businesslayer.CommandsCollector;
-import id.meier.timetracking.businesslayer.consistency.ConsistencyProblem;
 import id.meier.timetracking.businesslayer.consistency.IConsistencyChecker;
 import id.meier.timetracking.businesslayer.consistency.IConsistencyMessage;
-import id.meier.timetracking.businesslayer.consistency.impl.ConsistencyChecker;
-import id.meier.timetracking.businesslayer.consistency.impl.rules.DescriptionCheckRule;
-import id.meier.timetracking.businesslayer.consistency.impl.rules.EndDateTimeCheckRule;
-import id.meier.timetracking.businesslayer.consistency.impl.rules.ProjectPhaseTaskCheckRule;
-import id.meier.timetracking.businesslayer.consistency.impl.rules.StartDateTimeCheckRule;
 import id.meier.timetracking.dblayer.repository.RepositoryAccessor;
 import id.meier.timetracking.model.Assignment;
 import id.meier.timetracking.model.Phase;
 import id.meier.timetracking.model.Project;
 import id.meier.timetracking.model.Task;
-
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,9 +30,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;

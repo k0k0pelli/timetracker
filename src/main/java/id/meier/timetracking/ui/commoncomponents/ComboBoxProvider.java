@@ -65,7 +65,7 @@ public class ComboBoxProvider<T extends NamedElement> {
 	}
 
 	private class NamedObjectCapsule implements NamedElement {
-		private T encapsulatedObject;
+		private final T encapsulatedObject;
 			
 		NamedObjectCapsule(String name) throws InstantiationException, IllegalAccessException {
 			encapsulatedObject = containerClass.newInstance();

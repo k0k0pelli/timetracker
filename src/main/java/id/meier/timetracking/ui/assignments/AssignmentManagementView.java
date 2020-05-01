@@ -87,11 +87,7 @@ public class AssignmentManagementView extends VerticalLayout implements SearchPa
 		assignmentCreationOption.setItems(guessOption,templateOptions);
 		assignmentCreationOption.setValue(templateOptions);
 		assignmentCreationOption.addValueChangeListener( e ->  {
-			if (e.getValue().equals(templateOptions)) {
-				templateName.setEnabled(true);
-			} else {
-				templateName.setEnabled(false);
-			}
+            templateName.setEnabled(e.getValue().equals(templateOptions));
 		});
 
 		terminateNonFinishedAssignments = new Checkbox(getTranslation("time.tracking.assignment.new.terminate.opt"));

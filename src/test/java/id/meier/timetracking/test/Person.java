@@ -17,10 +17,10 @@
 package id.meier.timetracking.test;
 
 public class Person {
-    private String name;
+    private final String name;
 
 
-    private Topic topic;
+    private final Topic topic;
     public Person(String p, Topic t) {
         name = p;
         topic = t;
