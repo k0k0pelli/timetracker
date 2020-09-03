@@ -1,7 +1,7 @@
 # TimeTracker
 TimeTracker is a simple tool for the personal tracking of the time you have spent on projects. It aims primarily at
 developers who want to simply track their own effort spent on projects, but may be useful also in other cases
-in which a detailed tracking of time spent is helpful. Hence, TimeTracker allowes you to
+in which a detailed tracking of time spent is helpful. Hence, TimeTracker allows you to
 
 1. ... simply record your activities in a project on a personal basis (no multi-user TimeTracking).
 1. ... create reports for the time spent on a project/phase/task on a daily basis.
@@ -24,8 +24,8 @@ Change to the directory where you cloned the GIT repo and execute Gradle
 cd git/timetracker
 ./gradlew clean bootJar
 ```
-You will find find the package Spring Boot jar file in the target folder in the 
-subdirectory `target/timetracking-X.Y-SNAPSHOT.jar`, with X.Y denoting the release version.
+You will find the package Spring Boot jar file in the target folder in the 
+subdirectory `dist/timetracking-X.Y-SNAPSHOT.jar`, with X.Y denoting the release version.
 
 ## Execute the TimeTracking application
 The TimeTracking application is a web application. In order to execute it, 
@@ -58,7 +58,7 @@ the following [Stackoverflow entry](https://stackoverflow.com/questions/37052857
 TimeTracker is intended for the personal use on the computer where it is installed. By default, there are no security
 mechanisms switched on protecting your data. Thus, it is recommendable that the TimeTracker web application is only 
 accessible from your local machine, which can be achieved by defining the necessary Firewall rules on your operating 
-system (please check Google for how to to it).
+system (please check Google for how to do it).
 
 Nevertheless, there may be cases in which you like to access TimeTracker from different devices. In this case, you can 
 activate an authentication mechanism and define the credentials for the user which is allowed to sing-in. If you like to 
@@ -129,7 +129,7 @@ The screenshot enumerates all the UI elements in the parts:
    set will be terminated. That means that the current date and time is set as end date and time.
 1. `New Assignment` button creates a new Assignment and fills out the data according to the chosen 
    options under (1) - (3). The Assignment editor appears with the new Assignment in the lower half of the view, see items
-   (12) - (23). The new Assignment is not saved, but must be saved explicitely. 
+   (12) - (23). The new Assignment is not saved, but must be saved explicitly. 
 1. Selection filter `Start Date`, `Start Time`, `End Date`, `End Time` Any values set in these 
    fields are used to search for Assignments whose start date/time and end date/time include the given
    start and end date/time. 
@@ -147,7 +147,7 @@ The screenshot enumerates all the UI elements in the parts:
     record (row) in the file. The values of each record are separated by commas.
 1. `Start Date` and `Start Time` the start date and start time of edited Assignment.
 1. `Set Start` pressing this button fills in the current date and time as start date and time in 
-    the currently edited Assignement. 
+    the currently edited Assignment. 
 1. `End Date` and `End Time` the end date, and the end time of the Assignment opened in the editor.
 1. `Set End` pressing this button fills in the current date and time as end date and time in 
     the edited Assignment. 
@@ -162,7 +162,7 @@ The screenshot enumerates all the UI elements in the parts:
 1. `Description` the detailed description of the edited Assignment.
 1. `Clone Template Name` the template name of the Assignment. In case the template name is defined,
    the name may be specified when creating a new Assignment, see option (1.2) `Create Assignment by template`.
-   In this case, the Project, Phase, and task, as well as the descrition of the template Assignment is filled 
+   In this case, the Project, Phase, and task, as well as the description of the template Assignment is filled 
    in the newly created Assignment.
 1. `Save` saves the edited Assignment.
 1. `Delete` Deletes a stored Assignment. This button is not available for newly created Assignments which have not 
@@ -234,9 +234,9 @@ assignments. The following screenshot shows the detail of the reporting view.
 
 The numbered items in the reporting view are:
 1. `Search Panel` The search panel helps you to select the assignments for which you
-like to create a report. The search panel works the same way as the one in the assingment view
+like to create a report. The search panel works the same way as the one in the assignment view
 (see above).
-1. `Result List` The result list show all the selected assingments for which you 
+1. `Result List` The result list show all the selected assignments for which you 
 like to create a report. The displayed information is described in detail
 in the assignment view (see above).
 1. `Summary` The summery list the total hours spent on the assignments in the result list
@@ -245,7 +245,7 @@ as well as the number of assignments.
 result list into a CSV file. The details of this functionality can be found assignment 
 view help (see above).
 1. `Report Selection` The report selection allows you to select which report for the 
-selected assingments will be generated:
+selected assignments will be generated:
    1. `Project` Groups the assignments by the associated Project and outputs the total hours
       spent on each project.
    1. `Project/Phase` Groups the assignments by the associated Project and Phase and 
