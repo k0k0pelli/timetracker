@@ -1,7 +1,7 @@
 # TimeTracker
 TimeTracker is a simple tool for the personal tracking of the time you have spent on projects. It aims primarily at
 developers who want to simply track their own effort spent on projects, but may be useful also in other cases
-in which a detailed tracking of time spent is helpful. Hence, TimeTracker allowes you to
+in which a detailed tracking of time spent is helpful. Hence, TimeTracker allows you to
 
 1. ... simply record your activities in a project on a personal basis (no multi-user TimeTracking).
 1. ... create reports for the time spent on a project/phase/task on a daily basis.
@@ -24,8 +24,8 @@ Change to the directory where you cloned the GIT repo and execute Gradle
 cd git/timetracker
 ./gradlew clean bootJar
 ```
-You will find find the package Spring Boot jar file in the target folder in the 
-subdirectory `target/timetracking-X.Y-SNAPSHOT.jar`, with X.Y denoting the release version.
+You will find the package Spring Boot jar file in the target folder in the 
+subdirectory `dist/timetracking-X.Y-SNAPSHOT.jar`, with X.Y denoting the release version.
 
 ## Execute the TimeTracking application
 The TimeTracking application is a web application. In order to execute it, 
@@ -58,7 +58,7 @@ the following [Stackoverflow entry](https://stackoverflow.com/questions/37052857
 TimeTracker is intended for the personal use on the computer where it is installed. By default, there are no security
 mechanisms switched on protecting your data. Thus, it is recommendable that the TimeTracker web application is only 
 accessible from your local machine, which can be achieved by defining the necessary Firewall rules on your operating 
-system (please check Google for how to to it).
+system (please check Google for how to do it).
 
 Nevertheless, there may be cases in which you like to access TimeTracker from different devices. In this case, you can 
 activate an authentication mechanism and define the credentials for the user which is allowed to sing-in. If you like to 
