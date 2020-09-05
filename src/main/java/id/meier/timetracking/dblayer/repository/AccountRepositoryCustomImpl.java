@@ -1,24 +1,18 @@
 package id.meier.timetracking.dblayer.repository;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Path;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
-
-import org.springframework.stereotype.Repository;
-
 import id.meier.timetracking.model.Assignment;
 import id.meier.timetracking.model.Phase;
 import id.meier.timetracking.model.Project;
 import id.meier.timetracking.model.Task;
+import org.springframework.stereotype.Repository;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.*;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public class AccountRepositoryCustomImpl implements AccountRepositoryCustom {

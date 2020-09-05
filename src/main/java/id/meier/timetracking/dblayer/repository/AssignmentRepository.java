@@ -1,14 +1,13 @@
 package id.meier.timetracking.dblayer.repository;
 
-import java.util.List;
-
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-
 import id.meier.timetracking.model.Assignment;
 import id.meier.timetracking.model.Phase;
 import id.meier.timetracking.model.Project;
 import id.meier.timetracking.model.Task;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+import java.util.List;
 
 
 

@@ -1,7 +1,7 @@
 # TimeTracker
 TimeTracker is a simple tool for the personal tracking of the time you have spent on projects. It aims primarily at
-developers who want to simply track their own effort spent on projects, but may be useful also in other cases
-in which a detailed tracking of time spent is helpful. Hence, TimeTracker allows you to
+developers who want to simply track their personal effort spent on projects, but it may be useful also in other cases
+when a detailed tracking of time spent is helpful. Hence, TimeTracker allows you to
 
 1. ... simply record your activities in a project on a personal basis (no multi-user TimeTracking).
 1. ... create reports for the time spent on a project/phase/task on a daily basis.
@@ -17,26 +17,38 @@ git clone https://github.com/k0k0pelli/timetracker.git
 ```
 
 ## Compiling with Gradle
-The project is configured to use Gradle wrapper for compiling creating the distribution package of the Project.
+The project uses the newest Vaadin technology applying Polymer/Web Components. For compiling the project, 
+you need to install version 12.X.Y LTS of NodeJS and NPM, respectively (any other seems not to work together 
+with spring boot). Please refer to [NodeJS download site](https://nodejs.org/en/) on how to do this for your 
+operating system.
+
+After installing NodeJS, you can create a distribution of your project by using Gradle.
+The project uses the Gradle wrapper for compiling creating the distribution package of the Project. So you
+do not need to install Gradle yourself.
 
 Change to the directory where you cloned the GIT repo and execute Gradle
 ```shell script
 cd git/timetracker
-./gradlew clean bootJar
+./gradlew clean build
 ```
-You will find the package Spring Boot jar file in the target folder in the 
-subdirectory `dist/timetracking-X.Y-SNAPSHOT.jar`, with X.Y denoting the release version.
+You will find the packaged Spring Boot jar file in the target folder  
+(subdirectory `dist/timetracking-X.Y.Z[-SNAPSHOT].jar`, with X.Y.Z denoting the release version).
 
 ## Execute the TimeTracking application
 The TimeTracking application is a web application. In order to execute it, 
-copy the jar file to a directory of your choice and execute
+copy the jar file and the shell scripts to a directory of your choice and execute
 
 ```shell script
-java -jar ./timetracking-0.8-SNAPSHOT.jar
+java -jar ./timetracking-[X.Y.Z-SNAPSHOT].jar
 ```
+
+or use the Shell scripts.
 
 The server will startup on port 8080 @ localhost. The database is automatically created 
 inside the startup directory and named `timetracker.mv.db`. So, you need to backup this file.
+
+If you need more information about how to run directly with Gradle or run inside an IDE, please
+refer to [the base Vaadin starter project](https://github.com/vaadin/base-starter-spring-gradle).
 
 ### Tweaking Parameters
 The following default values are set in the 

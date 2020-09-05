@@ -1,14 +1,13 @@
 package id.meier.timetracking.ui.assignments;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.List;
-
-import org.springframework.stereotype.Component;
-
 import id.meier.timetracking.dblayer.repository.AssignmentRefHitParadeProjectPhaseTask;
 import id.meier.timetracking.dblayer.repository.AssignmentRepository;
 import id.meier.timetracking.model.Assignment;
+import org.springframework.stereotype.Component;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.List;
 
 @Component
 public class AssignmentCreator {
@@ -52,11 +51,10 @@ public class AssignmentCreator {
 	}
 
 	private void setStartDate(Assignment assignment) {
-		Assignment result = assignment;
 		LocalDate startDate = LocalDate.now();
 		LocalTime startTime = LocalTime.now();
-		result.setStartDate(startDate);
-		result.setStartTime(startTime);
+		assignment.setStartDate(startDate);
+		assignment.setStartTime(startTime);
 	}
 
 	void terminateOpenAssignmentsOnSaveNewAssignment(Assignment newAssignment, boolean terminateOpenAssignments) {

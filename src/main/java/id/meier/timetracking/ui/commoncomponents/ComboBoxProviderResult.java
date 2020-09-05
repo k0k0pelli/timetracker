@@ -1,8 +1,8 @@
 package id.meier.timetracking.ui.commoncomponents;
 
-import java.util.List;
-
 import id.meier.timetracking.model.NamedElement;
+
+import java.util.List;
 
 public class ComboBoxProviderResult<T extends NamedElement> {
 	private final T addedElement;

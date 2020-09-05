@@ -1,27 +1,25 @@
 package id.meier.timetracking.ui.assignments;
 
-import java.util.List;
-
-import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
-import id.meier.timetracking.dblayer.repository.RepositoryAccessor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.core.annotation.Order;
-
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.spring.annotation.SpringComponent;
 import com.vaadin.flow.spring.annotation.UIScope;
-
+import id.meier.timetracking.dblayer.repository.RepositoryAccessor;
+import id.meier.timetracking.model.Assignment;
 import id.meier.timetracking.ui.commoncomponents.AssignmentOverviewPanel;
 import id.meier.timetracking.ui.commoncomponents.SearchPanel;
 import id.meier.timetracking.ui.commoncomponents.SearchParametersChangedEvent;
 import id.meier.timetracking.ui.commoncomponents.SearchParametersChangedListener;
-import id.meier.timetracking.model.Assignment;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.annotation.Order;
+
+import java.util.List;
 
 
 @SpringComponent

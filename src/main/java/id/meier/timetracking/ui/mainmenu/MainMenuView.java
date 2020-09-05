@@ -1,17 +1,15 @@
 package id.meier.timetracking.ui.mainmenu;
 
-import com.vaadin.flow.component.tabs.Tab;
-import com.vaadin.flow.component.tabs.Tabs;
-import id.meier.timetracking.ui.projects.ProjectsManagementView;
-import org.springframework.core.annotation.Order;
-
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.tabs.Tab;
+import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.router.Route;
-
-import id.meier.timetracking.ui.assignments.AssignmentManagementView;
 import id.meier.timetracking.reporting.ReportingManagementView;
+import id.meier.timetracking.ui.assignments.AssignmentManagementView;
+import id.meier.timetracking.ui.projects.ProjectsManagementView;
+import org.springframework.core.annotation.Order;
 
 import java.util.HashMap;
 import java.util.Map;

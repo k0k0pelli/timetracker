@@ -1,18 +1,8 @@
 package id.meier.timetracking.ui.commoncomponents;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import com.vaadin.flow.component.ClickEvent;
-import com.vaadin.flow.component.KeyNotifier;
-import id.meier.timetracking.util.LocaleRetriever;
-import org.springframework.core.annotation.Order;
-
-
 import com.vaadin.flow.component.Key;
+import com.vaadin.flow.component.KeyNotifier;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.datepicker.DatePicker;
@@ -22,13 +12,20 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.timepicker.TimePicker;
 import com.vaadin.flow.spring.annotation.SpringComponent;
 import com.vaadin.flow.spring.annotation.UIScope;
-
 import id.meier.timetracking.dblayer.repository.PhaseRepository;
 import id.meier.timetracking.dblayer.repository.ProjectRepository;
 import id.meier.timetracking.dblayer.repository.TaskRepository;
 import id.meier.timetracking.model.Phase;
 import id.meier.timetracking.model.Project;
 import id.meier.timetracking.model.Task;
+import id.meier.timetracking.util.LocaleRetriever;
+import org.springframework.core.annotation.Order;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 
 @SpringComponent

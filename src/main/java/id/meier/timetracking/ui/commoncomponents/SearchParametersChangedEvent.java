@@ -1,11 +1,11 @@
 package id.meier.timetracking.ui.commoncomponents;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-
 import id.meier.timetracking.model.Phase;
 import id.meier.timetracking.model.Project;
 import id.meier.timetracking.model.Task;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class SearchParametersChangedEvent {
 	private final LocalDate startDate;

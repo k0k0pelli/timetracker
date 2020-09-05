@@ -69,14 +69,14 @@ public class ReportGenerator {
 					JasperExportManager.exportReportToPdfFile(printer, outputFilename);
 				}
 			} catch (IOException | JRException e) {
-				e.printStackTrace();
+				throw new IllegalArgumentException("Creation of report failed!", e);
 			}
 		}
 	}
 
 	private JRBeanCollectionDataSource getBeanColDataSource(List<Assignment> assignments, String reportId) {
 		JRBeanCollectionDataSource beanColDataSource;
-		Collection collection = assignments;
+		Collection<?> collection = assignments;
 		if (reportId.equals(ReportDefinitionFactory.TIME_TRACKER_REPORT_WORKING_PERIOD_FILENAME)) {
 			Duration duration = Duration.ofMinutes(1);
 			collection = workingPeriodAggregator.aggregateAssignments(assignments, duration);

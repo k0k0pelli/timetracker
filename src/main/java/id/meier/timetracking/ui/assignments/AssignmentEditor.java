@@ -18,32 +18,25 @@ import com.vaadin.flow.component.timepicker.TimePicker;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.spring.annotation.SpringComponent;
 import com.vaadin.flow.spring.annotation.UIScope;
-
 import id.meier.timetracking.TimeTrackerException;
+import id.meier.timetracking.businesslayer.CommandsCollector;
 import id.meier.timetracking.businesslayer.consistency.IConsistencyChecker;
 import id.meier.timetracking.businesslayer.consistency.IConsistencyMessage;
-import id.meier.timetracking.ui.commoncomponents.ComboBoxProvider;
-import id.meier.timetracking.ui.commoncomponents.ComboBoxProviderResult;
-import id.meier.timetracking.businesslayer.CommandsCollector;
 import id.meier.timetracking.businesslayer.context.DefaultRepositoryContext;
 import id.meier.timetracking.dblayer.repository.RepositoryAccessor;
-import id.meier.timetracking.model.Assignment;
-import id.meier.timetracking.model.NamedElement;
-import id.meier.timetracking.model.Phase;
-import id.meier.timetracking.model.Project;
-import id.meier.timetracking.model.Task;
+import id.meier.timetracking.model.*;
+import id.meier.timetracking.ui.commoncomponents.ComboBoxProvider;
+import id.meier.timetracking.ui.commoncomponents.ComboBoxProviderResult;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.annotation.Order;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 @SpringComponent
 @UIScope

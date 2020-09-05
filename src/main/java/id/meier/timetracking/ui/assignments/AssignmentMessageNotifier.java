@@ -24,7 +24,6 @@ import id.meier.timetracking.businesslayer.consistency.IConsistencyMessage;
 import id.meier.timetracking.model.Assignment;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class AssignmentMessageNotifier extends Notification {
     public AssignmentMessageNotifier(List<IConsistencyMessage> messages, IAssignmentEditor editor) {
@@ -52,21 +51,21 @@ public class AssignmentMessageNotifier extends Notification {
 
     private Assignment getReferencedAssignment(List<IConsistencyMessage> messageList) {
         return messageList
-                .stream().map(m -> m.getMessageData())
+                .stream().map(IConsistencyMessage::getMessageData)
                 .flatMap(List::stream)
                 .map(md -> (Assignment)md.getData())
                 .findFirst().orElse(null);
     }
 
     private String getMessage(List<IConsistencyMessage> messageList) {
-        String textMessages = "";
+        StringBuffer textMessages = new StringBuffer();
         for (IConsistencyMessage m : messageList) {
             for (ConsistencyProblem p : m.getProblems()) {
                 String key = p.getMessageKey();
                 String message = getTranslation(key);
-                textMessages += "<p>" + message + "</p> ";
+                textMessages.append("<p>" + message + "</p> ");
             }
         }
-        return textMessages;
+        return textMessages.toString();
     }
 }

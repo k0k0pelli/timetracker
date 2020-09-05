@@ -3,15 +3,10 @@ package id.meier.timetracking.moduletest.consistency.rules;
 import id.meier.timetracking.TestBase;
 import id.meier.timetracking.businesslayer.consistency.ConsistencyProblem;
 import id.meier.timetracking.businesslayer.consistency.IConsistencyMessage;
-import id.meier.timetracking.businesslayer.consistency.impl.rules.ProjectPhaseTaskCheckRule;
 import id.meier.timetracking.businesslayer.consistency.impl.rules.StartDateTimeCheckRule;
 import id.meier.timetracking.model.Assignment;
-import id.meier.timetracking.model.Phase;
-import id.meier.timetracking.model.Project;
-import id.meier.timetracking.model.Task;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 
 import java.time.LocalDate;
 import java.time.LocalTime;

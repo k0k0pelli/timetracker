@@ -1,9 +1,5 @@
 package id.meier.timetracking.ui.projects;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
@@ -12,10 +8,13 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.function.ValueProvider;
-
 import id.meier.timetracking.businesslayer.CommandsCollector;
 import id.meier.timetracking.model.DescribedElement;
 import id.meier.timetracking.model.NamedElement;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 public abstract class ElementView<T extends DescribedElement>  extends VerticalLayout implements ElementEditorChangeListener<T> {

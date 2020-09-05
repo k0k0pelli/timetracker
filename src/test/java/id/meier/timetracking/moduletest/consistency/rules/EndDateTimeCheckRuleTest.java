@@ -4,10 +4,8 @@ import id.meier.timetracking.TestBase;
 import id.meier.timetracking.businesslayer.consistency.ConsistencyProblem;
 import id.meier.timetracking.businesslayer.consistency.IConsistencyMessage;
 import id.meier.timetracking.businesslayer.consistency.impl.rules.EndDateTimeCheckRule;
-
 import id.meier.timetracking.dblayer.repository.RepositoryAccessor;
 import id.meier.timetracking.model.Assignment;
-
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 

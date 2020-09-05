@@ -6,7 +6,6 @@ import id.meier.timetracking.model.Phase;
 import id.meier.timetracking.model.Project;
 import id.meier.timetracking.model.Task;
 import id.meier.timetracking.reporting.generator.ReportGenerator;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +31,7 @@ public class ReportingTest extends TestBase {
 	@Test
 	public void testReporting() {
 		Assignment a = new Assignment();
-		String  s = Optional.ofNullable(a)
+		String  s = Optional.of(a)
 		         .map(Assignment::getProject)
 		         .map(Project::getName)
 		         .orElse(null);

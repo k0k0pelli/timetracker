@@ -1,15 +1,15 @@
 package id.meier.timetracking.businesslayer;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-
 import id.meier.timetracking.businesslayer.commands.*;
 import id.meier.timetracking.dblayer.repository.RepositoryAccessor;
 import id.meier.timetracking.model.PersistableElement;
 import id.meier.timetracking.model.Phase;
 import id.meier.timetracking.model.Project;
 import id.meier.timetracking.model.Task;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
 public class CommandsCollector {
 	private final List<Command> commands;

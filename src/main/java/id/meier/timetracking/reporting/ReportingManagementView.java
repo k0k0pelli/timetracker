@@ -1,16 +1,5 @@
 package id.meier.timetracking.reporting;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-
-import id.meier.timetracking.dblayer.repository.RepositoryAccessor;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.core.annotation.Order;
-
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
@@ -23,15 +12,23 @@ import com.vaadin.flow.server.StreamResource;
 import com.vaadin.flow.server.VaadinSession;
 import com.vaadin.flow.spring.annotation.SpringComponent;
 import com.vaadin.flow.spring.annotation.UIScope;
-
 import id.meier.timetracking.TimeTrackerException;
+import id.meier.timetracking.dblayer.repository.RepositoryAccessor;
+import id.meier.timetracking.model.Assignment;
+import id.meier.timetracking.reporting.generator.ReportGenerator;
 import id.meier.timetracking.ui.commoncomponents.AssignmentOverviewPanel;
 import id.meier.timetracking.ui.commoncomponents.SearchPanel;
 import id.meier.timetracking.ui.commoncomponents.SearchParametersChangedEvent;
 import id.meier.timetracking.ui.commoncomponents.SearchParametersChangedListener;
-import id.meier.timetracking.dblayer.repository.AssignmentRepository;
-import id.meier.timetracking.model.Assignment;
-import id.meier.timetracking.reporting.generator.ReportGenerator;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.annotation.Order;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 @SpringComponent
 @UIScope
@@ -97,13 +94,11 @@ public class ReportingManagementView extends VerticalLayout implements SearchPar
 
 	private Button createDownloadButton() {
 		return new Button("Show Report", VaadinIcon.ARROW_CIRCLE_DOWN.create(), event -> {
-			boolean isCheckPassed = true;
 			final StreamResource resource = new StreamResource("report.pdf",
 					this::generateAndDownloadReport);
-			resource.setContentType("application/pdf");
+			//resource.setContentType("application/pdf");
 			final StreamRegistration registration = VaadinSession.getCurrent().getResourceRegistry().registerResource(resource);
 
-			//UI.getCurrent().getPage().setLocation(registration.getResourceUri());
 			UI.getCurrent().getPage().executeJs("window.open(\"" + registration.getResourceUri().toString() + "\", \"_blank\");" );
 		});
 	}

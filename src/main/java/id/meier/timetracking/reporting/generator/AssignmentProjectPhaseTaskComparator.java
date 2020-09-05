@@ -1,10 +1,10 @@
 package id.meier.timetracking.reporting.generator;
 
-import java.util.Comparator;
-
+import id.meier.timetracking.model.Assignment;
 import org.apache.commons.collections.ComparatorUtils;
 import org.springframework.stereotype.Component;
-import id.meier.timetracking.model.Assignment;
+
+import java.util.Comparator;
 
 @Component
 class AssignmentProjectPhaseTaskComparator implements Comparator<Assignment> {

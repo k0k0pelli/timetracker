@@ -1,18 +1,17 @@
 package id.meier.timetracking.util;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.Date;
-import java.util.List;
-
+import id.meier.timetracking.TimeTrackerException;
+import id.meier.timetracking.model.Assignment;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import id.meier.timetracking.TimeTrackerException;
-import id.meier.timetracking.model.Assignment;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Date;
+import java.util.List;
 
 import static id.meier.timetracking.util.DateTimeFormatter.d2S;
 import static id.meier.timetracking.util.DateTimeFormatter.t2S;

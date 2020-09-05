@@ -1,14 +1,13 @@
 package id.meier.timetracking.reporting;
 
+import id.meier.timetracking.util.TranslationProvider;
+import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-
-import org.springframework.core.annotation.Order;
-import org.springframework.stereotype.Component;
-
-import id.meier.timetracking.util.TranslationProvider;
 
 @Component
 @Order(8)
