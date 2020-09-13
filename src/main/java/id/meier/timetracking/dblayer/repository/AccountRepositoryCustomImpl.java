@@ -41,10 +41,13 @@ public class AccountRepositoryCustomImpl implements AccountRepositoryCustom {
 		    	predicates.add(cb.greaterThanOrEqualTo(startTimePath, cb.literal(startTime)));
 		    }
 		    if (endDate != null) {
-		    	predicates.add(cb.lessThanOrEqualTo(endDatePath, cb.literal(endDate)));
+		    	predicates.add(cb.or(cb.lessThanOrEqualTo(endDatePath, cb.literal(endDate)),
+						cb.isNull(endDatePath)));
 		    }
 		    if (endTime != null) {
-		    	predicates.add(cb.lessThanOrEqualTo(endTimePath, cb.literal(endTime)));
+		    	predicates.add(cb.or(
+		    			cb.lessThanOrEqualTo(endTimePath, cb.literal(endTime)),
+						cb.isNull(endTimePath)));
 		    }
 		    if (project != null) {
 		    	predicates.add(cb.equal(projectPath,cb.literal(project)));

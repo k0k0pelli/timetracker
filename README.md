@@ -39,7 +39,7 @@ The TimeTracking application is a web application. In order to execute it,
 copy the jar file and the shell scripts to a directory of your choice and execute
 
 ```shell script
-java -jar ./timetracking-[X.Y.Z-SNAPSHOT].jar
+java -jar ./timetracking-X.Y.Z[-SNAPSHOT].jar
 ```
 
 or use the Shell scripts.

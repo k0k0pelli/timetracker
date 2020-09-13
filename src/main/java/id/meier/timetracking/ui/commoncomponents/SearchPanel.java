@@ -8,6 +8,8 @@ import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.formlayout.FormLayout.ResponsiveStep;
+import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.timepicker.TimePicker;
 import com.vaadin.flow.spring.annotation.SpringComponent;
@@ -73,9 +75,12 @@ public class SearchPanel extends VerticalLayout  implements KeyNotifier {
     	searchEndTime.setLocale(localeRetriever.getLocale());
     	
     	buttonSetTimeFilterForToday = new Button(getTranslation("time.tracking.search.panel.btn.set.filter.for.today"),
-				this::onComponentEvent2
+				this::performSetToday
     	);
-    	
+
+    	Button subtractOnePeriod = new Button(VaadinIcon.ARROW_LEFT.create(), e -> backward());
+		Button addOnePeriod = new Button(VaadinIcon.ARROW_RIGHT.create(), e -> forward());
+
     	projectFilter = new ComboBox<>(getTranslation("time.tracking.search.panel.project"), projectProvider.getAllElements());
         projectFilter.addValueChangeListener(e -> {
         	Project p = e.getValue();
@@ -90,32 +95,53 @@ public class SearchPanel extends VerticalLayout  implements KeyNotifier {
         	}
         });
     	phaseFilter = new ComboBox<>(getTranslation("time.tracking.search.panel.phase"), phaseProvider.getAllElements());
-        taskFilter = new ComboBox<>(getTranslation("time.tracking.search.panel.task"), taskProvider.getAllElements());
+        phaseFilter.addValueChangeListener( e -> {
+        	Phase p = e.getValue();
+        	taskFilter.setValue(null);
+        	if (p != null) {
+        		taskFilter.setItems(p.getTasks());
+			} else {
+        		taskFilter.setItems(Collections.EMPTY_LIST);
+			}
+		});
+    	taskFilter = new ComboBox<>(getTranslation("time.tracking.search.panel.task"), taskProvider.getAllElements());
 		Button performSearch = new Button(getTranslation("time.tracking.search.panel.btn"),
-				this::onComponentEvent
+				this::performSearch
 		);
         performSearch.addClickShortcut(Key.ENTER);
-        FormLayout hl = new FormLayout();
-        hl.add(searchStartDate, searchStartTime, searchEndDate, searchEndTime, 
-        		buttonSetTimeFilterForToday, projectFilter, phaseFilter, taskFilter, performSearch);
-        hl.setResponsiveSteps(
-    	        new ResponsiveStep("20em", 1),
-    	        new ResponsiveStep("20em", 2),
-    	        new ResponsiveStep("20em", 3),
-    	        new ResponsiveStep("20em", 4),
-    	        new ResponsiveStep("20em", 5),
-    	        new ResponsiveStep("20em", 6),
-    	        new ResponsiveStep("20em", 7),
-    	        new ResponsiveStep("20em", 8),
-    	        new ResponsiveStep("20em", 9)
-    	        );
-        this.add(hl);
+
+		HorizontalLayout forwardBackward = new HorizontalLayout();
+		forwardBackward.setAlignItems(Alignment.BASELINE);
+		forwardBackward.setJustifyContentMode(JustifyContentMode.START);
+		forwardBackward.add(buttonSetTimeFilterForToday, subtractOnePeriod, addOnePeriod);
+		forwardBackward.expand(buttonSetTimeFilterForToday);
+		forwardBackward.setMargin(true);
+
+
+		FormLayout fl = new FormLayout();
+		fl.add(searchStartDate, searchStartTime, searchEndDate, searchEndTime,
+				forwardBackward,
+				projectFilter, phaseFilter, taskFilter, performSearch);
+		fl.setColspan(forwardBackward, 2);
+        fl.setResponsiveSteps(
+    	        new ResponsiveStep("15em", 1),
+    	        new ResponsiveStep("15em", 2),
+    	        new ResponsiveStep("15em", 3),
+				new ResponsiveStep("15em", 4),
+				new ResponsiveStep("5em", 5),
+				new ResponsiveStep("5em", 6),
+				new ResponsiveStep("20em", 7),
+				new ResponsiveStep("20em", 8),
+				new ResponsiveStep("20em", 9),
+				new ResponsiveStep("15em", 10)
+		);
+
+        this.add(fl);
         this.getStyle().set("border", "1px solid LightGray");
         this.setAlignItems(Alignment.BASELINE);
         this.setMargin(false);
     	this.setPadding(true);
     	this.setSpacing(false);
-        
 	}
     
     private void setStartVisibility(boolean visible) {
@@ -131,39 +157,45 @@ public class SearchPanel extends VerticalLayout  implements KeyNotifier {
     private void setTodayFilterButtonVisible(boolean visible) {
     	this.buttonSetTimeFilterForToday.setVisible(visible);   	
     }
-    
-    public void setDateFilterVisible(boolean visible) {
-    	this.setStartVisibility(visible);
-    	this.setEndVisibility(visible);
-    	this.setTodayFilterButtonVisible(visible);
-    	
-    }
-    
-    public void setProjectVisibility(boolean visible) {
-    	this.projectFilter.setVisible(visible);
-    }
-    
-    public void setPhaseVisibility(boolean visible) {
-    	this.phaseFilter.setVisible(visible);
-    }
-    
-    public void setTasVisibility(boolean visible) {
-    	this.taskFilter.setVisible(visible);
-    }
-    
+
+    private void forward() {
+		calculateAndSetNextDate(searchStartDate, searchStartTime,
+				searchEndDate, searchEndTime,1);
+	}
+
+	private void backward() {
+		calculateAndSetNextDate(searchEndDate, searchStartTime,
+				searchStartDate, searchEndTime, -1);
+	}
+
+	private void calculateAndSetNextDate(DatePicker startDatePicker,
+										 TimePicker startTimePicker,
+										 DatePicker endDatePicker,
+										 TimePicker endTimePicker,
+										 long daysToAdd) {
+		// get start date / time and end date / time
+		LocalDate startDate = startDatePicker.getValue();
+		LocalDate endDate = endDatePicker.getValue();
+
+		startDatePicker.setValue(startDate.plusDays(daysToAdd));
+		startTimePicker.setValue(LocalTime.of(0,0,0));
+		endDatePicker.setValue(endDate.plusDays(daysToAdd));
+		endTimePicker.setValue(LocalTime.of(23,59,59));
+		performSearch();
+	}
+
     public void setTodayFilter() {
     	searchStartTime.setValue(LocalTime.of(0, 0));
-		searchStartDate.setValue(LocalDate.now());		
-    }
+		searchStartDate.setValue(LocalDate.now());
+		searchEndTime.setValue(LocalTime.of(23, 59, 59));
+		searchEndDate.setValue(LocalDate.now());
+		performSearch();
+	}
 	
     public void addChangeListener(SearchParametersChangedListener listener) {
     	this.changeListener.add(listener);    	
     }
-    
-    public void removeChangeListener(SearchParametersChangedListener listener) {
-    	this.changeListener.remove(listener);    	
-    }
-    
+
     private LocalDate getSearchStartDate() {
 		return searchStartDate.getValue();
 	}
@@ -200,12 +232,11 @@ public class SearchPanel extends VerticalLayout  implements KeyNotifier {
 		}
 	}
 
-
-	private void onComponentEvent(ClickEvent<Button> e) {
+	private void performSearch(ClickEvent<Button> e) {
 		performSearch();
 	}
 
-	private void onComponentEvent2(ClickEvent<Button> e) {
+	private void performSetToday(ClickEvent<Button> e) {
 		setTodayFilter();
 	}
 }
