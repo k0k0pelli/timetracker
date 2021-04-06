@@ -1,16 +1,16 @@
 package id.meier.timetracking.businesslayer.commands;
 
 import id.meier.timetracking.businesslayer.Context;
-import id.meier.timetracking.model.Phase;
-import id.meier.timetracking.model.Project;
+import id.meier.timetracking.db.entity.PhaseEntity;
+import id.meier.timetracking.db.entity.ProjectEntity;
 
 public class AddPhaseToProjectCommand extends BaseCommand {
 
 
-	private final Phase phase;
-	private final Project project;
+	private final PhaseEntity phase;
+	private final ProjectEntity project;
 
-	public AddPhaseToProjectCommand(Phase phase, Project project) {
+	public AddPhaseToProjectCommand(PhaseEntity phase, ProjectEntity project) {
 		this.phase = phase;
 		this.project = project;
 	}

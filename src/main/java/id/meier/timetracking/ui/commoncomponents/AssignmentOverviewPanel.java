@@ -8,7 +8,6 @@ import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.Grid.Column;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.VaadinIcon;
-import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.function.ValueProvider;
@@ -18,7 +17,7 @@ import com.vaadin.flow.server.VaadinSession;
 import com.vaadin.flow.spring.annotation.SpringComponent;
 import com.vaadin.flow.spring.annotation.UIScope;
 import id.meier.timetracking.TimeTrackerException;
-import id.meier.timetracking.model.Assignment;
+import id.meier.timetracking.db.entity.AssignmentEntity;
 import id.meier.timetracking.util.AssignmentExporter;
 import org.springframework.core.annotation.Order;
 
@@ -37,10 +36,10 @@ import static id.meier.timetracking.util.DateTimeFormatter.t2S;
 @UIScope
 @Order(10)
 public class AssignmentOverviewPanel extends VerticalLayout {
-	private Grid<Assignment> grid;
+	private Grid<AssignmentEntity> grid;
 	private Label summary;
 	private final AssignmentExporter exporter;
-    private List<Assignment> assignments;
+    private List<AssignmentEntity> assignments;
 	public AssignmentOverviewPanel(AssignmentExporter exporter) {
 		this.exporter = exporter;
 		this.assignments = new ArrayList<>();
@@ -52,13 +51,13 @@ public class AssignmentOverviewPanel extends VerticalLayout {
 		add(grid, summaryAndExport);
 	}
 
-	public void setItems(List<Assignment> assignments) {
+	public void setItems(List<AssignmentEntity> assignments) {
 		grid.setItems(assignments);
 		setSummaryLabel(assignments);
 		this.assignments = assignments;
 	}
 	
-	private Grid<Assignment> createGridPanel() {
+	private Grid<AssignmentEntity> createGridPanel() {
 		this.grid = new Grid<>();
 
 		grid.setHeight("200px");
@@ -82,18 +81,18 @@ public class AssignmentOverviewPanel extends VerticalLayout {
 		 * getFormattedDouble(a.getIndustrialHoursDiff())))
 		 * .setHeader(l).setSortable(true);
 		 */
-		addColumnToGrid(Assignment::getProjectName, getTranslation("time.tracking.overview.table.project.name")).setSortable(true);
+		addColumnToGrid(AssignmentEntity::getProjectName, getTranslation("time.tracking.overview.table.project.name")).setSortable(true);
 
-		addColumnToGrid(Assignment::getPhaseName, getTranslation("time.tracking.overview.table.phase.name")).setSortable(true);
+		addColumnToGrid(AssignmentEntity::getPhaseName, getTranslation("time.tracking.overview.table.phase.name")).setSortable(true);
 
-		addColumnToGrid(Assignment::getTaskName, getTranslation("time.tracking.overview.table.task.name")).setSortable(true);
+		addColumnToGrid(AssignmentEntity::getTaskName, getTranslation("time.tracking.overview.table.task.name")).setSortable(true);
 
-		addColumnToGrid(Assignment::getDescription, getTranslation("time.tracking.overview.table.description")).setSortable(true);
+		addColumnToGrid(AssignmentEntity::getDescription, getTranslation("time.tracking.overview.table.description")).setSortable(true);
 		grid.asSingleSelect();
 		return grid;
 	}
 
-	public void setValueChangeListener(ValueChangeListener<ValueChangeEvent<Assignment>> valueChangeListener) {
+	public void setValueChangeListener(ValueChangeListener<ValueChangeEvent<AssignmentEntity>> valueChangeListener) {
 		grid.asSingleSelect().addValueChangeListener(valueChangeListener);
 	}
 
@@ -123,14 +122,14 @@ public class AssignmentOverviewPanel extends VerticalLayout {
 		});
 	}
 
-	private void setSummaryLabel(List<Assignment> assignments) {
-		Double sum = assignments.stream().mapToDouble(Assignment::getIndustrialHoursDiff).reduce(0, Double::sum);
+	private void setSummaryLabel(List<AssignmentEntity> assignments) {
+		Double sum = assignments.stream().mapToDouble(AssignmentEntity::getIndustrialHoursDiff).reduce(0, Double::sum);
 		DecimalFormat df = new DecimalFormat("0.00"); 
 		String msg = getTranslation("time.tracking.overview.table.summary.label", assignments.size(), sum);
 		this.summary.setText(msg);
 	}
 	
-	private Column<Assignment> addColumnToGrid(ValueProvider<Assignment, ?> valueProvider, String headerText) {
+	private Column<AssignmentEntity> addColumnToGrid(ValueProvider<AssignmentEntity, ?> valueProvider, String headerText) {
 		return grid.addColumn(valueProvider).setHeader(headerText);
 	}
 

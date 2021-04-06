@@ -35,7 +35,7 @@
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
-	<field name="phase" class="id.meier.timetracking.model.Phase">
+	<field name="phase" class="id.meier.timetracking.db.entity.PhaseEntity">
 		<fieldDescription><![CDATA[phase]]></fieldDescription>
 	</field>
 	<field name="endDate" class="java.time.LocalDate">
@@ -44,13 +44,13 @@
 	<field name="description" class="java.lang.String">
 		<fieldDescription><![CDATA[description]]></fieldDescription>
 	</field>
-	<field name="project" class="id.meier.timetracking.model.Project">
+	<field name="project" class="id.meier.timetracking.db.entity.ProjectEntity">
 		<fieldDescription><![CDATA[project]]></fieldDescription>
 	</field>
 	<field name="industrialHoursDiff" class="java.lang.Double">
 		<fieldDescription><![CDATA[industrialHoursDiff]]></fieldDescription>
 	</field>
-	<field name="task" class="id.meier.timetracking.model.Task">
+	<field name="task" class="id.meier.timetracking.db.entity.TaskEntity">
 		<fieldDescription><![CDATA[task]]></fieldDescription>
 	</field>
 	<field name="startTime" class="java.time.LocalTime">

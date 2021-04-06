@@ -1,4 +1,4 @@
-package id.meier.timetracking.model;
+package id.meier.timetracking.db.dto;
 
 public interface DescribedElement extends NamedElement {
 	String getDescription();

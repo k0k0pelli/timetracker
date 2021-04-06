@@ -1,8 +1,8 @@
 package id.meier.timetracking.ui.commoncomponents;
 
-import id.meier.timetracking.model.Phase;
-import id.meier.timetracking.model.Project;
-import id.meier.timetracking.model.Task;
+import id.meier.timetracking.db.entity.PhaseEntity;
+import id.meier.timetracking.db.entity.ProjectEntity;
+import id.meier.timetracking.db.entity.TaskEntity;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -12,12 +12,12 @@ public class SearchParametersChangedEvent {
 	private final LocalTime startTime;
 	private final LocalDate endDate;
 	private final LocalTime endTime;
-	private final Project project;
-	private final Phase phase;
-	private final Task task;
+	private final ProjectEntity project;
+	private final PhaseEntity phase;
+	private final TaskEntity task;
 
 	SearchParametersChangedEvent(LocalDate startDate, LocalTime startTime,
-								 LocalDate endDate, LocalTime endTime, Project project, Phase phase, Task task) {
+								 LocalDate endDate, LocalTime endTime, ProjectEntity project, PhaseEntity phase, TaskEntity task) {
 		this.startDate = startDate;
 		this.startTime = startTime;
 		this.endDate = endDate;
@@ -39,13 +39,13 @@ public class SearchParametersChangedEvent {
 	public LocalTime getEndTime() {
 		return endTime;
 	}
-	public Project getProject() {
+	public ProjectEntity getProject() {
 		return project;
 	}
-	public Phase getPhase() {
+	public PhaseEntity getPhase() {
 		return phase;
 	}
-	public Task getTask() {
+	public TaskEntity getTask() {
 		return task;
 	}
 }

@@ -1,8 +1,8 @@
 package id.meier.timetracking.ui.assignments;
 
-import id.meier.timetracking.dblayer.repository.AssignmentRefHitParadeProjectPhaseTask;
-import id.meier.timetracking.dblayer.repository.AssignmentRepository;
-import id.meier.timetracking.model.Assignment;
+import id.meier.timetracking.db.repository.AssignmentRefHitParadeProjectPhaseTask;
+import id.meier.timetracking.db.repository.AssignmentRepository;
+import id.meier.timetracking.db.entity.AssignmentEntity;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -17,19 +17,19 @@ public class AssignmentCreator {
 		this.assignmentRepo = assignmentRepo;
 	}
 	
-	Assignment createNewAssignment(boolean guessDataForNewAssignment, String templateName) {
-		Assignment result = new Assignment();
+	AssignmentEntity createNewAssignment(boolean guessDataForNewAssignment, String templateName) {
+		AssignmentEntity result = new AssignmentEntity();
 		setStartDate(result);
 		guessAssignment(guessDataForNewAssignment, result);
 		applyTemplate(guessDataForNewAssignment, templateName, result);
 		return result;
 	}
 
-	private void applyTemplate(boolean guessDataForNewAssignment, String templateName, Assignment assignment) {
+	private void applyTemplate(boolean guessDataForNewAssignment, String templateName, AssignmentEntity assignment) {
 		if (!guessDataForNewAssignment && templateName != null && !templateName.equals("")) {
-			List<Assignment> templateAssignments = assignmentRepo.findAssignmentByCloneableTemplateName(templateName);
+			List<AssignmentEntity> templateAssignments = assignmentRepo.findAssignmentByCloneableTemplateName(templateName);
 			if (templateAssignments.size() > 0) {
-				Assignment templateAssignment = templateAssignments.get(0);
+				AssignmentEntity templateAssignment = templateAssignments.get(0);
 				assignment.setProject(templateAssignment.getProject());
 				assignment.setPhase(templateAssignment.getPhase());
 				assignment.setTask(templateAssignment.getTask());
@@ -38,7 +38,7 @@ public class AssignmentCreator {
 		}
 	}
 
-	private void guessAssignment(boolean guessDataForNewAssignment, Assignment assignment) {
+	private void guessAssignment(boolean guessDataForNewAssignment, AssignmentEntity assignment) {
 		if (guessDataForNewAssignment) {
 			List<AssignmentRefHitParadeProjectPhaseTask> hitParade = assignmentRepo.findTopReferredProjectPhaseAndTasks();
 			if (hitParade.size() > 0) {
@@ -50,17 +50,17 @@ public class AssignmentCreator {
 		}
 	}
 
-	private void setStartDate(Assignment assignment) {
+	private void setStartDate(AssignmentEntity assignment) {
 		LocalDate startDate = LocalDate.now();
 		LocalTime startTime = LocalTime.now();
 		assignment.setStartDate(startDate);
 		assignment.setStartTime(startTime);
 	}
 
-	void terminateOpenAssignmentsOnSaveNewAssignment(Assignment newAssignment, boolean terminateOpenAssignments) {
+	void terminateOpenAssignmentsOnSaveNewAssignment(AssignmentEntity newAssignment, boolean terminateOpenAssignments) {
 		if (terminateOpenAssignments) {				
-			List<Assignment> list = assignmentRepo.findByEndDateIsNullOrEndTimeIsNull();
-			for (Assignment a : list) {
+			List<AssignmentEntity> list = assignmentRepo.findByEndDateIsNullOrEndTimeIsNull();
+			for (AssignmentEntity a : list) {
 				a.setEndTime(newAssignment.getStartTime());
 				a.setEndDate(newAssignment.getStartDate());
 				assignmentRepo.save(a);

@@ -4,8 +4,8 @@ import id.meier.timetracking.TestBase;
 import id.meier.timetracking.businesslayer.consistency.ConsistencyProblem;
 import id.meier.timetracking.businesslayer.consistency.IConsistencyMessage;
 import id.meier.timetracking.businesslayer.consistency.impl.rules.EndDateTimeCheckRule;
-import id.meier.timetracking.dblayer.repository.RepositoryAccessor;
-import id.meier.timetracking.model.Assignment;
+import id.meier.timetracking.db.repository.RepositoryAccessor;
+import id.meier.timetracking.db.entity.AssignmentEntity;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -24,7 +24,7 @@ public class EndDateTimeCheckRuleTest extends TestBase {
     @Test
     public void testNoMissingTimeAndNoOverlapping() {
         EndDateTimeCheckRule testee = createTestee(createRepoAccessorMockForNoOverlappingAssignments());
-        Assignment a = createAssignment();
+        AssignmentEntity a = createAssignment();
         List<IConsistencyMessage> messages = testee.checkConsistency(a);
         assertThat(messages).hasSize(0);
     }
@@ -32,7 +32,7 @@ public class EndDateTimeCheckRuleTest extends TestBase {
     @Test
     public void testMissingOverlappingDates() {
         EndDateTimeCheckRule testee = createTestee(createRepoAccessorMockForOverlappingAssignments());
-        Assignment a = createAssignment();
+        AssignmentEntity a = createAssignment();
         List<IConsistencyMessage> messages = testee.checkConsistency(a);
         assertThat(messages).hasSize(1);
         assertThat(messages).element(0)
@@ -40,7 +40,7 @@ public class EndDateTimeCheckRuleTest extends TestBase {
                 .satisfies(cm -> assertThat(cm.getProblems()).hasSize(1).element(0).isEqualTo(ConsistencyProblem.DATE_TIME_OVERLAP));
     }
 
-    private Assignment createAssignment() {
+    private AssignmentEntity createAssignment() {
         return createAssignment(null, null, LocalDate.of(2019, 12, 31), LocalTime.of(13,0,0), null, null,  null, null, 1L);
     }
 
@@ -49,7 +49,7 @@ public class EndDateTimeCheckRuleTest extends TestBase {
     }
 
     private RepositoryAccessor createRepoAccessorMockForNoOverlappingAssignments() {
-        List<Assignment> list = new ArrayList<>();
+        List<AssignmentEntity> list = new ArrayList<>();
         RepositoryAccessor repositoryAccessor = Mockito.mock(RepositoryAccessor.class);
         when(repositoryAccessor.selectAssignmentsStartDateTimeAfterGivenDateTime(eq(LocalDate.of(2019,12,31)), eq(LocalTime.of(13,0,0))))
                 .thenReturn(list);
@@ -58,7 +58,7 @@ public class EndDateTimeCheckRuleTest extends TestBase {
 
 
     private RepositoryAccessor createRepoAccessorMockForOverlappingAssignments() {
-        List<Assignment> list = new ArrayList<>();
+        List<AssignmentEntity> list = new ArrayList<>();
         list.add(createAssignment(LocalDate.of(2019,12,31), LocalTime.of(13,0,0), null, null, null, null, null, null, 1L));
         RepositoryAccessor repositoryAccessor = Mockito.mock(RepositoryAccessor.class);
         when(repositoryAccessor.selectAssignmentsStartDateTimeAfterGivenDateTime(eq(LocalDate.of(2019,12,31)), eq(LocalTime.of(13,0,0))))

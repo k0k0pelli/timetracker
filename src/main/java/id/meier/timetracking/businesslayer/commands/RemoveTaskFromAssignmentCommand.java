@@ -1,22 +1,22 @@
 package id.meier.timetracking.businesslayer.commands;
 
 import id.meier.timetracking.businesslayer.Context;
-import id.meier.timetracking.model.Assignment;
-import id.meier.timetracking.model.Task;
+import id.meier.timetracking.db.entity.AssignmentEntity;
+import id.meier.timetracking.db.entity.TaskEntity;
 
 import java.util.List;
 
 public class RemoveTaskFromAssignmentCommand extends BaseCommand {
 
-	private final Task task;
+	private final TaskEntity task;
 	
-	public RemoveTaskFromAssignmentCommand(Task task) {		
+	public RemoveTaskFromAssignmentCommand(TaskEntity task) {
 		this.task = task;
 	}
 
 	public void execute() {
-		List<Assignment> assignments = repoAccessor.findAssignmentByTask(task);
-		for (Assignment a : assignments) {			
+		List<AssignmentEntity> assignments = repoAccessor.findAssignmentByTask(task);
+		for (AssignmentEntity a : assignments) {
 			a.setTask(null);
 			repoAccessor.save(a);
 		}

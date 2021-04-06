@@ -1,13 +1,13 @@
 package id.meier.timetracking.ui.projects;
 
 import id.meier.timetracking.businesslayer.CommandsCollector;
-import id.meier.timetracking.model.Phase;
-import id.meier.timetracking.model.Task;
+import id.meier.timetracking.db.entity.PhaseEntity;
+import id.meier.timetracking.db.entity.TaskEntity;
 
-public class TaskElementView extends SubElementView<Task, Phase> {
+public class TaskElementView extends SubElementView<TaskEntity, PhaseEntity> {
 	
-	TaskElementView(CommandsCollector commandsCollector, SubElementEditor<Task> editor) {
-		super(false, commandsCollector, Task.class, editor);
+	TaskElementView(CommandsCollector commandsCollector, SubElementEditor<TaskEntity> editor) {
+		super(false, commandsCollector, TaskEntity.class, editor);
 		editor.setBaseEditorChangeHandler(this);
 	}
 
@@ -33,7 +33,7 @@ public class TaskElementView extends SubElementView<Task, Phase> {
 	}
 
 	@Override
-	public void addElement(Task element) {
+	public void addElement(TaskEntity element) {
 		if (!addedElements.contains(element)) {
 			this.addedElements.add(element);
 			commandsCollector.addTaskToPhase(element, this.parent);
@@ -43,7 +43,7 @@ public class TaskElementView extends SubElementView<Task, Phase> {
 	}
 
 	@Override
-	public void removeElement(Task element) {
+	public void removeElement(TaskEntity element) {
 		if (!removedElements.contains(element)) {
 			removedElements.add(element);
 		}

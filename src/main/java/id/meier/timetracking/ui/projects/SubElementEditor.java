@@ -1,7 +1,7 @@
 package id.meier.timetracking.ui.projects;
 
 import id.meier.timetracking.businesslayer.CommandsCollector;
-import id.meier.timetracking.model.DescribedElement;
+import id.meier.timetracking.db.dto.DescribedElement;
 
 public abstract class SubElementEditor<T extends DescribedElement>  extends ElementEditor<T> {
     private BaseEditorChangeHandler<T> baseEditorChangeHandler;

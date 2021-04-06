@@ -1,4 +1,6 @@
-package id.meier.timetracking.model;
+package id.meier.timetracking.db.entity;
+
+import id.meier.timetracking.db.dto.PersistableElement;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -7,7 +9,7 @@ import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 
 @Entity
-public class Assignment implements PersistableElement {
+public class AssignmentEntity implements PersistableElement {
 	@Id
 	@GeneratedValue
 	private Long id;
@@ -19,21 +21,21 @@ public class Assignment implements PersistableElement {
 	private String description;
 	
 	@ManyToOne
-	private Project project;
+	private ProjectEntity project;
 	
 	@ManyToOne
-	private Phase phase;
+	private PhaseEntity phase;
 
 	@ManyToOne
-	private Task task;
+	private TaskEntity task;
 
 	@Column(length = 20)
 	private String cloneableTemplateName;
 
-	public Assignment() {		
+	public AssignmentEntity() {
 	}
 	
-	public Assignment(LocalDate startDate, LocalTime startTime, LocalDate endDate, LocalTime endTime, String description, String cloneableTemplateName, Project p, Phase phase, Task task) {
+	public AssignmentEntity(LocalDate startDate, LocalTime startTime, LocalDate endDate, LocalTime endTime, String description, String cloneableTemplateName, ProjectEntity p, PhaseEntity phase, TaskEntity task) {
 		this.startTime = startTime;
 		this.endTime = endTime;
 		this.startDate = startDate;
@@ -69,22 +71,22 @@ public class Assignment implements PersistableElement {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public Project getProject() {
+	public ProjectEntity getProject() {
 		return project;
 	}
-	public void setProject(Project project) {
+	public void setProject(ProjectEntity project) {
 		this.project = project;
 	}
-	public Phase getPhase() {
+	public PhaseEntity getPhase() {
 		return phase;
 	}
-	public void setPhase(Phase phase) {
+	public void setPhase(PhaseEntity phase) {
 		this.phase = phase;
 	}
-	public Task getTask() {
+	public TaskEntity getTask() {
 		return task;
 	}
-	public void setTask(Task task) {
+	public void setTask(TaskEntity task) {
 		this.task = task;
 	}
 	

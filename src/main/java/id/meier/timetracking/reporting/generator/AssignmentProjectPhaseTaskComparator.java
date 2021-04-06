@@ -1,16 +1,16 @@
 package id.meier.timetracking.reporting.generator;
 
-import id.meier.timetracking.model.Assignment;
+import id.meier.timetracking.db.entity.AssignmentEntity;
 import org.apache.commons.collections.ComparatorUtils;
 import org.springframework.stereotype.Component;
 
 import java.util.Comparator;
 
 @Component
-class AssignmentProjectPhaseTaskComparator implements Comparator<Assignment> {
+class AssignmentProjectPhaseTaskComparator implements Comparator<AssignmentEntity> {
 
 	@Override
-	public int compare(Assignment o1, Assignment o2) {
+	public int compare(AssignmentEntity o1, AssignmentEntity o2) {
 		Comparator naturalComp = ComparatorUtils.naturalComparator();
 		int projectComp = naturalComp.compare(o1.getProjectName(), o2.getProjectName());
 		int phaseComp = naturalComp.compare(o1.getPhaseName(), o2.getPhaseName());

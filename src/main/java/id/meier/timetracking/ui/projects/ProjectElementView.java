@@ -1,16 +1,16 @@
 package id.meier.timetracking.ui.projects;
 
 import id.meier.timetracking.businesslayer.CommandsCollector;
-import id.meier.timetracking.dblayer.repository.RepositoryAccessor;
-import id.meier.timetracking.model.Project;
+import id.meier.timetracking.db.entity.ProjectEntity;
+import id.meier.timetracking.db.repository.RepositoryAccessor;
 
-public class ProjectElementView extends ElementView<Project> {
+public class ProjectElementView extends ElementView<ProjectEntity> {
 
 	private final RepositoryAccessor repositoryAccessor;
 
-	ProjectElementView(CommandsCollector commandsCollector, ElementEditor<Project> editor,
+	ProjectElementView(CommandsCollector commandsCollector, ElementEditor<ProjectEntity> editor,
 					   RepositoryAccessor repositoryAccessor) {
-		super(true, commandsCollector, Project.class, editor);
+		super(true, commandsCollector, ProjectEntity.class, editor);
 		editor.addDescribedElementModifiedListener(this);
 		this.repositoryAccessor = repositoryAccessor;
 		onChange(ChangeAction.SAVE);

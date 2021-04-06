@@ -18,11 +18,11 @@ package id.meier.timetracking.integrationtest.consistency;
 import id.meier.timetracking.TestBase;
 import id.meier.timetracking.businesslayer.consistency.IConsistencyChecker;
 import id.meier.timetracking.businesslayer.consistency.IConsistencyMessage;
-import id.meier.timetracking.dblayer.repository.RepositoryAccessor;
-import id.meier.timetracking.model.Assignment;
-import id.meier.timetracking.model.Phase;
-import id.meier.timetracking.model.Project;
-import id.meier.timetracking.model.Task;
+import id.meier.timetracking.db.entity.PhaseEntity;
+import id.meier.timetracking.db.entity.TaskEntity;
+import id.meier.timetracking.db.repository.RepositoryAccessor;
+import id.meier.timetracking.db.entity.AssignmentEntity;
+import id.meier.timetracking.db.entity.ProjectEntity;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,28 +54,28 @@ public class ConsistencyTest extends TestBase {
 
 	@Test
 	public void testNoConsistencyWarning() {
-	    Assignment a = setupData();
+	    AssignmentEntity a = setupData();
         List<IConsistencyMessage> messages = checker.checkConsistency(a);
 
         assertThat(messages).hasSize(1);
         assertThat(messages.get(0).getAssignment()).isEqualTo(a);
 	}
 
-	private Assignment setupData() {
-        Project project = getProject();
-        Phase phase = getPhase();
-        Task task = getTask();
+	private AssignmentEntity setupData() {
+        ProjectEntity project = getProject();
+        PhaseEntity phase = getPhase();
+        TaskEntity task = getTask();
         phase.getTasks().add(task);
         project.getPhases().add(phase);
         repositoryAccessor.save(task);
         repositoryAccessor.save(phase);
         repositoryAccessor.save(project);
 
-        Assignment a1 = createAssignment(getDate(2019,12,1), getTime(12,30, 0),
+        AssignmentEntity a1 = createAssignment(getDate(2019,12,1), getTime(12,30, 0),
                 getDate(2019,12,1), getTime(15,30, 0),
                 "test", project, phase, task, 1L);
         repositoryAccessor.save(a1);
-        Assignment a2 = createAssignment(getDate(2019,12,1), getTime(12,0, 30),
+        AssignmentEntity a2 = createAssignment(getDate(2019,12,1), getTime(12,0, 30),
                 getDate(2019,12,1), getTime(15, 0, 0),"test",
                 project, phase, task, 2L);
         repositoryAccessor.save(a2);
@@ -85,16 +85,16 @@ public class ConsistencyTest extends TestBase {
 
 
 
-    public Project getProject() {
-	    return new Project();
+    public ProjectEntity getProject() {
+	    return new ProjectEntity();
     }
 
-    public Phase getPhase() {
-	    return new Phase();
+    public PhaseEntity getPhase() {
+	    return new PhaseEntity();
     }
 
-    public Task getTask() {
-	    return new Task();
+    public TaskEntity getTask() {
+	    return new TaskEntity();
     }
 
 }

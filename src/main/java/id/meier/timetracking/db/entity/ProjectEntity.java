@@ -1,32 +1,41 @@
-package id.meier.timetracking.model;
+package id.meier.timetracking.db.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import id.meier.timetracking.db.dto.DescribedElement;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
-public class Task implements DescribedElement {
+public class ProjectEntity implements DescribedElement {
 	
 	@Id
 	@GeneratedValue
 	private Long id;
 	private String name;
 	private String description;
+	@OneToMany(cascade=CascadeType.REMOVE)
+	@LazyCollection(LazyCollectionOption.FALSE)
+	private List<PhaseEntity> phases;
+
 
 	private Boolean active;
 
-	public Task() {
+	public ProjectEntity() {
+		phases = new ArrayList<>();
 		active = true;
 	}
 	
-	public Task(String name) {
+	public ProjectEntity(String name) {
 		this();
 		this.name = name;
 	}
 	
-	public Task(String name, String description) {
-		this();
+	public ProjectEntity(String name, String description) {
+		this(name);
 		this.description = description;
 	}
 	
@@ -42,23 +51,27 @@ public class Task implements DescribedElement {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
 	public String getDescription() {
 		return description;
 	}
-
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
+	public List<PhaseEntity> getPhases() {
+		return phases;
+	}
+	public void setPhases(List<PhaseEntity> phases) {
+		this.phases = phases;
+	}
+
 	public String toString() {
 		return name;
 	}
-
+	
 	public boolean equals(Object o) {
 		boolean result = false;
-		if (o instanceof Task) {
-			Task p = (Task)o;
+		if (o instanceof ProjectEntity) {
+			ProjectEntity p = (ProjectEntity)o;
 			Object id1 = (p.getId() != null)?p.getId():p.toString();
 			Object id2 = (getId() != null)?getId():this.toString();
 			result = Objects.equals(id1, id2);
@@ -78,5 +91,4 @@ public class Task implements DescribedElement {
 	public void setActive(Boolean active) {
 		this.active = active;
 	}
-
 }

@@ -1,13 +1,13 @@
 package id.meier.timetracking.ui.projects;
 
 import id.meier.timetracking.businesslayer.CommandsCollector;
-import id.meier.timetracking.dblayer.repository.RepositoryAccessor;
-import id.meier.timetracking.model.Project;
+import id.meier.timetracking.db.entity.ProjectEntity;
+import id.meier.timetracking.db.repository.RepositoryAccessor;
 
-public class ProjectElementEditor extends ElementEditor<Project> {
+public class ProjectElementEditor extends ElementEditor<ProjectEntity> {
 	private final RepositoryAccessor repoAccessor;
 	ProjectElementEditor(CommandsCollector commandsCollector, RepositoryAccessor repoAccessor) {
-		super(commandsCollector, Project.class);
+		super(commandsCollector, ProjectEntity.class);
 		this.repoAccessor = repoAccessor;
 	}
 
@@ -42,14 +42,14 @@ public class ProjectElementEditor extends ElementEditor<Project> {
 	}
 
     @Override
-    protected void saveEditedElement(Project element) {
+    protected void saveEditedElement(ProjectEntity element) {
         commandsCollector.save(element);
         commandsCollector.performPersistingOperations(repoAccessor);
 		fireElementModified(ElementEditorChangeListener.ChangeAction.SAVE);
     }
 
     @Override
-	protected void deleteEditedElement(Project project) {
+	protected void deleteEditedElement(ProjectEntity project) {
 		commandsCollector.removeProjectFromAssignment(project);
 		commandsCollector.delete(project);
 		commandsCollector.performPersistingOperations(repoAccessor);

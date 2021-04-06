@@ -23,8 +23,12 @@ import id.meier.timetracking.businesslayer.CommandsCollector;
 import id.meier.timetracking.businesslayer.consistency.IConsistencyChecker;
 import id.meier.timetracking.businesslayer.consistency.IConsistencyMessage;
 import id.meier.timetracking.businesslayer.context.DefaultRepositoryContext;
-import id.meier.timetracking.dblayer.repository.RepositoryAccessor;
-import id.meier.timetracking.model.*;
+import id.meier.timetracking.db.dto.NamedElement;
+import id.meier.timetracking.db.entity.AssignmentEntity;
+import id.meier.timetracking.db.entity.PhaseEntity;
+import id.meier.timetracking.db.entity.ProjectEntity;
+import id.meier.timetracking.db.entity.TaskEntity;
+import id.meier.timetracking.db.repository.RepositoryAccessor;
 import id.meier.timetracking.ui.commoncomponents.ComboBoxProvider;
 import id.meier.timetracking.ui.commoncomponents.ComboBoxProviderResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,25 +49,25 @@ class AssignmentEditor extends VerticalLayout implements KeyNotifier, IAssignmen
 
     private TextField cloneableTemplateName;
     private TextArea description;
-    private Assignment assignment;
+    private AssignmentEntity assignment;
     private DatePicker startDate;
     private TimePicker startTime;
     private DatePicker endDate;
     private TimePicker endTime;
-    private ComboBox<Project> project;
-    private ComboBox<Phase> phase;
-    private ComboBox<Task> task;
+    private ComboBox<ProjectEntity> project;
+    private ComboBox<PhaseEntity> phase;
+    private ComboBox<TaskEntity> task;
 
-    private final ComboBoxProvider<Project> projectProvider;
-    private final ComboBoxProvider<Phase> phaseProvider;
-    private final ComboBoxProvider<Task> taskProvider;
+    private final ComboBoxProvider<ProjectEntity> projectProvider;
+    private final ComboBoxProvider<PhaseEntity> phaseProvider;
+    private final ComboBoxProvider<TaskEntity> taskProvider;
 
     private final Button cancel;
     private boolean newAssignment = false;
 	private boolean terminateOldAssignments = false;
     private final AssignmentCreator assignmentCreator;
     
-    private final Binder<Assignment> binder = new Binder<>(Assignment.class);
+    private final Binder<AssignmentEntity> binder = new Binder<>(AssignmentEntity.class);
     private ChangeHandler changeHandler;
 
     private final CommandsCollector commandsCollector;
@@ -82,17 +86,17 @@ class AssignmentEditor extends VerticalLayout implements KeyNotifier, IAssignmen
         Button delete = new Button(getTranslation("time.tracking.assignment.editor.btn.delete"), VaadinIcon.TRASH.create());
         HorizontalLayout actions = new HorizontalLayout(save, delete, cancel);
         Notification n;
-        projectProvider = new ComboBoxProvider<>(Project.class, () -> repoAccessor.getProjectRepo().findAll());
+        projectProvider = new ComboBoxProvider<>(ProjectEntity.class, () -> repoAccessor.getProjectRepo().findAll());
 
-        phaseProvider = new ComboBoxProvider<>(Phase.class, () ->{
-            List<Phase> phases = new ArrayList<>();
+        phaseProvider = new ComboBoxProvider<>(PhaseEntity.class, () ->{
+            List<PhaseEntity> phases = new ArrayList<>();
             if (project != null && project.getValue() != null && project.getValue().getPhases() != null) {
                 phases.addAll(project.getValue().getPhases());
             }
             return phases;
         });
-        taskProvider = new ComboBoxProvider<>(Task.class, () -> {
-            List<Task> tasks = new ArrayList<>();
+        taskProvider = new ComboBoxProvider<>(TaskEntity.class, () -> {
+            List<TaskEntity> tasks = new ArrayList<>();
             if (phase != null && phase.getValue() != null && phase.getValue().getTasks() != null) {
                 tasks.addAll(phase.getValue().getTasks());
             }
@@ -170,12 +174,12 @@ class AssignmentEditor extends VerticalLayout implements KeyNotifier, IAssignmen
         project = new ComboBox<>(getTranslation("time.tracking.assignment.editor.field.project"), this.projectProvider.getAllElements());
         project.setAllowCustomValue(true);
         project.addCustomValueSetListener(e -> {
-        	Project p = addNewComboboxValue(e, projectProvider, project);
+        	ProjectEntity p = addNewComboboxValue(e, projectProvider, project);
         	commandsCollector.save(p);
         });
         project.addValueChangeListener(e -> {
             if (valueChangeActive) {
-                Project p = e.getValue();
+                ProjectEntity p = e.getValue();
                 phase.setValue(null);
                 task.setValue(null);
                 if (p != null) {
@@ -188,12 +192,12 @@ class AssignmentEditor extends VerticalLayout implements KeyNotifier, IAssignmen
         phase = new ComboBox<>(getTranslation("time.tracking.assignment.editor.field.phase"), this.phaseProvider.getAllElements());
         phase.setAllowCustomValue(true);
         phase.addCustomValueSetListener(e -> {
-        	Phase p = addNewComboboxValue(e, phaseProvider, phase);
+        	PhaseEntity p = addNewComboboxValue(e, phaseProvider, phase);
         	commandsCollector.save(p);        	
         });
         phase.addValueChangeListener(e -> {
             if (valueChangeActive) {
-                Phase p = e.getValue();
+                PhaseEntity p = e.getValue();
                 task.setValue(null);
                 if (p != null) {
                     task.setItems(Collections.unmodifiableList(p.getTasks()));
@@ -205,7 +209,7 @@ class AssignmentEditor extends VerticalLayout implements KeyNotifier, IAssignmen
         task = new ComboBox<>(getTranslation("time.tracking.assignment.editor.field.task"), this.taskProvider.getAllElements());
         task.setAllowCustomValue(true);
         task.addCustomValueSetListener(e -> {
-        	Task t = addNewComboboxValue(e, taskProvider, task);
+        	TaskEntity t = addNewComboboxValue(e, taskProvider, task);
         	commandsCollector.save(t);
         });
         
@@ -246,8 +250,8 @@ class AssignmentEditor extends VerticalLayout implements KeyNotifier, IAssignmen
 
     private void setProjectsPhaseTasks() {
         if (assignment.getProject() != null) {
-            List<Phase> phases = this.phaseProvider.getAllElements();
-            for (Phase p : phases) {
+            List<PhaseEntity> phases = this.phaseProvider.getAllElements();
+            for (PhaseEntity p : phases) {
                 if (!assignment.getProject().getPhases().contains(p)) {
                     this.commandsCollector.addPhaseToProject(p, assignment.getProject());
                     this.commandsCollector.save(assignment.getProject());
@@ -255,8 +259,8 @@ class AssignmentEditor extends VerticalLayout implements KeyNotifier, IAssignmen
             }
         }
         if (assignment.getPhase() != null) {
-            List<Task> tasks = this.taskProvider.getAllElements();
-            for (Task t : tasks) {
+            List<TaskEntity> tasks = this.taskProvider.getAllElements();
+            for (TaskEntity t : tasks) {
                 if (!assignment.getPhase().getTasks().contains(t)) {
                     this.commandsCollector.addTaskToPhase(t, assignment.getPhase());
                     this.commandsCollector.save(assignment.getPhase());
@@ -269,7 +273,7 @@ class AssignmentEditor extends VerticalLayout implements KeyNotifier, IAssignmen
         void onChange();
     }
 
-    public void editAssignment(Assignment c, boolean terminateOldAssignments) {
+    public void editAssignment(AssignmentEntity c, boolean terminateOldAssignments) {
     	valueChangeActive = false;
 	    this.commandsCollector.reset();
     	this.terminateOldAssignments = terminateOldAssignments;
@@ -280,7 +284,7 @@ class AssignmentEditor extends VerticalLayout implements KeyNotifier, IAssignmen
         }
         final boolean persisted = c.getId() != null;
         if (persisted) {
-            assignment = repoAccessor.findById(c.getId(), Assignment.class);
+            assignment = repoAccessor.findById(c.getId(), AssignmentEntity.class);
             newAssignment = false;
             checkConsistency(assignment);
         } else {
@@ -295,7 +299,7 @@ class AssignmentEditor extends VerticalLayout implements KeyNotifier, IAssignmen
         valueChangeActive = true;
     }
 
-    private void checkConsistency(Assignment a) {
+    private void checkConsistency(AssignmentEntity a) {
         List<IConsistencyMessage> messages = consistencyChecker.checkConsistency(a);
         AssignmentMessageNotifier message = new AssignmentMessageNotifier(messages, this);
     }

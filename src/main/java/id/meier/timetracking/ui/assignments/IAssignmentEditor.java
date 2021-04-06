@@ -16,8 +16,8 @@
 
 package id.meier.timetracking.ui.assignments;
 
-import id.meier.timetracking.model.Assignment;
+import id.meier.timetracking.db.entity.AssignmentEntity;
 
 public interface IAssignmentEditor {
-    void editAssignment(Assignment c, boolean terminateOldAssignments);
+    void editAssignment(AssignmentEntity c, boolean terminateOldAssignments);
 }

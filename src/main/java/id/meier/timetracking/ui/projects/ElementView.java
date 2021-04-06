@@ -9,8 +9,8 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.function.ValueProvider;
 import id.meier.timetracking.businesslayer.CommandsCollector;
-import id.meier.timetracking.model.DescribedElement;
-import id.meier.timetracking.model.NamedElement;
+import id.meier.timetracking.db.dto.DescribedElement;
+import id.meier.timetracking.db.dto.NamedElement;
 
 import java.util.ArrayList;
 import java.util.List;

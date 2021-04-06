@@ -9,8 +9,8 @@ import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.spring.annotation.SpringComponent;
 import com.vaadin.flow.spring.annotation.UIScope;
-import id.meier.timetracking.dblayer.repository.RepositoryAccessor;
-import id.meier.timetracking.model.Assignment;
+import id.meier.timetracking.db.repository.RepositoryAccessor;
+import id.meier.timetracking.db.entity.AssignmentEntity;
 import id.meier.timetracking.ui.commoncomponents.AssignmentOverviewPanel;
 import id.meier.timetracking.ui.commoncomponents.SearchPanel;
 import id.meier.timetracking.ui.commoncomponents.SearchParametersChangedEvent;
@@ -29,7 +29,7 @@ public class AssignmentManagementView extends VerticalLayout implements SearchPa
 
 
     private final AssignmentEditor editor;
-    private List<Assignment> assignments;
+    private List<AssignmentEntity> assignments;
     private final AssignmentOverviewPanel assignmentOverviewPanel;
 	private Checkbox terminateNonFinishedAssignments;
     private final AssignmentCreator assignmentCreator;

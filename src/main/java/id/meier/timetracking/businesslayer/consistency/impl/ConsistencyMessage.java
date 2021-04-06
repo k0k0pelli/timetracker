@@ -2,18 +2,18 @@ package id.meier.timetracking.businesslayer.consistency.impl;
 
 import id.meier.timetracking.businesslayer.consistency.ConsistencyProblem;
 import id.meier.timetracking.businesslayer.consistency.IConsistencyMessage;
-import id.meier.timetracking.model.Assignment;
+import id.meier.timetracking.db.entity.AssignmentEntity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class ConsistencyMessage implements IConsistencyMessage {
-    private final Assignment assignement;
+    private final AssignmentEntity assignement;
     private final List<ConsistencyProblem> problems;
     private final List<AdditionalMessageData<?>> additionalMessageData;
 
-    public ConsistencyMessage(Assignment assignment) {
+    public ConsistencyMessage(AssignmentEntity assignment) {
         this.assignement = assignment;
         problems = new ArrayList<>();
         additionalMessageData = new ArrayList<>();
@@ -25,7 +25,7 @@ public class ConsistencyMessage implements IConsistencyMessage {
     }
 
     @Override
-    public Assignment getAssignment() {
+    public AssignmentEntity getAssignment() {
         return assignement;
     }
 

@@ -1,5 +1,6 @@
-package id.meier.timetracking.model;
+package id.meier.timetracking.db.entity;
 
+import id.meier.timetracking.db.dto.DescribedElement;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -9,7 +10,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-public class Phase  implements DescribedElement {
+public class PhaseEntity implements DescribedElement {
 	@Id
 	@GeneratedValue
 	private Long id; 
@@ -19,20 +20,20 @@ public class Phase  implements DescribedElement {
 
 	@OneToMany(cascade= CascadeType.REMOVE)
 	@LazyCollection(LazyCollectionOption.FALSE)
-	private List<Task> tasks;
+	private List<TaskEntity> tasks;
 
-	public Phase() {
+	public PhaseEntity() {
 		active = true;
 		tasks = new ArrayList<>();
 	}
 	
-	public Phase(String name, String description) {
+	public PhaseEntity(String name, String description) {
 		this();
 		this.name = name;
 		this.description = description;
 	}
 	
-	public Phase(String name) {
+	public PhaseEntity(String name) {
 		this.name = name;
 	}
 	
@@ -66,8 +67,8 @@ public class Phase  implements DescribedElement {
 	
 	public boolean equals(Object o) {
 		boolean result = false;
-		if (o instanceof Phase) {
-			Phase p = (Phase)o;
+		if (o instanceof PhaseEntity) {
+			PhaseEntity p = (PhaseEntity)o;
 			Object id1 = (p.getId() != null)?p.getId():p.toString();
 			Object id2 = (getId() != null)?getId():this.toString();
 			result = Objects.equals(id1, id2);
@@ -89,11 +90,11 @@ public class Phase  implements DescribedElement {
 	}
 
 
-	public List<Task> getTasks() {
+	public List<TaskEntity> getTasks() {
 		return tasks;
 	}
 
-	public void setTasks(List<Task> tasks) {
+	public void setTasks(List<TaskEntity> tasks) {
 		this.tasks = tasks;
 	}
 }

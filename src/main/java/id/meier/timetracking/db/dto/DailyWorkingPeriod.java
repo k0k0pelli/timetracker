@@ -1,4 +1,4 @@
-package id.meier.timetracking.model;
+package id.meier.timetracking.db.dto;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

@@ -14,12 +14,12 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.timepicker.TimePicker;
 import com.vaadin.flow.spring.annotation.SpringComponent;
 import com.vaadin.flow.spring.annotation.UIScope;
-import id.meier.timetracking.dblayer.repository.PhaseRepository;
-import id.meier.timetracking.dblayer.repository.ProjectRepository;
-import id.meier.timetracking.dblayer.repository.TaskRepository;
-import id.meier.timetracking.model.Phase;
-import id.meier.timetracking.model.Project;
-import id.meier.timetracking.model.Task;
+import id.meier.timetracking.db.entity.PhaseEntity;
+import id.meier.timetracking.db.entity.ProjectEntity;
+import id.meier.timetracking.db.entity.TaskEntity;
+import id.meier.timetracking.db.repository.PhaseRepository;
+import id.meier.timetracking.db.repository.ProjectRepository;
+import id.meier.timetracking.db.repository.TaskRepository;
 import id.meier.timetracking.util.LocaleRetriever;
 import org.springframework.core.annotation.Order;
 
@@ -41,24 +41,24 @@ public class SearchPanel extends VerticalLayout  implements KeyNotifier {
 	private final DatePicker searchEndDate;
     private final TimePicker searchEndTime;
     private final Button buttonSetTimeFilterForToday;
-    private ComboBox<Project> projectFilter;
-    private ComboBox<Phase> phaseFilter;
-    private ComboBox<Task> taskFilter;
+    private ComboBox<ProjectEntity> projectFilter;
+    private ComboBox<PhaseEntity> phaseFilter;
+    private ComboBox<TaskEntity> taskFilter;
 
 	@SuppressWarnings("unchecked")
 	public SearchPanel(TaskRepository taskRepo, PhaseRepository phaseRepo, ProjectRepository projectRepo, LocaleRetriever localeRetriever) {
     	this.changeListener = new ArrayList<>();
-		ComboBoxProvider<Project> projectProvider = new ComboBoxProvider<>(Project.class, projectRepo::findAll);
+		ComboBoxProvider<ProjectEntity> projectProvider = new ComboBoxProvider<>(ProjectEntity.class, projectRepo::findAll);
 		addKeyPressListener(Key.ENTER, e -> performSearch());
-		ComboBoxProvider<Phase> phaseProvider = new ComboBoxProvider<>(Phase.class, () -> {
-			List<Phase> phases = new ArrayList<>();
+		ComboBoxProvider<PhaseEntity> phaseProvider = new ComboBoxProvider<>(PhaseEntity.class, () -> {
+			List<PhaseEntity> phases = new ArrayList<>();
 			if (projectFilter != null && projectFilter.getValue() != null && projectFilter.getValue().getPhases() != null) {
 				phases.addAll(projectFilter.getValue().getPhases());
 			}
 			return phases;
 		});
-		ComboBoxProvider<Task> taskProvider = new ComboBoxProvider<>(Task.class, () -> {
-			List<Task> tasks = new ArrayList<>();
+		ComboBoxProvider<TaskEntity> taskProvider = new ComboBoxProvider<>(TaskEntity.class, () -> {
+			List<TaskEntity> tasks = new ArrayList<>();
 			if (phaseFilter != null && phaseFilter.getValue() != null && phaseFilter.getValue().getTasks() != null) {
 				tasks.addAll(phaseFilter.getValue().getTasks());
 			}
@@ -83,7 +83,7 @@ public class SearchPanel extends VerticalLayout  implements KeyNotifier {
 
     	projectFilter = new ComboBox<>(getTranslation("time.tracking.search.panel.project"), projectProvider.getAllElements());
         projectFilter.addValueChangeListener(e -> {
-        	Project p = e.getValue();
+        	ProjectEntity p = e.getValue();
         	phaseFilter.setValue(null);
     		taskFilter.setValue(null);
         	if (p != null) {
@@ -96,7 +96,7 @@ public class SearchPanel extends VerticalLayout  implements KeyNotifier {
         });
     	phaseFilter = new ComboBox<>(getTranslation("time.tracking.search.panel.phase"), phaseProvider.getAllElements());
         phaseFilter.addValueChangeListener( e -> {
-        	Phase p = e.getValue();
+        	PhaseEntity p = e.getValue();
         	taskFilter.setValue(null);
         	if (p != null) {
         		taskFilter.setItems(p.getTasks());
@@ -212,15 +212,15 @@ public class SearchPanel extends VerticalLayout  implements KeyNotifier {
 		return searchEndTime.getValue();
 	}
 
-	private Project getProjectFilter() {
+	private ProjectEntity getProjectFilter() {
 		return projectFilter.getValue();
 	}
 
-	private Phase getPhaseFilter() {
+	private PhaseEntity getPhaseFilter() {
 		return phaseFilter.getValue();
 	}
 
-	private Task getTaskFilter() {
+	private TaskEntity getTaskFilter() {
 		return taskFilter.getValue();
 	}
 	

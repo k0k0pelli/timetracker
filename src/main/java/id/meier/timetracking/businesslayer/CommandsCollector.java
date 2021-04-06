@@ -1,11 +1,11 @@
 package id.meier.timetracking.businesslayer;
 
 import id.meier.timetracking.businesslayer.commands.*;
-import id.meier.timetracking.dblayer.repository.RepositoryAccessor;
-import id.meier.timetracking.model.PersistableElement;
-import id.meier.timetracking.model.Phase;
-import id.meier.timetracking.model.Project;
-import id.meier.timetracking.model.Task;
+import id.meier.timetracking.db.entity.PhaseEntity;
+import id.meier.timetracking.db.entity.ProjectEntity;
+import id.meier.timetracking.db.entity.TaskEntity;
+import id.meier.timetracking.db.repository.RepositoryAccessor;
+import id.meier.timetracking.db.dto.PersistableElement;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -36,31 +36,31 @@ public class CommandsCollector {
 		}
 	}
 
-	public void addPhaseToProject(Phase phase, Project project) {
+	public void addPhaseToProject(PhaseEntity phase, ProjectEntity project) {
 		addCommand(new AddPhaseToProjectCommand(phase, project));
 	}
 
-	public void addTaskToPhase(Task task, Phase phase) {
+	public void addTaskToPhase(TaskEntity task, PhaseEntity phase) {
 		addCommand(new AddTaskToPhaseCommand(task, phase));
 	}
 
-	public void removeTaskFromAssignment(Task task) {
+	public void removeTaskFromAssignment(TaskEntity task) {
 		addCommand(new RemoveTaskFromAssignmentCommand(task));
 	}
 	
-	public void removePhaseFromAssignment(Phase phase) {
+	public void removePhaseFromAssignment(PhaseEntity phase) {
 		addCommand(new RemovePhaseFromAssignmentCommand(phase));
 	}
 
-	public void removeTaskFromProject(Task task) {
+	public void removeTaskFromProject(TaskEntity task) {
 		addCommand(new RemoveTaskFromPhaseCommand(task));
 	}
 
-	public void removePhaseFromProject(Phase phase) {
+	public void removePhaseFromProject(PhaseEntity phase) {
 		addCommand(new RemovePhaseFromProjectCommand(phase));
 	}
 
-	public void removeProjectFromAssignment(Project project) {
+	public void removeProjectFromAssignment(ProjectEntity project) {
 		addCommand(new RemoveProjectFromAssignmentCommand(project));
 	}
 	

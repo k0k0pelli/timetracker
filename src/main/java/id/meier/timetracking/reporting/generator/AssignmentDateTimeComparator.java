@@ -1,16 +1,16 @@
 package id.meier.timetracking.reporting.generator;
 
-import id.meier.timetracking.model.Assignment;
+import id.meier.timetracking.db.entity.AssignmentEntity;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Comparator;
 
 
-public abstract class AssignmentDateTimeComparator implements Comparator<Assignment> {
+public abstract class AssignmentDateTimeComparator implements Comparator<AssignmentEntity> {
 
 	@Override
-	public int compare(Assignment o1, Assignment o2) {
+	public int compare(AssignmentEntity o1, AssignmentEntity o2) {
 		int startDateComp = compare(getDate(o1), getDate(o2));
 		int startTimeComp = compare(getTime(o1), getTime(o2));
 		
@@ -38,8 +38,8 @@ public abstract class AssignmentDateTimeComparator implements Comparator<Assignm
 		return result;
 	}
 
-	protected abstract LocalTime getTime(Assignment a);
+	protected abstract LocalTime getTime(AssignmentEntity a);
 
-	protected abstract LocalDate getDate(Assignment a);
+	protected abstract LocalDate getDate(AssignmentEntity a);
 
 }

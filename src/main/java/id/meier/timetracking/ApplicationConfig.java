@@ -1,9 +1,9 @@
 package id.meier.timetracking;
 
 import com.vaadin.flow.spring.annotation.UIScope;
-import id.meier.timetracking.dblayer.repository.PhaseRepository;
-import id.meier.timetracking.dblayer.repository.ProjectRepository;
-import id.meier.timetracking.dblayer.repository.TaskRepository;
+import id.meier.timetracking.db.repository.PhaseRepository;
+import id.meier.timetracking.db.repository.ProjectRepository;
+import id.meier.timetracking.db.repository.TaskRepository;
 import id.meier.timetracking.ui.commoncomponents.AssignmentOverviewPanel;
 import id.meier.timetracking.ui.commoncomponents.SearchPanel;
 import id.meier.timetracking.util.AssignmentExporter;

@@ -1,12 +1,12 @@
 package id.meier.timetracking.ui.projects;
 
 import id.meier.timetracking.businesslayer.CommandsCollector;
-import id.meier.timetracking.dblayer.repository.RepositoryAccessor;
-import id.meier.timetracking.model.Task;
+import id.meier.timetracking.db.repository.RepositoryAccessor;
+import id.meier.timetracking.db.entity.TaskEntity;
 
-public class TaskElementEditor extends SubElementEditor<Task> {
+public class TaskElementEditor extends SubElementEditor<TaskEntity> {
 	TaskElementEditor(CommandsCollector commandsCollector, RepositoryAccessor repoAccessor) {
-		super(commandsCollector, Task.class);
+		super(commandsCollector, TaskEntity.class);
 	}
 
 	@Override
@@ -40,7 +40,7 @@ public class TaskElementEditor extends SubElementEditor<Task> {
 	}
 
 	@Override
-	protected void deleteEditedElement(Task task) {
+	protected void deleteEditedElement(TaskEntity task) {
 		commandsCollector.removeTaskFromAssignment(task);
 		commandsCollector.removeTaskFromProject(task);
 		super.deleteEditedElement(task);

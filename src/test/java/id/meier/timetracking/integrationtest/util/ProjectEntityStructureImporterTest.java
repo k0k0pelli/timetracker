@@ -2,10 +2,10 @@ package id.meier.timetracking.integrationtest.util;
 
 
 import id.meier.timetracking.businesslayer.CommandsCollector;
-import id.meier.timetracking.dblayer.repository.RepositoryAccessor;
-import id.meier.timetracking.model.Phase;
-import id.meier.timetracking.model.Project;
-import id.meier.timetracking.model.Task;
+import id.meier.timetracking.db.entity.PhaseEntity;
+import id.meier.timetracking.db.repository.RepositoryAccessor;
+import id.meier.timetracking.db.entity.ProjectEntity;
+import id.meier.timetracking.db.entity.TaskEntity;
 import id.meier.timetracking.util.ProjectStructureImporter;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,7 +25,7 @@ import java.util.List;
 @TestPropertySource(
   locations = "classpath:application-integrationtest.properties")
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-public class ProjectStructureImporterTest {
+public class ProjectEntityStructureImporterTest {
 		
 	@Autowired
 	private RepositoryAccessor accessor;
@@ -52,7 +52,7 @@ public class ProjectStructureImporterTest {
 		testee.commitImportedProjectMetaData();
 
 		// then
-		List<Project> projects = accessor.findAll(Project.class);
+		List<ProjectEntity> projects = accessor.findAll(ProjectEntity.class);
 		Assertions.assertThat(projects).hasSize(3);
 		Assertions.assertThat(projects).element(0).hasFieldOrPropertyWithValue("name","p1");
 		Assertions.assertThat(projects).element(1).hasFieldOrPropertyWithValue("name","p2");
@@ -72,11 +72,11 @@ public class ProjectStructureImporterTest {
 		testee.commitImportedProjectMetaData();
 
 		// then
-		List<Project> projects = accessor.findAll(Project.class);
+		List<ProjectEntity> projects = accessor.findAll(ProjectEntity.class);
 		Assertions.assertThat(projects)
 				.element(0)
 				.satisfies(p -> Assertions.assertThat(p.getPhases()).hasSize(2));
-		Assertions.assertThat(projects).flatExtracting(Project::getPhases).flatExtracting(Phase::getName)
+		Assertions.assertThat(projects).flatExtracting(ProjectEntity::getPhases).flatExtracting(PhaseEntity::getName)
 				.containsExactly("phase 1", "phase 2");
 	}
 
@@ -92,11 +92,11 @@ public class ProjectStructureImporterTest {
 		testee.commitImportedProjectMetaData();
 
 		// then
-		List<Project> projects = accessor.findAll(Project.class);
+		List<ProjectEntity> projects = accessor.findAll(ProjectEntity.class);
 		Assertions.assertThat(projects)
 				.element(0)
 				.satisfies(p -> Assertions.assertThat(p.getPhases().get(0).getTasks())
-					.flatExtracting(Task::getName)
+					.flatExtracting(TaskEntity::getName)
 					.containsExactly("task 1", "task 2", "task 3")
 				);
 

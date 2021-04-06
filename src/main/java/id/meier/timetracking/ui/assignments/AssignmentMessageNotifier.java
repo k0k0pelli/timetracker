@@ -21,7 +21,7 @@ import com.vaadin.flow.component.html.NativeButton;
 import com.vaadin.flow.component.notification.Notification;
 import id.meier.timetracking.businesslayer.consistency.ConsistencyProblem;
 import id.meier.timetracking.businesslayer.consistency.IConsistencyMessage;
-import id.meier.timetracking.model.Assignment;
+import id.meier.timetracking.db.entity.AssignmentEntity;
 
 import java.util.List;
 
@@ -33,7 +33,7 @@ public class AssignmentMessageNotifier extends Notification {
         NativeButton buttonInside = new NativeButton(getTranslation("time.tracking.consistency.message.show.dependent.assignment"));
         setDuration(5000);
         setPosition(Position.TOP_CENTER);
-        Assignment a = getReferencedAssignment(messages);
+        AssignmentEntity a = getReferencedAssignment(messages);
         if (a != null) {
             add(content, buttonInside);
             buttonInside.addClickListener(event -> {
@@ -49,11 +49,11 @@ public class AssignmentMessageNotifier extends Notification {
 
     }
 
-    private Assignment getReferencedAssignment(List<IConsistencyMessage> messageList) {
+    private AssignmentEntity getReferencedAssignment(List<IConsistencyMessage> messageList) {
         return messageList
                 .stream().map(IConsistencyMessage::getMessageData)
                 .flatMap(List::stream)
-                .map(md -> (Assignment)md.getData())
+                .map(md -> (AssignmentEntity)md.getData())
                 .findFirst().orElse(null);
     }
 

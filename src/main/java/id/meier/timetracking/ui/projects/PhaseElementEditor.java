@@ -1,16 +1,16 @@
 package id.meier.timetracking.ui.projects;
 
 import id.meier.timetracking.businesslayer.CommandsCollector;
-import id.meier.timetracking.dblayer.repository.RepositoryAccessor;
-import id.meier.timetracking.model.Phase;
+import id.meier.timetracking.db.repository.RepositoryAccessor;
+import id.meier.timetracking.db.entity.PhaseEntity;
 
-public class PhaseElementEditor extends SubElementEditor<Phase> {
+public class PhaseElementEditor extends SubElementEditor<PhaseEntity> {
 	PhaseElementEditor(CommandsCollector commandsCollector, RepositoryAccessor repoAccessor) {
-		super(commandsCollector, Phase.class);
+		super(commandsCollector, PhaseEntity.class);
 	}
 
 	@Override
-	protected void deleteEditedElement(Phase phase) {
+	protected void deleteEditedElement(PhaseEntity phase) {
 		commandsCollector.removePhaseFromAssignment(phase);
 		commandsCollector.removePhaseFromProject(phase);
 		super.deleteEditedElement(phase);

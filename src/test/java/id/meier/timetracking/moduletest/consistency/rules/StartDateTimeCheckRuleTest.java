@@ -4,7 +4,7 @@ import id.meier.timetracking.TestBase;
 import id.meier.timetracking.businesslayer.consistency.ConsistencyProblem;
 import id.meier.timetracking.businesslayer.consistency.IConsistencyMessage;
 import id.meier.timetracking.businesslayer.consistency.impl.rules.StartDateTimeCheckRule;
-import id.meier.timetracking.model.Assignment;
+import id.meier.timetracking.db.entity.AssignmentEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -25,14 +25,14 @@ public class StartDateTimeCheckRuleTest extends TestBase {
 
     @Test
     public void testNoStartDateTime() {
-        Assignment a = createAssignment(LocalDate.of(2019,12,31), LocalTime.of(13,0,0), null, null, null, null, null, null, 1L);
+        AssignmentEntity a = createAssignment(LocalDate.of(2019,12,31), LocalTime.of(13,0,0), null, null, null, null, null, null, 1L);
         List<IConsistencyMessage> messages = testee.checkConsistency(a);
         assertThat(messages).hasSize(0);
     }
 
     @Test
     public void testMissingStartDate() {
-        Assignment a = createAssignment(null, LocalTime.of(13,0,0), null, null, null, null,  null, null, 1L);
+        AssignmentEntity a = createAssignment(null, LocalTime.of(13,0,0), null, null, null, null,  null, null, 1L);
 
         List<IConsistencyMessage> messages = testee.checkConsistency(a);
         assertThat(messages).hasSize(1);
@@ -43,7 +43,7 @@ public class StartDateTimeCheckRuleTest extends TestBase {
 
     @Test
     public void testMissingStartTime() {
-        Assignment a = createAssignment(LocalDate.of(2019,12,31), null, null, null, null, null,  null, null, 1L);
+        AssignmentEntity a = createAssignment(LocalDate.of(2019,12,31), null, null, null, null, null,  null, null, 1L);
         List<IConsistencyMessage> messages = testee.checkConsistency(a);
         assertThat(messages).hasSize(1);
         assertThat(messages).element(0)

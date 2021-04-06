@@ -1,7 +1,7 @@
 package id.meier.timetracking.businesslayer.commands;
 
 import id.meier.timetracking.businesslayer.Context;
-import id.meier.timetracking.dblayer.repository.RepositoryAccessor;
+import id.meier.timetracking.db.repository.RepositoryAccessor;
 
 public abstract class BaseCommand implements Command {
     RepositoryAccessor repoAccessor;

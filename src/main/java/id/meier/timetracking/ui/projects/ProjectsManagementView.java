@@ -7,10 +7,10 @@ import com.vaadin.flow.spring.annotation.SpringComponent;
 import com.vaadin.flow.spring.annotation.UIScope;
 import id.meier.timetracking.businesslayer.CommandsCollector;
 import id.meier.timetracking.businesslayer.context.ProjectManageRepositoryContext;
-import id.meier.timetracking.dblayer.repository.RepositoryAccessor;
-import id.meier.timetracking.model.DescribedElement;
-import id.meier.timetracking.model.Phase;
-import id.meier.timetracking.model.Task;
+import id.meier.timetracking.db.entity.PhaseEntity;
+import id.meier.timetracking.db.entity.TaskEntity;
+import id.meier.timetracking.db.repository.RepositoryAccessor;
+import id.meier.timetracking.db.dto.DescribedElement;
 import org.springframework.core.annotation.Order;
 
 import java.util.List;
@@ -60,14 +60,14 @@ public class ProjectsManagementView extends VerticalLayout  {
 
 	private void createListeners() {
         projectElementView.addListener(l -> {
-            List<Phase> data = null;
+            List<PhaseEntity> data = null;
             if (l != null) {
                 data = l.getPhases();
             }
             setViewData(phaseView, data, l);
         });
 	    phaseView.addListener(l -> {
-            List<Task> data = null;
+            List<TaskEntity> data = null;
             if (l != null) {
                 data = l.getTasks();
             }

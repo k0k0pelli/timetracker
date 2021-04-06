@@ -4,10 +4,10 @@ import id.meier.timetracking.TestBase;
 import id.meier.timetracking.businesslayer.consistency.ConsistencyProblem;
 import id.meier.timetracking.businesslayer.consistency.IConsistencyMessage;
 import id.meier.timetracking.businesslayer.consistency.impl.rules.ProjectPhaseTaskCheckRule;
-import id.meier.timetracking.model.Assignment;
-import id.meier.timetracking.model.Phase;
-import id.meier.timetracking.model.Project;
-import id.meier.timetracking.model.Task;
+import id.meier.timetracking.db.entity.AssignmentEntity;
+import id.meier.timetracking.db.entity.PhaseEntity;
+import id.meier.timetracking.db.entity.ProjectEntity;
+import id.meier.timetracking.db.entity.TaskEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +15,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ProjectPhaseTaskCheckRuleTest extends TestBase {
+public class ProjectEntityPhaseEntityTaskEntityCheckRuleTest extends TestBase {
 
     private ProjectPhaseTaskCheckRule testee;
 
@@ -26,14 +26,14 @@ public class ProjectPhaseTaskCheckRuleTest extends TestBase {
 
     @Test
     public void testNoMissingProjectPhaseTask() {
-        Assignment a = createAssignment(null, null, null, null, null, new Project(), new Phase(), new Task(), 1L);
+        AssignmentEntity a = createAssignment(null, null, null, null, null, new ProjectEntity(), new PhaseEntity(), new TaskEntity(), 1L);
         List<IConsistencyMessage> messages = testee.checkConsistency(a);
         assertThat(messages).hasSize(0);
     }
 
     @Test
     public void testMissingProject() {
-        Assignment a = createAssignment(null, null, null, null, null, null, new Phase(), new Task(), 1L);
+        AssignmentEntity a = createAssignment(null, null, null, null, null, null, new PhaseEntity(), new TaskEntity(), 1L);
         List<IConsistencyMessage> messages = testee.checkConsistency(a);
         assertThat(messages).hasSize(1);
         assertThat(messages).element(0)
@@ -43,7 +43,7 @@ public class ProjectPhaseTaskCheckRuleTest extends TestBase {
 
     @Test
     public void testMissingPhase() {
-        Assignment a = createAssignment(null, null, null, null, null, new Project(), null, new Task(), 1L);
+        AssignmentEntity a = createAssignment(null, null, null, null, null, new ProjectEntity(), null, new TaskEntity(), 1L);
         List<IConsistencyMessage> messages = testee.checkConsistency(a);
         assertThat(messages).hasSize(1);
         assertThat(messages).element(0)
@@ -53,7 +53,7 @@ public class ProjectPhaseTaskCheckRuleTest extends TestBase {
 
     @Test
     public void testMissingTask() {
-        Assignment a = createAssignment(null, null, null, null, null, new Project(), new Phase(), null, 1L);
+        AssignmentEntity a = createAssignment(null, null, null, null, null, new ProjectEntity(), new PhaseEntity(), null, 1L);
         List<IConsistencyMessage> messages = testee.checkConsistency(a);
         assertThat(messages).hasSize(1);
         assertThat(messages).element(0)
@@ -64,7 +64,7 @@ public class ProjectPhaseTaskCheckRuleTest extends TestBase {
 
     @Test
     public void testMissingProjectPhaseTask() {
-        Assignment a = createAssignment(null, null, null, null, null, null, null, null, 1L);
+        AssignmentEntity a = createAssignment(null, null, null, null, null, null, null, null, 1L);
         List<IConsistencyMessage> messages = testee.checkConsistency(a);
         assertThat(messages).hasSize(3);
     }

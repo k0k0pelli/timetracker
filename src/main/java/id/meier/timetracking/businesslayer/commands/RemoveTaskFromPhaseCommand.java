@@ -1,23 +1,23 @@
 package id.meier.timetracking.businesslayer.commands;
 
 import id.meier.timetracking.businesslayer.Context;
-import id.meier.timetracking.dblayer.repository.RepositoryAccessor;
-import id.meier.timetracking.model.Phase;
-import id.meier.timetracking.model.Task;
+import id.meier.timetracking.db.entity.TaskEntity;
+import id.meier.timetracking.db.repository.RepositoryAccessor;
+import id.meier.timetracking.db.entity.PhaseEntity;
 
 import java.util.List;
 
 public class RemoveTaskFromPhaseCommand extends BaseCommand {
 
-	private final Task task;
+	private final TaskEntity task;
 
-	public RemoveTaskFromPhaseCommand(Task task) {
+	public RemoveTaskFromPhaseCommand(TaskEntity task) {
 		this.task = task;
 	}
 
 	public void execute() {
-		List<Phase> projects = repoAccessor.findProjectByPhase(task);
-		for (Phase p : projects) {
+		List<PhaseEntity> projects = repoAccessor.findProjectByPhase(task);
+		for (PhaseEntity p : projects) {
 			p.getTasks().remove(task);
 			repoAccessor.save(p);
 		}

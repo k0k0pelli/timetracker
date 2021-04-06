@@ -1,6 +1,6 @@
 package id.meier.timetracking.ui.commoncomponents;
 
-import id.meier.timetracking.model.NamedElement;
+import id.meier.timetracking.db.dto.NamedElement;
 
 import java.util.List;
 

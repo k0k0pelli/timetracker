@@ -1,9 +1,9 @@
-package id.meier.timetracking.dblayer.repository;
+package id.meier.timetracking.db.repository;
 
-import id.meier.timetracking.model.Assignment;
-import id.meier.timetracking.model.Phase;
-import id.meier.timetracking.model.Project;
-import id.meier.timetracking.model.Task;
+import id.meier.timetracking.db.entity.AssignmentEntity;
+import id.meier.timetracking.db.entity.PhaseEntity;
+import id.meier.timetracking.db.entity.ProjectEntity;
+import id.meier.timetracking.db.entity.TaskEntity;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -20,19 +20,19 @@ public class AccountRepositoryCustomImpl implements AccountRepositoryCustom {
     private EntityManager em;
 
 	@Override
-	public List<Assignment> selectAssignments(LocalDate startDate, LocalTime startTime, LocalDate endDate,
-			LocalTime endTime, Project project, Phase phase, Task task) {
+	public List<AssignmentEntity> selectAssignments(LocalDate startDate, LocalTime startTime, LocalDate endDate,
+													LocalTime endTime, ProjectEntity project, PhaseEntity phase, TaskEntity task) {
 		 	CriteriaBuilder cb = em.getCriteriaBuilder();
-		    CriteriaQuery<Assignment> q = cb.createQuery(Assignment.class);
-		    Root<Assignment> user = q.from(Assignment.class);
+		    CriteriaQuery<AssignmentEntity> q = cb.createQuery(AssignmentEntity.class);
+		    Root<AssignmentEntity> user = q.from(AssignmentEntity.class);
 
 		    Path<LocalDate> startDatePath = user.get("startDate");
 		    Path<LocalTime> startTimePath = user.get("startTime");
 		    Path<LocalDate> endDatePath = user.get("endDate");
 		    Path<LocalTime> endTimePath = user.get("endTime");
-		    Path<Project> projectPath = user.get("project");
-		    Path<Phase> phasePath = user.get("phase");
-		    Path<Task> taskPath = user.get("task");
+		    Path<ProjectEntity> projectPath = user.get("project");
+		    Path<PhaseEntity> phasePath = user.get("phase");
+		    Path<TaskEntity> taskPath = user.get("task");
 		    List<Predicate> predicates = new ArrayList<>();
 		    if (startDate != null) {
 		    	predicates.add(cb.greaterThanOrEqualTo(startDatePath, cb.literal(startDate)));
@@ -64,10 +64,10 @@ public class AccountRepositoryCustomImpl implements AccountRepositoryCustom {
 		return em.createQuery(q).getResultList();
 	}
 
-	public List<Assignment> selectAssignmentsStartDateTimeAfterGivenDateTime(LocalDate date, LocalTime time) {
+	public List<AssignmentEntity> selectAssignmentsStartDateTimeAfterGivenDateTime(LocalDate date, LocalTime time) {
 			CriteriaBuilder cb = em.getCriteriaBuilder();
-			CriteriaQuery<Assignment> q = cb.createQuery(Assignment.class);
-			Root<Assignment> user = q.from(Assignment.class);
+			CriteriaQuery<AssignmentEntity> q = cb.createQuery(AssignmentEntity.class);
+			Root<AssignmentEntity> user = q.from(AssignmentEntity.class);
 
 			Path<LocalDate> startDatePath = user.get("startDate");
 			Path<LocalTime> startTimePath = user.get("startTime");

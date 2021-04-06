@@ -2,8 +2,13 @@ package id.meier.timetracking.util;
 
 import id.meier.timetracking.businesslayer.CommandsCollector;
 import id.meier.timetracking.businesslayer.context.DefaultRepositoryContext;
-import id.meier.timetracking.dblayer.repository.RepositoryAccessor;
-import id.meier.timetracking.model.*;
+import id.meier.timetracking.db.dto.DescribedElement;
+import id.meier.timetracking.db.dto.PersistableElement;
+import id.meier.timetracking.db.entity.AssignmentEntity;
+import id.meier.timetracking.db.entity.PhaseEntity;
+import id.meier.timetracking.db.entity.ProjectEntity;
+import id.meier.timetracking.db.entity.TaskEntity;
+import id.meier.timetracking.db.repository.RepositoryAccessor;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
@@ -30,28 +35,28 @@ public class ProjectStructureImporter {
 
     public void prepareImport(String projectsFilename, String phaseFilename, String taskFilename, String assignmentsFilename) {
         if (taskFilename != null) {
-            prepare(taskFilename, Task.class, (property, value) -> value);
+            prepare(taskFilename, TaskEntity.class, (property, value) -> value);
         }
         if (phaseFilename != null) {
-            prepare(phaseFilename, Phase.class, (property, value) -> {
+            prepare(phaseFilename, PhaseEntity.class, (property, value) -> {
                 if (property.equals("tasks")) {
-                    return createListOfReferredObjects(value, Task.class);
+                    return createListOfReferredObjects(value, TaskEntity.class);
                 } else {
                     return value;
                 }
             });
         }
         if (projectsFilename != null) {
-            prepare(projectsFilename, Project.class,  (property, value) -> {
+            prepare(projectsFilename, ProjectEntity.class,  (property, value) -> {
                 if (property.equals("phases")) {
-                    return createListOfReferredObjects(value, Phase.class);
+                    return createListOfReferredObjects(value, PhaseEntity.class);
                 } else {
                     return value;
                 }
             });
         }
         if (assignmentsFilename != null) {
-            prepare(assignmentsFilename, Assignment.class,  (property, value) -> {
+            prepare(assignmentsFilename, AssignmentEntity.class,  (property, value) -> {
                 switch (property) {
                     case "phase":
                     case "task":

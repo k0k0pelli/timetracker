@@ -2,7 +2,7 @@ package id.meier.timetracking.businesslayer.context;
 
 import id.meier.timetracking.businesslayer.Context;
 import id.meier.timetracking.businesslayer.commands.Command;
-import id.meier.timetracking.model.PersistableElement;
+import id.meier.timetracking.db.dto.PersistableElement;
 
 import java.util.*;
 import java.util.stream.Collectors;

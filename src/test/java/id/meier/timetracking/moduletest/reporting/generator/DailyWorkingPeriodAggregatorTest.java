@@ -1,6 +1,10 @@
 package id.meier.timetracking.moduletest.reporting.generator;
 
-import id.meier.timetracking.model.*;
+import id.meier.timetracking.db.dto.DailyWorkingPeriod;
+import id.meier.timetracking.db.entity.AssignmentEntity;
+import id.meier.timetracking.db.entity.PhaseEntity;
+import id.meier.timetracking.db.entity.ProjectEntity;
+import id.meier.timetracking.db.entity.TaskEntity;
 import id.meier.timetracking.reporting.generator.AssignmentStartDateTimeComparator;
 import id.meier.timetracking.reporting.generator.DailyWorkingPeriodAggregator;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,14 +32,14 @@ public class DailyWorkingPeriodAggregatorTest {
     public void testWorkingBlockAggregator() {
         Duration duration = Duration.ofMinutes(1);
 
-        List<Assignment> assignments = getAssignments();
+        List<AssignmentEntity> assignments = getAssignments();
 
         List<DailyWorkingPeriod> workingBlocks = testee.aggregateAssignments(assignments, duration);
         assertThat(workingBlocks, hasSize(6));
     }
 
-    private List<Assignment> getAssignments() {
-        List<Assignment> assignments = new ArrayList<>();
+    private List<AssignmentEntity> getAssignments() {
+        List<AssignmentEntity> assignments = new ArrayList<>();
         LocalDate d0 = getDate(12);
         LocalDate d1 = getDate(13);
         LocalDate d2 = getDate(14);
@@ -70,11 +74,11 @@ public class DailyWorkingPeriodAggregatorTest {
         return LocalTime.of(hour, minute, seconds);
     }
 
-    private Assignment getAssignment(LocalDate sDate, LocalTime sTime, LocalDate eDate, LocalTime eTime) {
-        Project project = new Project();
-        Phase phase = new Phase();
-        Task task = new Task();
-        Assignment a = new Assignment();
+    private AssignmentEntity getAssignment(LocalDate sDate, LocalTime sTime, LocalDate eDate, LocalTime eTime) {
+        ProjectEntity project = new ProjectEntity();
+        PhaseEntity phase = new PhaseEntity();
+        TaskEntity task = new TaskEntity();
+        AssignmentEntity a = new AssignmentEntity();
         a.setProject(project);
         a.setPhase(phase);
         a.setTask(task);

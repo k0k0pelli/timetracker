@@ -1,10 +1,10 @@
-package id.meier.timetracking.dblayer.repository;
+package id.meier.timetracking.db.repository;
 
 import id.meier.timetracking.businesslayer.commands.Command;
-import id.meier.timetracking.model.Assignment;
-import id.meier.timetracking.model.Phase;
-import id.meier.timetracking.model.Project;
-import id.meier.timetracking.model.Task;
+import id.meier.timetracking.db.entity.AssignmentEntity;
+import id.meier.timetracking.db.entity.PhaseEntity;
+import id.meier.timetracking.db.entity.ProjectEntity;
+import id.meier.timetracking.db.entity.TaskEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
 
@@ -30,10 +30,10 @@ public class RepositoryAccessor {
 		this.taskRepo = taskRepo;
 		this.assignmentRepo = assignmentRepo;
 		repositories = new HashMap<>();
-		repositories.put(Project.class, projectRepo);
-		repositories.put(Phase.class, phaseRepo);
-		repositories.put(Task.class, taskRepo);
-		repositories.put(Assignment.class, assignmentRepo);
+		repositories.put(ProjectEntity.class, projectRepo);
+		repositories.put(PhaseEntity.class, phaseRepo);
+		repositories.put(TaskEntity.class, taskRepo);
+		repositories.put(AssignmentEntity.class, assignmentRepo);
 	}
 	
 	public void executeCommands(List<Command> commands) {
@@ -48,27 +48,27 @@ public class RepositoryAccessor {
 		return repo.findById(id).orElse(null);
 	}
 	
-	public List<Project> findProjectByNameStartsWithIgnoreCase(String name) {
+	public List<ProjectEntity> findProjectByNameStartsWithIgnoreCase(String name) {
 		return this.projectRepo.findByNameStartsWithIgnoreCase(name);
 	}
 	
-	 public List<Task> findTaskByNameStartsWithIgnoreCase(String name) {
+	 public List<TaskEntity> findTaskByNameStartsWithIgnoreCase(String name) {
 		 return this.taskRepo.findByNameStartsWithIgnoreCase(name);
 	 }
 
-	 public List<Project> findProjectByPhase(Phase phase) {
+	 public List<ProjectEntity> findProjectByPhase(PhaseEntity phase) {
 		return this.projectRepo.findByPhasesIn(Collections.singletonList(phase));
 	 }
 
-	public List<Phase> findProjectByPhase(Task task) {
+	public List<PhaseEntity> findProjectByPhase(TaskEntity task) {
 		return this.phaseRepo.findByTasksIn(Collections.singletonList(task));
 	}
 
-	 public List<Phase> findPhasesByNameStartsWithIgnoreCase(String name) {
+	 public List<PhaseEntity> findPhasesByNameStartsWithIgnoreCase(String name) {
 		 return this.phaseRepo.findByNameStartsWithIgnoreCase(name);
 	 }
 	
-	 public List<Assignment> findAssignmentByEndDateIsNullOrEndTimeIsNull() {
+	 public List<AssignmentEntity> findAssignmentByEndDateIsNullOrEndTimeIsNull() {
 		 return assignmentRepo.findByEndDateIsNullOrEndTimeIsNull();
 	 }
 	
@@ -76,12 +76,12 @@ public class RepositoryAccessor {
 		 return assignmentRepo.findTopReferredProjectPhaseAndTasks();
 	 }
 	 
-	 public List<Assignment> selectAssignments(LocalDate startDate, LocalTime startTime, LocalDate endDate, 
-			 LocalTime endTime, Project project, Phase phase, Task task) {
+	 public List<AssignmentEntity> selectAssignments(LocalDate startDate, LocalTime startTime, LocalDate endDate,
+													 LocalTime endTime, ProjectEntity project, PhaseEntity phase, TaskEntity task) {
 		 return assignmentRepo.selectAssignments(startDate, startTime, endDate, endTime, project, phase, task);
 	 }
 
-	public List<Assignment> selectAssignmentsStartDateTimeAfterGivenDateTime(LocalDate date, LocalTime time) {
+	public List<AssignmentEntity> selectAssignmentsStartDateTimeAfterGivenDateTime(LocalDate date, LocalTime time) {
 		return assignmentRepo.selectAssignmentsStartDateTimeAfterGivenDateTime(date, time);
 	}
 
@@ -123,15 +123,15 @@ public class RepositoryAccessor {
 		return assignmentRepo;
 	}
 	
-	public List<Assignment> findAssignmentByProject(Project project) {
+	public List<AssignmentEntity> findAssignmentByProject(ProjectEntity project) {
 		return assignmentRepo.findByProject(project);
 	}
 	 
-	public List<Assignment> findAssignmentByPhase(Phase phase) {
+	public List<AssignmentEntity> findAssignmentByPhase(PhaseEntity phase) {
 		return assignmentRepo.findByPhase(phase);
 	}
 	 
-	public List<Assignment> findAssignmentByTask(Task task) {
+	public List<AssignmentEntity> findAssignmentByTask(TaskEntity task) {
 	    return assignmentRepo.findByTask(task);
 	}
 	 

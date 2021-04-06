@@ -7,7 +7,7 @@ import id.meier.timetracking.businesslayer.consistency.impl.rules.DescriptionChe
 import id.meier.timetracking.businesslayer.consistency.impl.rules.EndDateTimeCheckRule;
 import id.meier.timetracking.businesslayer.consistency.impl.rules.ProjectPhaseTaskCheckRule;
 import id.meier.timetracking.businesslayer.consistency.impl.rules.StartDateTimeCheckRule;
-import id.meier.timetracking.model.Assignment;
+import id.meier.timetracking.db.entity.AssignmentEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -30,7 +30,7 @@ public class ConsistencyChecker implements IConsistencyChecker {
     }
 
     @Override
-    public List<IConsistencyMessage> checkConsistency(Assignment assignment) {
+    public List<IConsistencyMessage> checkConsistency(AssignmentEntity assignment) {
         List<IConsistencyMessage> messages = new ArrayList<>();
         for (IConsistencyRule r : rules) {
             messages.addAll(r.checkConsistency(assignment));

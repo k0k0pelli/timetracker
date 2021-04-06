@@ -1,6 +1,6 @@
 package id.meier.timetracking.reporting.generator;
 
-import id.meier.timetracking.model.Assignment;
+import id.meier.timetracking.db.entity.AssignmentEntity;
 import id.meier.timetracking.reporting.ReportDefinitionFactory;
 import id.meier.timetracking.util.LocaleRetriever;
 import net.sf.jasperreports.engine.*;
@@ -39,17 +39,17 @@ public class ReportGenerator {
 		this.workingPeriodAggregator = workingPeriodAggregator;
 	}
 
-	public void generateReport(List<Assignment> assignments, String reportId, String outputFilename) {
+	public void generateReport(List<AssignmentEntity> assignments, String reportId, String outputFilename) {
 	    assignments.sort(getComparator(reportId));
 		generateReport(assignments, reportId, new HashMap<>(), outputFilename);
 	}
 
-	public void generateReport(List<Assignment> assignments, String reportId, Map<String, Object> parameters,
-			String outputFilename) {
+	public void generateReport(List<AssignmentEntity> assignments, String reportId, Map<String, Object> parameters,
+							   String outputFilename) {
 		// get the report input filename from the properties
 		String inputFilename = environment.getProperty(reportId);
-		Assignment first = this.getFirstAssignment(assignments);
-		Assignment last = this.getLastAssignment(assignments);
+		AssignmentEntity first = this.getFirstAssignment(assignments);
+		AssignmentEntity last = this.getLastAssignment(assignments);
 
 		LocalDate startdate = (first != null)?first.getStartDate() : null;
 		LocalTime starttime = (first != null)?first.getStartTime() : null;
@@ -74,7 +74,7 @@ public class ReportGenerator {
 		}
 	}
 
-	private JRBeanCollectionDataSource getBeanColDataSource(List<Assignment> assignments, String reportId) {
+	private JRBeanCollectionDataSource getBeanColDataSource(List<AssignmentEntity> assignments, String reportId) {
 		JRBeanCollectionDataSource beanColDataSource;
 		Collection<?> collection = assignments;
 		if (reportId.equals(ReportDefinitionFactory.TIME_TRACKER_REPORT_WORKING_PERIOD_FILENAME)) {
@@ -86,21 +86,21 @@ public class ReportGenerator {
 		return beanColDataSource;
 	}
 
-	private Comparator<Assignment> getComparator(String reportId) {
-		Comparator<Assignment> result = projectPhaseTaskComparator;
+	private Comparator<AssignmentEntity> getComparator(String reportId) {
+		Comparator<AssignmentEntity> result = projectPhaseTaskComparator;
 		if (reportId.equals(ReportDefinitionFactory.TIME_TRACKER_REPORT_WORKDAYS_FILENAME)) {
 			result = startDateTimeComparator;
 		}
 		return result;
 	}
 
-	private Assignment getFirstAssignment(List<Assignment> assignments) {
-		Optional<Assignment> min = assignments.stream().min(this.startDateTimeComparator);
+	private AssignmentEntity getFirstAssignment(List<AssignmentEntity> assignments) {
+		Optional<AssignmentEntity> min = assignments.stream().min(this.startDateTimeComparator);
 		return min.orElse(null);
 	}
 
-	private Assignment getLastAssignment(List<Assignment> assignments) {
-		Optional<Assignment> max = assignments.stream().max(this.endDateTimeComparator);
+	private AssignmentEntity getLastAssignment(List<AssignmentEntity> assignments) {
+		Optional<AssignmentEntity> max = assignments.stream().max(this.endDateTimeComparator);
 		return  max.orElse(null);
 	}
 

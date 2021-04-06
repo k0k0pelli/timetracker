@@ -1,9 +1,9 @@
 package id.meier.timetracking;
 
-import id.meier.timetracking.model.Assignment;
-import id.meier.timetracking.model.Phase;
-import id.meier.timetracking.model.Project;
-import id.meier.timetracking.model.Task;
+import id.meier.timetracking.db.entity.AssignmentEntity;
+import id.meier.timetracking.db.entity.PhaseEntity;
+import id.meier.timetracking.db.entity.ProjectEntity;
+import id.meier.timetracking.db.entity.TaskEntity;
 import org.apache.commons.beanutils.BeanUtils;
 
 import java.lang.reflect.InvocationTargetException;
@@ -28,12 +28,12 @@ public class TestBase {
         return LocalTime.of(hours, 0, seconds);
     }
 
-    protected Project createProject(String name, String description ) {
+    protected ProjectEntity createProject(String name, String description ) {
         return createProject(name, description, null);
     }
 
-    protected Project createProject(String name, String description, Long nextId ) {
-        Project p = new Project();
+    protected ProjectEntity createProject(String name, String description, Long nextId ) {
+        ProjectEntity p = new ProjectEntity();
         p.setDescription(description);
         p.setName(name);
         p.setId(nextId++);
@@ -47,38 +47,38 @@ public class TestBase {
         return p;
     }
 
-    protected Phase createPhase(String name, String description) {
+    protected PhaseEntity createPhase(String name, String description) {
         return createPhase(name, description, null);
     }
 
-    protected Phase createPhase(String name, String description, Long nextId) {
-        Phase p = new Phase();
+    protected PhaseEntity createPhase(String name, String description, Long nextId) {
+        PhaseEntity p = new PhaseEntity();
         p.setDescription(description);
         p.setName(name);
         p.setId(nextId++);
         return p;
     }
 
-    protected Task createTask(String name, String description) {
+    protected TaskEntity createTask(String name, String description) {
         return createTask(name, description, null);
     }
 
-    protected Task createTask(String name, String description, Long nextId) {
-        Task t = new Task();
+    protected TaskEntity createTask(String name, String description, Long nextId) {
+        TaskEntity t = new TaskEntity();
         t.setDescription(description);
         t.setName(name);
         t.setId(nextId++);
         return t;
     }
 
-    protected Assignment createAssignment(LocalDate startDate, LocalTime startTime, LocalDate endDate, LocalTime endTime,
-                                          String description, Project project, Phase phase, Task task) {
+    protected AssignmentEntity createAssignment(LocalDate startDate, LocalTime startTime, LocalDate endDate, LocalTime endTime,
+                                                String description, ProjectEntity project, PhaseEntity phase, TaskEntity task) {
         return createAssignment(startDate, startTime, endDate, endTime, description, project, phase, task, null);
     }
 
-    protected Assignment createAssignment(LocalDate startDate, LocalTime startTime, LocalDate endDate, LocalTime endTime,
-                                        String description, Project project, Phase phase, Task task, Long nextId) {
-        Assignment a = new Assignment();
+    protected AssignmentEntity createAssignment(LocalDate startDate, LocalTime startTime, LocalDate endDate, LocalTime endTime,
+                                                String description, ProjectEntity project, PhaseEntity phase, TaskEntity task, Long nextId) {
+        AssignmentEntity a = new AssignmentEntity();
         a.setStartDate(startDate);
         a.setStartTime(startTime);
         a.setEndDate(endDate);

@@ -2,11 +2,11 @@ package id.meier.timetracking.integrationtest.db;
 
 
 import id.meier.timetracking.businesslayer.CommandsCollector;
-import id.meier.timetracking.dblayer.repository.RepositoryAccessor;
-import id.meier.timetracking.model.Assignment;
-import id.meier.timetracking.model.Phase;
-import id.meier.timetracking.model.Project;
-import id.meier.timetracking.model.Task;
+import id.meier.timetracking.db.entity.PhaseEntity;
+import id.meier.timetracking.db.entity.TaskEntity;
+import id.meier.timetracking.db.repository.RepositoryAccessor;
+import id.meier.timetracking.db.entity.AssignmentEntity;
+import id.meier.timetracking.db.entity.ProjectEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -47,16 +47,16 @@ public class RepositoryAccessorTest {
 	
 	@Test
 	public void test() {
-		Project project = new Project();
+		ProjectEntity project = new ProjectEntity();
 		project.setName("test1Project");
-		Task task = new Task();
+		TaskEntity task = new TaskEntity();
 		task.setName("task1");
 		//project.getTasks().add(task);
-		Phase phase = new Phase();
+		PhaseEntity phase = new PhaseEntity();
 		phase.setName("phase1");
 		phase.getTasks().add(task);
 		project.getPhases().add(phase);
-		Assignment a = new Assignment();
+		AssignmentEntity a = new AssignmentEntity();
 		a.setStartDate(LocalDate.now());
 		a.setStartTime(LocalTime.now());
 		a.setEndDate(LocalDate.now());
@@ -71,7 +71,7 @@ public class RepositoryAccessorTest {
 		collector.save(a);
 		collector.performPersistingOperations(accessor);
 
-		List<Assignment> assignments = accessor.findAll(Assignment.class);
+		List<AssignmentEntity> assignments = accessor.findAll(AssignmentEntity.class);
 		assertThat(assignments, hasSize(1));
 		assertThat(assignments, hasItem(
 				allOf(

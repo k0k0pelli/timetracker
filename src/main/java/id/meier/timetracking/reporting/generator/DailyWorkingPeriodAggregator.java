@@ -1,7 +1,7 @@
 package id.meier.timetracking.reporting.generator;
 
-import id.meier.timetracking.model.Assignment;
-import id.meier.timetracking.model.DailyWorkingPeriod;
+import id.meier.timetracking.db.entity.AssignmentEntity;
+import id.meier.timetracking.db.dto.DailyWorkingPeriod;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
@@ -16,15 +16,15 @@ public class DailyWorkingPeriodAggregator {
         this.comparator = comparator;
     }
 
-    public List<DailyWorkingPeriod> aggregateAssignments(List<Assignment> assignments, Duration durationThreshHold) {
+    public List<DailyWorkingPeriod> aggregateAssignments(List<AssignmentEntity> assignments, Duration durationThreshHold) {
         List<DailyWorkingPeriod> workingBlocks = new ArrayList<>();
-        List<Assignment> sortedAssignments = new ArrayList<>(assignments);
+        List<AssignmentEntity> sortedAssignments = new ArrayList<>(assignments);
         sortedAssignments.sort(comparator);
         LocalDateTime blockStartDateTime = null;
         LocalDateTime previousDateTime = null;
         LocalDateTime start;
         LocalDateTime end;
-        for (Assignment a : sortedAssignments) {
+        for (AssignmentEntity a : sortedAssignments) {
             start = getStartDateTime(a);
             end = getEndDateTime(a);
 
@@ -75,7 +75,7 @@ public class DailyWorkingPeriodAggregator {
                 previousDateTime.toLocalDate(), previousDateTime.toLocalTime(), timePeriod);
     }
 
-    private LocalDateTime getStartDateTime(Assignment a) {
+    private LocalDateTime getStartDateTime(AssignmentEntity a) {
         LocalDateTime start = null;
         if (a.getStartDate() != null && a.getStartTime() != null) {
             start = LocalDateTime.of(a.getStartDate(), a.getStartTime());
@@ -83,7 +83,7 @@ public class DailyWorkingPeriodAggregator {
         return start;
     }
 
-    private LocalDateTime getEndDateTime(Assignment a) {
+    private LocalDateTime getEndDateTime(AssignmentEntity a) {
         LocalDateTime end = null;
         if (a.getEndDate() != null && a.getEndTime() != null) {
             end = LocalDateTime.of(a.getEndDate(), a.getEndTime());

@@ -13,8 +13,8 @@ import com.vaadin.flow.server.VaadinSession;
 import com.vaadin.flow.spring.annotation.SpringComponent;
 import com.vaadin.flow.spring.annotation.UIScope;
 import id.meier.timetracking.TimeTrackerException;
-import id.meier.timetracking.dblayer.repository.RepositoryAccessor;
-import id.meier.timetracking.model.Assignment;
+import id.meier.timetracking.db.repository.RepositoryAccessor;
+import id.meier.timetracking.db.entity.AssignmentEntity;
 import id.meier.timetracking.reporting.generator.ReportGenerator;
 import id.meier.timetracking.ui.commoncomponents.AssignmentOverviewPanel;
 import id.meier.timetracking.ui.commoncomponents.SearchPanel;
@@ -37,7 +37,7 @@ public class ReportingManagementView extends VerticalLayout implements SearchPar
 	private final ReportGenerator reportGenerator;
 	private final AssignmentOverviewPanel assignmentOverviewPanel;
 	private final RepositoryAccessor repoAccessor;
-	private List<Assignment> assignments;
+	private List<AssignmentEntity> assignments;
 	private final ReportDefinitionFactory reportingFactory;
 	private ComboBox<ReportDefinition> reportSelection;
 	

@@ -1,7 +1,7 @@
 package id.meier.timetracking.businesslayer.commands;
 
 import id.meier.timetracking.businesslayer.Context;
-import id.meier.timetracking.model.PersistableElement;
+import id.meier.timetracking.db.dto.PersistableElement;
 
 public class DeleteCommand<T extends PersistableElement> extends BaseCommand {
 

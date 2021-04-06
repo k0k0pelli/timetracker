@@ -1,6 +1,6 @@
 package id.meier.timetracking.ui.projects;
 
-import id.meier.timetracking.model.DescribedElement;
+import id.meier.timetracking.db.dto.DescribedElement;
 
 @FunctionalInterface
 interface ElementViewChangeListener<V extends DescribedElement> {

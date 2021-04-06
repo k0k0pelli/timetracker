@@ -3,8 +3,8 @@ package id.meier.timetracking.businesslayer.consistency.impl.rules;
 import id.meier.timetracking.businesslayer.consistency.ConsistencyProblem;
 import id.meier.timetracking.businesslayer.consistency.IConsistencyMessage;
 import id.meier.timetracking.businesslayer.consistency.impl.AdditionalMessageData;
-import id.meier.timetracking.dblayer.repository.RepositoryAccessor;
-import id.meier.timetracking.model.Assignment;
+import id.meier.timetracking.db.repository.RepositoryAccessor;
+import id.meier.timetracking.db.entity.AssignmentEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ public class EndDateTimeCheckRule extends AbstractConsistencyRule {
     }
 
     @Override
-    protected List<IConsistencyMessage> check(Assignment assignment) {
+    protected List<IConsistencyMessage> check(AssignmentEntity assignment) {
         List<IConsistencyMessage> messages = new ArrayList<>();
         add(messages, checkEndTimeNull(assignment));
         add(messages, checkEndDateNull(assignment));
@@ -27,20 +27,20 @@ public class EndDateTimeCheckRule extends AbstractConsistencyRule {
         return messages;
     }
 
-    private IConsistencyMessage checkEndDateNull(Assignment assignment)  {
+    private IConsistencyMessage checkEndDateNull(AssignmentEntity assignment)  {
         return checkConsistencyAndCreateMessage(assignment, ConsistencyProblem.MISSING_END_DATE, a -> a.getEndDate() == null);
     }
 
-    private IConsistencyMessage checkEndTimeNull(Assignment assignment)  {
+    private IConsistencyMessage checkEndTimeNull(AssignmentEntity assignment)  {
         return checkConsistencyAndCreateMessage(assignment, ConsistencyProblem.MISSING_END_TIME, a -> a.getEndTime() == null);
     }
 
-    private IConsistencyMessage checkTimeOverlap(Assignment assignment)  {
-        List<Assignment> foundOverlaps = new ArrayList<>();
+    private IConsistencyMessage checkTimeOverlap(AssignmentEntity assignment)  {
+        List<AssignmentEntity> foundOverlaps = new ArrayList<>();
         IConsistencyMessage message = checkConsistencyAndCreateMessage(assignment, ConsistencyProblem.DATE_TIME_OVERLAP, a -> {
             boolean result = false;
             if ((assignment.getEndTime() != null) && (assignment.getEndDate() != null)) {
-                List<Assignment> overlappingAssignments = repoAccessor.selectAssignmentsStartDateTimeAfterGivenDateTime(assignment.getEndDate(), assignment.getEndTime());
+                List<AssignmentEntity> overlappingAssignments = repoAccessor.selectAssignmentsStartDateTimeAfterGivenDateTime(assignment.getEndDate(), assignment.getEndTime());
                 if (overlappingAssignments.size() > 0) {
                     foundOverlaps.addAll(overlappingAssignments);
                     result = true;
@@ -53,11 +53,11 @@ public class EndDateTimeCheckRule extends AbstractConsistencyRule {
         return message;
     }
 
-    private void addOverlappingAssignments(List<Assignment> foundOverlaps, IConsistencyMessage message) {
+    private void addOverlappingAssignments(List<AssignmentEntity> foundOverlaps, IConsistencyMessage message) {
         if (foundOverlaps.size() > 0) {
             List<AdditionalMessageData<?>> messageData = foundOverlaps
                     .stream()
-                    .map(a -> new AdditionalMessageData<Assignment>(a, Assignment.class))
+                    .map(a -> new AdditionalMessageData<AssignmentEntity>(a, AssignmentEntity.class))
                     .collect(Collectors.toList());
             message.addMessageData(messageData);
         }

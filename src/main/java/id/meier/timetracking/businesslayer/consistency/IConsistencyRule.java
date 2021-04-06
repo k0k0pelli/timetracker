@@ -1,9 +1,9 @@
 package id.meier.timetracking.businesslayer.consistency;
 
-import id.meier.timetracking.model.Assignment;
+import id.meier.timetracking.db.entity.AssignmentEntity;
 
 import java.util.List;
 
 public interface IConsistencyRule {
-    List<IConsistencyMessage> checkConsistency(Assignment assignment);
+    List<IConsistencyMessage> checkConsistency(AssignmentEntity assignment);
 }

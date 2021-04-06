@@ -1,7 +1,7 @@
 package id.meier.timetracking.util;
 
 import id.meier.timetracking.TimeTrackerException;
-import id.meier.timetracking.model.Assignment;
+import id.meier.timetracking.db.entity.AssignmentEntity;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.springframework.core.annotation.Order;
@@ -36,7 +36,7 @@ public class AssignmentExporter {
 				translationProvider.getTranslation("time.tracking.exporter.header.description")};
 	}
 	
-	public File createCSVFile(List<Assignment> assignments) throws IOException {
+	public File createCSVFile(List<AssignmentEntity> assignments) throws IOException {
 		File temp = File.createTempFile("export" + new Date().getTime(), ".csv"); 
 	    FileWriter out = new FileWriter(temp.getAbsoluteFile());
 	    try (CSVPrinter printer = new CSVPrinter(out, CSVFormat.EXCEL.withHeader(HEADERS))) {	        
