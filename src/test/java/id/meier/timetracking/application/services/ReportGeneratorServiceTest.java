@@ -1,0 +1,173 @@
+package id.meier.timetracking.application.services;
+
+import id.meier.timetracking.TestBase;
+
+import id.meier.timetracking.domain.Assignment;
+import id.meier.timetracking.domain.Phase;
+import id.meier.timetracking.domain.Project;
+import id.meier.timetracking.domain.Task;
+import org.apache.commons.beanutils.BeanUtils;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import java.lang.reflect.InvocationTargetException;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+@ExtendWith(SpringExtension.class)
+@SpringBootTest
+@TestPropertySource(
+        locations = "classpath:application-integrationtest.properties")
+class ReportGeneratorServiceTest  {
+
+    @Autowired
+    private ReportGeneratorService reportGenerator;
+
+    private long nextId = 0;
+
+    @Test
+    public void testReporting() {
+        Assignment a = new Assignment();
+        String  s = Optional.of(a)
+                .map(Assignment::getProject)
+                .map(Project::getName)
+                .orElse(null);
+        reportGenerator.generateReport(getTestAssignments(), "/id/meier/timetracking/reports/TRGroupedByProjectPhaseTask.jasper",
+                new HashMap<>(), "./test.pdf");
+    }
+
+    private List<Assignment> getTestAssignments() {
+        List<Assignment> list = new ArrayList<>();
+        Project project1 = createProject("Project a", "Project a description", nextId());
+        Project project2 = createProject("Project b", "Project b description", nextId());
+        Project project3 = createProject("Project c", "Project c description", nextId());
+        Project project4 = createProject("Project d", "Project d description", nextId());
+
+        Phase phase1 = createPhase("Phase 1", "Phase 1 Description", nextId());
+        Phase phase2 = createPhase("Phase 2", "Phase 2 Description", nextId());
+        Phase phase3 = createPhase("Phase 3", "Phase 3 Description", nextId());
+        Phase phase4 = createPhase("Phase 4", "Phase 4 Description", nextId());
+
+        Task task1 = createTask("Task 1", "Task 1 Description", nextId());
+        Task task2 = createTask("Task 2", "Task 2 Description", nextId());
+        Task task3 = createTask("Task 3", "Task 3 Description", nextId());
+        Task task4 = createTask("Task 4", "Task 4 Description", nextId());
+
+        Assignment a1 = createAssignment(getDate(1), getTime(10,0), getDate(1), getTime(11,10),
+                "description a1", project1, phase1, task1, nextId());
+        Assignment a12 = createAssignment(getDate(2), getTime(10,0), getDate(2), getTime(11,10),
+                "description a1", project1, phase1, task1, nextId());
+        Assignment a13 = createAssignment(getDate(3), getTime(10,0), getDate(3), getTime(11,10),
+                "description a1", project1, phase1, task1, nextId());
+        Assignment a2 = createAssignment(getDate(2), getTime(9,0), getDate(2), getTime(13,20), "description a2", project2, phase2, task2, nextId());
+        Assignment a3 = createAssignment(getDate(3), getTime(8,0), getDate(3), getTime(11,20), "description a3", project3, phase3, task3, nextId());
+        Assignment a4 = createAssignment(getDate(4), getTime(8,0), getDate(4), getTime(11,20), "description a4", project4, phase4, task4, nextId());
+        Assignment a5 = createAssignment(getDate(5), getTime(8,0), getDate(5), getTime(11,20), "description a4", project4, phase4, task4, nextId());
+        Assignment a6 = createAssignment(getDate(6), getTime(8,0), getDate(6), getTime(11,20), "description a4", project4, phase4, task4, nextId());
+
+        list.add(a1);
+        list.add(a12);
+        list.add(a13);
+        list.add(a2);
+        list.add(a3);
+        list.add(a4);
+        list.add(a5);
+        list.add(a6);
+        return list;
+    }
+
+    private Long nextId() {
+        return nextId++;
+    }
+
+    protected LocalDate getDate(int year, int month, int day) {
+        return LocalDate.of(year, month, day);
+    }
+
+    protected LocalTime getTime(int hours, int minutes, int seconds) {
+        return LocalTime.of(hours, minutes, seconds);
+    }
+
+    protected LocalDate getDate(int day) {
+        return LocalDate.of(2019, 1, day);
+    }
+
+    protected LocalTime getTime(int hours, int seconds) {
+        return LocalTime.of(hours, 0, seconds);
+    }
+
+    protected Project createProject(String name, String description ) {
+        return createProject(name, description, null);
+    }
+
+    protected Project createProject(String name, String description, Long nextId ) {
+        Project p = new Project();
+        p.setDescription(description);
+        p.setName(name);
+        p.setId(nextId++);
+        try {
+            BeanUtils.setProperty(new Object(), "bla", 12);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+        return p;
+    }
+
+    protected Phase createPhase(String name, String description) {
+        return createPhase(name, description, null);
+    }
+
+    protected Phase createPhase(String name, String description, Long nextId) {
+        Phase p = new Phase();
+        p.setDescription(description);
+        p.setName(name);
+        p.setId(nextId++);
+        return p;
+    }
+
+    protected Task createTask(String name, String description) {
+        return createTask(name, description, null);
+    }
+
+    protected Task createTask(String name, String description, Long nextId) {
+        Task t = new Task();
+        t.setDescription(description);
+        t.setName(name);
+        t.setId(nextId++);
+        return t;
+    }
+
+    protected Assignment createAssignment(LocalDate startDate, LocalTime startTime, LocalDate endDate, LocalTime endTime,
+                                          String description, Project project, Phase phase, Task task) {
+        return createAssignment(startDate, startTime, endDate, endTime, description, project, phase, task, null);
+    }
+
+    protected Assignment createAssignment(LocalDate startDate, LocalTime startTime, LocalDate endDate, LocalTime endTime,
+                                          String description, Project project, Phase phase, Task task, Long nextId) {
+        Assignment a = new Assignment();
+        a.setStartDate(startDate);
+        a.setStartTime(startTime);
+        a.setEndDate(endDate);
+        a.setEndTime(endTime);
+        a.setDescription(description);
+        a.setProject(project);
+        a.setPhase(phase);
+        a.setTask(task);
+        a.setId(nextId++);
+        return a;
+    }
+
+}

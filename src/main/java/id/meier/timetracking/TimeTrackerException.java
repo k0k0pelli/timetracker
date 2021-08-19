@@ -9,6 +9,5 @@ public class TimeTrackerException extends RuntimeException {
 		super(msg);
 	}
 	
-	public TimeTrackerException() {
-	}
+
 }

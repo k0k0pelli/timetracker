@@ -1,9 +1,9 @@
 package id.meier.timetracking;
 
-import id.meier.timetracking.model.Assignment;
-import id.meier.timetracking.model.Phase;
-import id.meier.timetracking.model.Project;
-import id.meier.timetracking.model.Task;
+import id.meier.timetracking.domain.Assignment;
+import id.meier.timetracking.domain.Phase;
+import id.meier.timetracking.domain.Project;
+import id.meier.timetracking.domain.Task;
 import org.apache.commons.beanutils.BeanUtils;
 
 import java.lang.reflect.InvocationTargetException;

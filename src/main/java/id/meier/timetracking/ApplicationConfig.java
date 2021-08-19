@@ -1,13 +1,12 @@
 package id.meier.timetracking;
 
 import com.vaadin.flow.spring.annotation.UIScope;
-import id.meier.timetracking.dblayer.repository.PhaseRepository;
-import id.meier.timetracking.dblayer.repository.ProjectRepository;
-import id.meier.timetracking.dblayer.repository.TaskRepository;
-import id.meier.timetracking.ui.commoncomponents.AssignmentOverviewPanel;
-import id.meier.timetracking.ui.commoncomponents.SearchPanel;
-import id.meier.timetracking.util.AssignmentExporter;
+
+import id.meier.timetracking.adapter.in.web.ManageProjectStructureController;
+import id.meier.timetracking.application.services.AssignmentExporter;
 import id.meier.timetracking.util.LocaleRetriever;
+import id.meier.timetracking.web.commoncomponents.AssignmentOverviewPanel;
+import id.meier.timetracking.web.commoncomponents.SearchPanel;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -29,14 +28,14 @@ public class ApplicationConfig {
 	
 	@Bean
 	@UIScope
-	public SearchPanel reportingSearchPanel(TaskRepository taskRepo, PhaseRepository phaseRepo, ProjectRepository projectRepo, LocaleRetriever localeRetriever) {
-		return new SearchPanel(taskRepo, phaseRepo, projectRepo, localeRetriever);
+	public SearchPanel reportingSearchPanel(ManageProjectStructureController manageProjectStructureController, LocaleRetriever localeRetriever) {
+		return new SearchPanel(manageProjectStructureController, localeRetriever);
 	}
 	
 	@Bean
 	@UIScope
-	public SearchPanel assignmentManagementSearchPanel(TaskRepository taskRepo, PhaseRepository phaseRepo, ProjectRepository projectRepo, LocaleRetriever localeRetriever) {
-		SearchPanel searchPanel = new SearchPanel(taskRepo, phaseRepo, projectRepo, localeRetriever);
+	public SearchPanel assignmentManagementSearchPanel(ManageProjectStructureController manageProjectStructureController, LocaleRetriever localeRetriever) {
+		SearchPanel searchPanel = new SearchPanel(manageProjectStructureController, localeRetriever);
 		searchPanel.setTodayFilter();
 		return searchPanel;
 	}

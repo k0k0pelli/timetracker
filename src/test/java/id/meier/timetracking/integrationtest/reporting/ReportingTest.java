@@ -1,11 +1,13 @@
 package id.meier.timetracking.integrationtest.reporting;
 
 import id.meier.timetracking.TestBase;
-import id.meier.timetracking.model.Assignment;
-import id.meier.timetracking.model.Phase;
-import id.meier.timetracking.model.Project;
-import id.meier.timetracking.model.Task;
-import id.meier.timetracking.reporting.generator.ReportGenerator;
+import id.meier.timetracking.application.services.ConsistencyChecker;
+import id.meier.timetracking.application.services.ReportGeneratorService;
+import id.meier.timetracking.domain.Assignment;
+import id.meier.timetracking.domain.Phase;
+import id.meier.timetracking.domain.Project;
+import id.meier.timetracking.domain.Task;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +26,7 @@ import java.util.Optional;
 		  locations = "classpath:application-integrationtest.properties")
 public class ReportingTest extends TestBase {
 	@Autowired
-	private ReportGenerator reportGenerator;
+	private ReportGeneratorService reportGenerator;
 	
 	private long nextId = 0;
 	

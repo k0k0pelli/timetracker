@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.9.0.final using JasperReports Library version 6.9.0-cb8f9004be492ccc537180b49c026951f4220bf3  -->
+<!-- Created with Jaspersoft Studio version 6.17.0.final using JasperReports Library version 6.17.0-6d93193241dd8cc42629e188b94f9e0bc5722efd  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Time Report" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" resourceBundle="translate" uuid="13acf49e-4913-4d1b-bccc-113817ad15d1">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<property name="net.sf.jasperreports.awt.ignore.missing.font" value="true"/>
@@ -13,7 +13,7 @@
 	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
-	<import value="id.meier.timetracking.model.*"/>
+	<import value="id.meier.timetracking.domain.*"/>
 	<import value="java.util.*"/>
 	<import value="java.time.LocalDate"/>
 	<import value="id.meier.timetracking.util.DateTimeFormatter"/>
@@ -35,7 +35,7 @@
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
-	<field name="phase" class="id.meier.timetracking.model.Phase">
+	<field name="phase" class="id.meier.timetracking.domain.Phase">
 		<fieldDescription><![CDATA[phase]]></fieldDescription>
 	</field>
 	<field name="endDate" class="java.time.LocalDate">
@@ -44,13 +44,13 @@
 	<field name="description" class="java.lang.String">
 		<fieldDescription><![CDATA[description]]></fieldDescription>
 	</field>
-	<field name="project" class="id.meier.timetracking.model.Project">
+	<field name="project" class="id.meier.timetracking.domain.Project">
 		<fieldDescription><![CDATA[project]]></fieldDescription>
 	</field>
 	<field name="industrialHoursDiff" class="java.lang.Double">
 		<fieldDescription><![CDATA[industrialHoursDiff]]></fieldDescription>
 	</field>
-	<field name="task" class="id.meier.timetracking.model.Task">
+	<field name="task" class="id.meier.timetracking.domain.Task">
 		<fieldDescription><![CDATA[task]]></fieldDescription>
 	</field>
 	<field name="startTime" class="java.time.LocalTime">

@@ -1,8 +1,10 @@
 package id.meier.timetracking.moduletest.reporting.generator;
 
-import id.meier.timetracking.model.*;
-import id.meier.timetracking.reporting.generator.AssignmentStartDateTimeComparator;
-import id.meier.timetracking.reporting.generator.DailyWorkingPeriodAggregator;
+
+import id.meier.timetracking.application.port.in.assignmentmangement.AssignmentDailyWorkAggregatorUseCase;
+import id.meier.timetracking.application.services.AssignmentDailyWorkAggregatorService;
+import id.meier.timetracking.application.services.comparator.AssignmentStartDateTimeComparator;
+import id.meier.timetracking.domain.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,11 +19,11 @@ import static org.hamcrest.Matchers.hasSize;
 
 public class DailyWorkingPeriodAggregatorTest {
 
-    private DailyWorkingPeriodAggregator testee;
+    private AssignmentDailyWorkAggregatorUseCase testee;
 
     @BeforeEach
     public void setup() {
-        testee = new DailyWorkingPeriodAggregator(new AssignmentStartDateTimeComparator());
+        testee = new AssignmentDailyWorkAggregatorService(new AssignmentStartDateTimeComparator());
     }
 
     @Test

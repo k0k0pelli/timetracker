@@ -1,10 +1,11 @@
 package id.meier.timetracking.moduletest.consistency.rules;
 
 import id.meier.timetracking.TestBase;
-import id.meier.timetracking.businesslayer.consistency.ConsistencyProblem;
-import id.meier.timetracking.businesslayer.consistency.IConsistencyMessage;
-import id.meier.timetracking.businesslayer.consistency.impl.rules.DescriptionCheckRule;
-import id.meier.timetracking.model.Assignment;
+import id.meier.timetracking.application.port.in.assignmentmangement.consistency.ConsistencyProblem;
+import id.meier.timetracking.application.port.in.assignmentmangement.consistency.IConsistencyMessage;
+
+import id.meier.timetracking.application.services.consistency.rules.DescriptionCheckRule;
+import id.meier.timetracking.domain.Assignment;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

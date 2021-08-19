@@ -16,13 +16,18 @@
 
 package id.meier.timetracking.integrationtest.consistency;
 import id.meier.timetracking.TestBase;
-import id.meier.timetracking.businesslayer.consistency.IConsistencyChecker;
-import id.meier.timetracking.businesslayer.consistency.IConsistencyMessage;
-import id.meier.timetracking.dblayer.repository.RepositoryAccessor;
-import id.meier.timetracking.model.Assignment;
-import id.meier.timetracking.model.Phase;
-import id.meier.timetracking.model.Project;
-import id.meier.timetracking.model.Task;
+import id.meier.timetracking.application.port.in.assignmentmangement.ConsistencyCheckUseCase;
+import id.meier.timetracking.application.port.in.assignmentmangement.commands.SaveAssignmentCommand;
+import id.meier.timetracking.application.port.in.assignmentmangement.consistency.IConsistencyMessage;
+import id.meier.timetracking.application.port.in.structuremanagment.commands.SavePhaseCommand;
+import id.meier.timetracking.application.port.in.structuremanagment.commands.SaveProjectCommand;
+import id.meier.timetracking.application.port.in.structuremanagment.commands.SaveTaskCommand;
+import id.meier.timetracking.application.services.ManageProjectStructureService;
+import id.meier.timetracking.application.services.ManagementAssignmentService;
+import id.meier.timetracking.domain.Assignment;
+import id.meier.timetracking.domain.Phase;
+import id.meier.timetracking.domain.Project;
+import id.meier.timetracking.domain.Task;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,10 +51,14 @@ public class ConsistencyTest extends TestBase {
 
 
 	@Autowired
-	private RepositoryAccessor repositoryAccessor;
+	private ManageProjectStructureService projectStructureService;
+	@Autowired
+    private ManagementAssignmentService assignmentService;
+
+
 
 	@Autowired
-	private IConsistencyChecker checker;
+	private ConsistencyCheckUseCase checker;
 
 
 	@Test
@@ -67,18 +76,18 @@ public class ConsistencyTest extends TestBase {
         Task task = getTask();
         phase.getTasks().add(task);
         project.getPhases().add(phase);
-        repositoryAccessor.save(task);
-        repositoryAccessor.save(phase);
-        repositoryAccessor.save(project);
+        projectStructureService.saveTask(SaveTaskCommand.of(task));
+        projectStructureService.savePhase(SavePhaseCommand.of(phase));
+        projectStructureService.saveProject(SaveProjectCommand.of(project));
 
         Assignment a1 = createAssignment(getDate(2019,12,1), getTime(12,30, 0),
                 getDate(2019,12,1), getTime(15,30, 0),
                 "test", project, phase, task, 1L);
-        repositoryAccessor.save(a1);
+        assignmentService.saveAssignment(SaveAssignmentCommand.of(a1));
         Assignment a2 = createAssignment(getDate(2019,12,1), getTime(12,0, 30),
                 getDate(2019,12,1), getTime(15, 0, 0),"test",
                 project, phase, task, 2L);
-        repositoryAccessor.save(a2);
+        assignmentService.saveAssignment(SaveAssignmentCommand.of(a2));
 
         return a2;
     }

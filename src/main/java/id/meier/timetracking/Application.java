@@ -1,6 +1,7 @@
 package id.meier.timetracking;
 
-import id.meier.timetracking.util.ProjectStructureImporter;
+
+import id.meier.timetracking.adapter.in.web.DataImpoterController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ public class Application {
     private Environment env;
 
     @Autowired
-    private ProjectStructureImporter importer;
+    private DataImpoterController dataImporter;
 
     private static final Logger log = LoggerFactory.getLogger(Application.class);
 
@@ -31,8 +32,7 @@ public class Application {
         String phaseFile = env.getProperty("phasesFile");
         String taskFile = env.getProperty("tasksFile");
         String assignmentsFile = env.getProperty("assignmentsFile");
-        importer.prepareImport(projectsFile, phaseFile, taskFile, assignmentsFile);
-        importer.commitImportedProjectMetaData();
+        dataImporter.prepareImport(projectsFile, phaseFile, taskFile, assignmentsFile);
 
     }
 
