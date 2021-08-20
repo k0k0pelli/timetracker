@@ -132,8 +132,8 @@ public class SelectAssignmentCommand {
                 if (startDate != null) exceptionMessage = "startDate";
                 if (startTime != null) exceptionMessage = "startTime";
                 if (endDate != null) exceptionMessage = "endDate";
-                if (endTime != null) exceptionMessage = "startDate";
-                if (project != null) exceptionMessage = "endTime";
+                if (endTime != null) exceptionMessage = "endTime";
+                if (project != null) exceptionMessage = "project";
                 if (phase != null) exceptionMessage = "phase";
                 if (task != null) exceptionMessage = "task";
                 if (templateName != null) exceptionMessage = "templateName";

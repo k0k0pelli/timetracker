@@ -6,9 +6,9 @@ import id.meier.timetracking.adapter.out.persistence.entities.TaskEntity;
 import id.meier.timetracking.adapter.out.persistence.mapper.PhaseEntityMapper;
 import id.meier.timetracking.adapter.out.persistence.mapper.ProjectEntityMapper;
 import id.meier.timetracking.adapter.out.persistence.mapper.TaskEntityMapper;
-import id.meier.timetracking.adapter.out.persistence.repositories.PhaseRepository2;
-import id.meier.timetracking.adapter.out.persistence.repositories.ProjectRepository2;
-import id.meier.timetracking.adapter.out.persistence.repositories.TaskRepository2;
+import id.meier.timetracking.adapter.out.persistence.repositories.PhaseRepository;
+import id.meier.timetracking.adapter.out.persistence.repositories.ProjectRepository;
+import id.meier.timetracking.adapter.out.persistence.repositories.TaskRepository;
 import id.meier.timetracking.application.port.out.commands.*;
 import id.meier.timetracking.application.port.out.ManageProjectStructurePort;
 import id.meier.timetracking.application.port.out.SelectionProjectStructurePort;
@@ -28,11 +28,11 @@ public class ProjectStructurePersistenceAdapter implements ManageProjectStructur
     private PhaseEntityMapper phaseMapper = new PhaseEntityMapper();
     private TaskEntityMapper taskMapper = new TaskEntityMapper();
 
-    private ProjectRepository2 projectRepository;
-    private PhaseRepository2 phaseRepository;
-    private TaskRepository2 taskRepository;
+    private ProjectRepository projectRepository;
+    private PhaseRepository phaseRepository;
+    private TaskRepository taskRepository;
 
-    public ProjectStructurePersistenceAdapter(ProjectRepository2 projectRepository, PhaseRepository2 phaseRepository, TaskRepository2 taskRepository) {
+    public ProjectStructurePersistenceAdapter(ProjectRepository projectRepository, PhaseRepository phaseRepository, TaskRepository taskRepository) {
         this.projectRepository = projectRepository;
         this.phaseRepository = phaseRepository;
         this.taskRepository = taskRepository;

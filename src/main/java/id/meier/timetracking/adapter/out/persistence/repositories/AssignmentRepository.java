@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 
-public interface AssignmentRepository2 extends JpaRepository<AssignmentEntity, Long>, AssignmentRepositorySelection {
+public interface AssignmentRepository extends JpaRepository<AssignmentEntity, Long>, AssignmentRepositorySelection {
 
 	List<AssignmentEntity> findByEndDateIsNullOrEndTimeIsNull();
 	

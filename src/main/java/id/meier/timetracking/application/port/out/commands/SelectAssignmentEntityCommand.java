@@ -88,7 +88,7 @@ public class SelectAssignmentEntityCommand {
         public Builder setAssignmentCommand(SelectAssignmentCommand
                                             selectInCommand) {
             this.setEndDate(selectInCommand.getEndDate())
-                    .setEndTime(selectInCommand.getStartTime())
+                    .setEndTime(selectInCommand.getEndTime())
                     .setStartDate(selectInCommand.getStartDate())
                     .setStartTime(selectInCommand.getStartTime())
                     .setProject(selectInCommand.getProject())

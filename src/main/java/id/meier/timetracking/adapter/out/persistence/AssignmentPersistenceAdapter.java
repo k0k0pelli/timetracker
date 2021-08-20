@@ -3,9 +3,8 @@ package id.meier.timetracking.adapter.out.persistence;
 import id.meier.timetracking.adapter.out.persistence.entities.AssignmentEntity;
 import id.meier.timetracking.adapter.out.persistence.entities.AssignmentRefHitParadeProjectPhaseTaskEntity;
 import id.meier.timetracking.adapter.out.persistence.mapper.*;
-import id.meier.timetracking.adapter.out.persistence.repositories.AssignmentRepository2;
+import id.meier.timetracking.adapter.out.persistence.repositories.AssignmentRepository;
 import id.meier.timetracking.adapter.out.persistence.repositories.AssignmentRepositorySelection;
-import id.meier.timetracking.application.port.in.assignmentmangement.commands.SelectAssignmentCommand;
 import id.meier.timetracking.application.port.out.ManageAssignmentPort;
 import id.meier.timetracking.application.port.out.SelectionAssignmentPort;
 import id.meier.timetracking.application.port.out.commands.*;
@@ -26,10 +25,10 @@ public class AssignmentPersistenceAdapter implements ManageAssignmentPort, Selec
     private AssignmentRefHitParadeProjectPhaseTaskEntityMapper assignmentRefHitParadeProjectPhaseTaskEntityMapper
             = new AssignmentRefHitParadeProjectPhaseTaskEntityMapper();
     private AssignmentRepositorySelection selectAssignmentRepository;
-    private AssignmentRepository2 repository;
+    private AssignmentRepository repository;
     private ProjectStructurePersistenceAdapter projectStructurePersistenceAdapter;
 
-    public AssignmentPersistenceAdapter(AssignmentRepository2 repository,
+    public AssignmentPersistenceAdapter(AssignmentRepository repository,
                                         @Qualifier("assignmentRepositorySelectionImpl") AssignmentRepositorySelection selectAssignmentRepository,
                                         ProjectStructurePersistenceAdapter projectStructurePersistenceAdapter
     ) {

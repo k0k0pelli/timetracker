@@ -61,30 +61,32 @@ public class AssignmentRepositorySelectionImpl implements AssignmentRepositorySe
 
 		q.where(cb.and(predicates.toArray(new Predicate[0])));
 
-		return em.createQuery(q).getResultList();
+		List<AssignmentEntity> result =   em.createQuery(q).getResultList();
+		return result;
 	}
 
 	public List<AssignmentEntity> selectAssignmentsStartDateTimeAfterGivenDateTime(LocalDate date, LocalTime time) {
-			CriteriaBuilder cb = em.getCriteriaBuilder();
-			CriteriaQuery<AssignmentEntity> q = cb.createQuery(AssignmentEntity.class);
-			Root<AssignmentEntity> user = q.from(AssignmentEntity.class);
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<AssignmentEntity> q = cb.createQuery(AssignmentEntity.class);
+		Root<AssignmentEntity> user = q.from(AssignmentEntity.class);
 
-			Path<LocalDate> startDatePath = user.get("startDate");
-			Path<LocalTime> startTimePath = user.get("startTime");
-			Path<LocalDate> endDatePath = user.get("endDate");
-			Path<LocalTime> endTimePath = user.get("endTime");
-			List<Predicate> predicates = new ArrayList<>();
-			if (date != null) {
-				predicates.add(cb.lessThanOrEqualTo(startDatePath, cb.literal(date)));
-				predicates.add(cb.greaterThanOrEqualTo(endDatePath, cb.literal(date)));
-			}
-			if (time != null) {
-				predicates.add(cb.lessThan(startTimePath, cb.literal(time)));
-				predicates.add(cb.greaterThan(endTimePath, cb.literal(time)));
-			}
+		Path<LocalDate> startDatePath = user.get("startDate");
+		Path<LocalTime> startTimePath = user.get("startTime");
+		Path<LocalDate> endDatePath = user.get("endDate");
+		Path<LocalTime> endTimePath = user.get("endTime");
+		List<Predicate> predicates = new ArrayList<>();
+		if (date != null) {
+			predicates.add(cb.lessThanOrEqualTo(startDatePath, cb.literal(date)));
+			predicates.add(cb.greaterThanOrEqualTo(endDatePath, cb.literal(date)));
+		}
+		if (time != null) {
+			predicates.add(cb.lessThan(startTimePath, cb.literal(time)));
+			predicates.add(cb.greaterThan(endTimePath, cb.literal(time)));
+		}
 
-			q.where(cb.and(predicates.toArray(new Predicate[0])));
+		q.where(cb.and(predicates.toArray(new Predicate[0])));
 
-			return em.createQuery(q).getResultList();
+		List<AssignmentEntity> result =  em.createQuery(q).getResultList();
+		return result;
 	}
 }

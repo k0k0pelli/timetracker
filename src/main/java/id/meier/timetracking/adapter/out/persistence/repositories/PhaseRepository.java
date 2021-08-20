@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface PhaseRepository2 extends JpaRepository<PhaseEntity, Long> {
+public interface PhaseRepository extends JpaRepository<PhaseEntity, Long> {
     List<PhaseEntity> findByNameStartsWithIgnoreCase(String name);
     List<PhaseEntity> findByTasksIn(List<TaskEntity> tasks);
 }
