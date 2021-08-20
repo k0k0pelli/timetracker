@@ -17,6 +17,7 @@ import com.vaadin.flow.server.VaadinSession;
 import com.vaadin.flow.spring.annotation.SpringComponent;
 import com.vaadin.flow.spring.annotation.UIScope;
 import id.meier.timetracking.TimeTrackerException;
+import id.meier.timetracking.application.port.in.exporter.AssignmentExporterUseCase;
 import id.meier.timetracking.application.services.AssignmentExporter;
 import id.meier.timetracking.domain.Assignment;
 import org.springframework.core.annotation.Order;
@@ -38,9 +39,9 @@ import static id.meier.timetracking.util.DateTimeFormatter.t2S;
 public class AssignmentOverviewPanel extends VerticalLayout {
 	private Grid<Assignment> grid;
 	private Label summary;
-	private final AssignmentExporter exporter;
+	private final AssignmentExporterUseCase exporter;
     private List<Assignment> assignments;
-	public AssignmentOverviewPanel(AssignmentExporter exporter) {
+	public AssignmentOverviewPanel(AssignmentExporterUseCase exporter) {
 		this.exporter = exporter;
 		this.assignments = new ArrayList<>();
 		grid = createGridPanel();

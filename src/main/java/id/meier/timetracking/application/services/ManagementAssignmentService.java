@@ -5,12 +5,12 @@ import id.meier.timetracking.application.port.in.assignmentmangement.commands.Sa
 import id.meier.timetracking.application.port.in.assignmentmangement.commands.RemoveAssignmentCommand;
 import id.meier.timetracking.application.port.in.assignmentmangement.commands.SelectAssignmentAfterGivenStartDateAndTimeCommand;
 import id.meier.timetracking.application.port.in.assignmentmangement.commands.SelectAssignmentCommand;
+import id.meier.timetracking.application.port.in.structuremanagment.commands.SavePhaseCommand;
+import id.meier.timetracking.application.port.in.structuremanagment.commands.SaveProjectCommand;
+import id.meier.timetracking.application.port.in.structuremanagment.commands.SaveTaskCommand;
 import id.meier.timetracking.application.port.out.ManageAssignmentPort;
 import id.meier.timetracking.application.port.out.SelectionAssignmentPort;
-import id.meier.timetracking.application.port.out.commands.RemoveAssignmentEntityCommand;
-import id.meier.timetracking.application.port.out.commands.SaveAssignmentEntityCommand;
-import id.meier.timetracking.application.port.out.commands.SelectAssignmentEntityAfterGivenStartDateAndTimeCommand;
-import id.meier.timetracking.application.port.out.commands.SelectAssignmentEntityCommand;
+import id.meier.timetracking.application.port.out.commands.*;
 import id.meier.timetracking.domain.Assignment;
 import id.meier.timetracking.domain.AssignmentRefHitParadeProjectPhaseTask;
 import org.springframework.stereotype.Component;
@@ -21,12 +21,14 @@ import java.util.List;
 public class ManagementAssignmentService implements ManageAssignmentUseCase {
     private ManageAssignmentPort manageAssignmentPort;
     private SelectionAssignmentPort selectionAssignmentPort;
-
+    private ManageProjectStructureService manageProjectStructureService;
 
     public ManagementAssignmentService(ManageAssignmentPort manageAssignmentPort,
-                                       SelectionAssignmentPort selectionAssignmentPort) {
+                                       SelectionAssignmentPort selectionAssignmentPort,
+                                       ManageProjectStructureService manageProjectStructureService) {
         this.manageAssignmentPort = manageAssignmentPort;
         this.selectionAssignmentPort = selectionAssignmentPort;
+        this.manageProjectStructureService = manageProjectStructureService;
     }
 
 
@@ -79,4 +81,14 @@ public class ManagementAssignmentService implements ManageAssignmentUseCase {
     public void removeAssignment(RemoveAssignmentCommand assignmentCommand) {
         manageAssignmentPort.removeAssignment(RemoveAssignmentEntityCommand.of(assignmentCommand.getAssignment()));
     }
+
+    @Override
+    public Assignment saveAssignmentWithDependentEntities(SaveAssignmentCommand assignmentCommand) {
+        Assignment assignment = assignmentCommand.getAssignment();
+        manageProjectStructureService.saveTask(SaveTaskCommand.of(assignment.getTask()));
+        manageProjectStructureService.savePhaseWithDependentEntities(SavePhaseCommand.of(assignment.getPhase()));
+        manageProjectStructureService.saveProjectWithDependentEntities(SaveProjectCommand.of(assignment.getProject()));
+        return manageAssignmentPort.saveAssignment(SaveAssignmentEntityCommand.of(assignmentCommand.getAssignment()));
+    }
+
 }

@@ -6,6 +6,7 @@ import id.meier.timetracking.domain.Assignment;
 import id.meier.timetracking.util.TranslationProvider;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
+import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -16,6 +17,7 @@ import java.util.List;
 import static id.meier.timetracking.util.DateTimeFormatter.d2S;
 import static id.meier.timetracking.util.DateTimeFormatter.t2S;
 
+@Component
 public class AssignmentExporter implements AssignmentExporterUseCase {
     private final String[] HEADERS;
     private final TranslationProvider translationProvider;

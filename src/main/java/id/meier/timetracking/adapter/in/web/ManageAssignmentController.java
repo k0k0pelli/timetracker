@@ -52,4 +52,8 @@ public class ManageAssignmentController {
     public void removeAssignment(RemoveAssignmentCommand command) {
         manageAssignmentUseCase.removeAssignment(command);
     }
+
+    public Assignment saveAssignmentWithDependentEntities(SaveAssignmentCommand assignmentCommand) {
+        return manageAssignmentUseCase.saveAssignmentWithDependentEntities(assignmentCommand);
+    }
 }

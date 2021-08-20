@@ -59,6 +59,8 @@ public class ProjectStructurePersistenceAdapter implements ManageProjectStructur
         return taskMapper.toDomainObject(task, command.getTask());
     }
 
+
+
     @Override
     public void removeProject(RemoveProjectEntityCommand command) {
         ProjectEntity project = projectMapper.toEntityObject(command.getProject());

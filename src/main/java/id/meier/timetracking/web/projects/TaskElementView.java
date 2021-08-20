@@ -39,7 +39,7 @@ public class TaskElementView extends SubElementView<Task, Phase> {
 	public void addElement(Task element) {
 		if (!addedElements.contains(element)) {
 			this.addedElements.add(element);
-			projectStructureController.saveTask(SaveTaskCommand.of(element));
+			parent.getTasks().add(element);
 		}
 		setFilteredItems(this.allElements);
 	}
@@ -48,7 +48,9 @@ public class TaskElementView extends SubElementView<Task, Phase> {
 	public void removeElement(Task element) {
 		if (!removedElements.contains(element)) {
 			removedElements.add(element);
+			parent.getTasks().remove(element);
 		}
+
 		removedElements.add(element);
 		setFilteredItems(allElements);
 	}

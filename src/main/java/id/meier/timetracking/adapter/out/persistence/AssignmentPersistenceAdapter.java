@@ -54,7 +54,6 @@ public class AssignmentPersistenceAdapter implements ManageAssignmentPort, Selec
     }
 
     private AssignmentEntity save(AssignmentEntity element) {
-
         return repository.save(element);
     }
 
@@ -68,8 +67,6 @@ public class AssignmentPersistenceAdapter implements ManageAssignmentPort, Selec
         if (element.getProject() != null && element.getProject().getId() == null) {
             this.projectStructurePersistenceAdapter.saveProject(SaveProjectEntityCommand.of(element.getProject()));
         }
-
-
     }
 
     public void delete(AssignmentEntity element) {

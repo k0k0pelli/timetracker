@@ -44,12 +44,12 @@ public class TaskElementEditor extends SubElementEditor<Task> {
 
 	@Override
 	protected void saveElement(Task element) {
-		projectStructureController.saveTask(SaveTaskCommand.of(element));
+		//projectStructureController.saveTask(SaveTaskCommand.of(element));
 	}
 
 	@Override
 	protected void deleteElement(Task element) {
-		projectStructureController.removeTask(RemoveTaskCommand.of(element));
+		//projectStructureController.removeTask(RemoveTaskCommand.of(element));
 	}
 
 

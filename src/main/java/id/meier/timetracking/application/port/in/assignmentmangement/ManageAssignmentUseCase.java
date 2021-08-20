@@ -4,6 +4,7 @@ import id.meier.timetracking.application.port.in.assignmentmangement.commands.Sa
 import id.meier.timetracking.application.port.in.assignmentmangement.commands.RemoveAssignmentCommand;
 import id.meier.timetracking.application.port.in.assignmentmangement.commands.SelectAssignmentAfterGivenStartDateAndTimeCommand;
 import id.meier.timetracking.application.port.in.assignmentmangement.commands.SelectAssignmentCommand;
+import id.meier.timetracking.application.port.out.commands.SaveAssignmentEntityCommand;
 import id.meier.timetracking.domain.Assignment;
 import id.meier.timetracking.domain.AssignmentRefHitParadeProjectPhaseTask;
 
@@ -18,5 +19,6 @@ public interface ManageAssignmentUseCase {
     List<Assignment>selectAssignmentsStartDateTimeAfterGivenDateTime(SelectAssignmentAfterGivenStartDateAndTimeCommand command);
     Assignment saveAssignment(SaveAssignmentCommand assignmentCommand);
     void removeAssignment(RemoveAssignmentCommand assignmentCommand);
+    Assignment saveAssignmentWithDependentEntities(SaveAssignmentCommand assignmentCommand);
 
 }

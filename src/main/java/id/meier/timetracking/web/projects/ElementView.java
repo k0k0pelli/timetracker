@@ -130,7 +130,7 @@ public abstract class ElementView<T extends DescribedElement>  extends VerticalL
 	private T createNewElement() {
 		T element = null;
 		try {
-			element = clazz.newInstance();
+			element = clazz.getDeclaredConstructor().newInstance();
 		} catch (Exception ignored) {
 		}
 		return element;

@@ -44,26 +44,35 @@ public class ManageProjectStructureController {
     }
 
     public Task getTaskById(SelectTaskByIdCommand command) {
-        return getTaskById(command);
+        return manageProjectUseCase.getTaskById(command);
     }
 
     public List<Task> getTaskByPhase(SelectTaskByPhaseCommand command) {
-        return getTaskByPhase(command);
+        return manageProjectUseCase.getTaskByPhase(command);
     }
 
     public Phase getPhaseById(SelectPhaseByIdCommand command) {
-        return getPhaseById(command);
+        return manageProjectUseCase.getPhaseById(command);
     }
 
     public List<Phase> getPhaseByProject(SelectPhaseByProjectCommand project) {
-        return getPhaseByProject(project);
+        return manageProjectUseCase.getPhaseByProject(project);
     }
 
     public List<Project> getProjects() {
-        return getProjects();
+        return manageProjectUseCase.getProjects();
     }
 
     public Project getProject(SelectProjectCommand command) {
-        return getProject(command);
+        return manageProjectUseCase.getProject(command);
     }
+
+    public Project saveProjectWithDependentEntities(SaveProjectCommand command) {
+        return manageProjectUseCase.saveProjectWithDependentEntities(command);
+    }
+
+    public Phase savePhaseWithDependentEntities(SavePhaseCommand command) {
+        return manageProjectUseCase.savePhaseWithDependentEntities(command);
+    }
+
 }

@@ -24,6 +24,7 @@ import id.meier.timetracking.adapter.in.web.ConsistencyCheckController;
 import id.meier.timetracking.adapter.in.web.ManageAssignmentController;
 import id.meier.timetracking.adapter.in.web.ManageProjectStructureController;
 import id.meier.timetracking.application.port.in.assignmentmangement.commands.RemoveAssignmentCommand;
+import id.meier.timetracking.application.port.in.assignmentmangement.commands.SaveAssignmentCommand;
 import id.meier.timetracking.application.port.in.assignmentmangement.commands.SelectAssignmentCommand;
 import id.meier.timetracking.application.port.in.assignmentmangement.consistency.IConsistencyMessage;
 import id.meier.timetracking.application.port.in.structuremanagment.commands.SavePhaseCommand;
@@ -239,7 +240,7 @@ class AssignmentEditor extends VerticalLayout implements KeyNotifier, IAssignmen
     		this.assignmentCreator.terminateOpenAssignmentsOnSaveNewAssignment(assignment, this.terminateOldAssignments);
     	}
         setProjectsPhaseTasks();
-
+        this.manageAssignmentController.saveAssignment(SaveAssignmentCommand.of(assignment));
         changeHandler.onChange();
         resetProviders();
     }

@@ -11,6 +11,7 @@ import id.meier.timetracking.domain.Phase;
 import id.meier.timetracking.domain.Task;
 import org.springframework.core.annotation.Order;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @SpringComponent
@@ -59,14 +60,14 @@ public class ProjectsManagementView extends VerticalLayout  {
         projectElementView.addListener(l -> {
             List<Phase> data = null;
             if (l != null) {
-                data = l.getPhases();
+                data = new ArrayList<>(l.getPhases());
             }
             setViewData(phaseView, data, l);
         });
 	    phaseView.addListener(l -> {
             List<Task> data = null;
             if (l != null) {
-                data = l.getTasks();
+                data = new ArrayList<>(l.getTasks());
             }
             setViewData(taskView, data, l);
         });

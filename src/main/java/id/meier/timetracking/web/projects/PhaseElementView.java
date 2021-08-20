@@ -37,7 +37,8 @@ public class PhaseElementView extends SubElementView<Phase, Project> {
 	@Override
 	public void addElement(Phase element) {
 		if (!addedElements.contains(element)) {
-			projectStructureController.savePhase(SavePhaseCommand.of(element));
+			this.addedElements.add(element);
+			parent.getPhases().add(element);
 		}
 		setFilteredItems(this.allElements);
 	}
@@ -46,6 +47,7 @@ public class PhaseElementView extends SubElementView<Phase, Project> {
 	public void removeElement(Phase element) {
 		if (!removedElements.contains(element)) {
 			removedElements.add(element);
+			parent.getPhases().remove(element);
 		}
 		removedElements.add(element);
 		setFilteredItems(allElements);

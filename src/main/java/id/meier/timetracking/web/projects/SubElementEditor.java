@@ -12,10 +12,10 @@ public abstract class SubElementEditor<T extends DescribedElement>  extends Elem
 
     @Override
     protected void saveEditedElement(T element) {
-        saveElement(element);
         if (changeListener != null && element.getId() == null) {
             baseEditorChangeHandler.addElement(element);
         }
+        saveElement(element);
     }
 
     protected abstract void saveElement(T element);

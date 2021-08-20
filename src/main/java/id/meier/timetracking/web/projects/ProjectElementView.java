@@ -13,7 +13,7 @@ public class ProjectElementView extends ElementView<Project> {
 		super(true, Project.class, editor);
 		editor.addDescribedElementModifiedListener(this);
 		this.projectStructureController = projectStructureController;
-		onChange(ChangeAction.SAVE);
+		refresh();
 	}
 
 	@Override

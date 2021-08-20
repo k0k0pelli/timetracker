@@ -3,6 +3,7 @@ package id.meier.timetracking;
 import com.vaadin.flow.spring.annotation.UIScope;
 
 import id.meier.timetracking.adapter.in.web.ManageProjectStructureController;
+import id.meier.timetracking.application.port.in.exporter.AssignmentExporterUseCase;
 import id.meier.timetracking.application.services.AssignmentExporter;
 import id.meier.timetracking.util.LocaleRetriever;
 import id.meier.timetracking.web.commoncomponents.AssignmentOverviewPanel;
@@ -16,7 +17,7 @@ public class ApplicationConfig {
 	
 	@Bean
 	@UIScope 
-	public AssignmentOverviewPanel assignmentViewAssignmentOverviewPanel(AssignmentExporter assignmentExporter) {
+	public AssignmentOverviewPanel assignmentViewAssignmentOverviewPanel(AssignmentExporterUseCase assignmentExporter) {
 		return new AssignmentOverviewPanel(assignmentExporter);
 	}
 	

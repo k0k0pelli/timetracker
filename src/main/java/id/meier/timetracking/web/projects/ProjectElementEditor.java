@@ -44,7 +44,7 @@ public class ProjectElementEditor extends ElementEditor<Project> {
 
     @Override
     protected void saveEditedElement(Project element) {
-		projectStructureController.saveProject(SaveProjectCommand.of(element));
+		projectStructureController.saveProjectWithDependentEntities(SaveProjectCommand.of(element));
         fireElementModified(ElementEditorChangeListener.ChangeAction.SAVE);
     }
 

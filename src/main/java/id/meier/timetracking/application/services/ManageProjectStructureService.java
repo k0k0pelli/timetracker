@@ -124,5 +124,19 @@ public class ManageProjectStructureService implements ManageProjectStructureUseC
         return selectionProjectStructurePort.selectProject(SelectProjectEntityCommand.of(command.getId()));
     }
 
+    @Override
+    public Project saveProjectWithDependentEntities(SaveProjectCommand command) {
+        Project p = command.getProject();
+        p.getPhases().forEach(phase -> savePhaseWithDependentEntities(SavePhaseCommand.of(phase)));
+        return saveProject(command);
+    }
+
+    @Override
+    public Phase savePhaseWithDependentEntities(SavePhaseCommand command) {
+        Phase phase = command.getPhase();
+        phase.getTasks().forEach(t -> saveTask(SaveTaskCommand.of(t)));
+        return manageProjectStructurePort.savePhase(SavePhaseEntityCommand.of(phase));
+    }
+
 
 }

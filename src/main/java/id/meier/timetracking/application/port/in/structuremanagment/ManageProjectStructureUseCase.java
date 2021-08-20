@@ -1,6 +1,8 @@
 package id.meier.timetracking.application.port.in.structuremanagment;
 
 import id.meier.timetracking.application.port.in.structuremanagment.commands.*;
+import id.meier.timetracking.application.port.out.commands.SavePhaseEntityCommand;
+import id.meier.timetracking.application.port.out.commands.SaveProjectEntityCommand;
 import id.meier.timetracking.domain.Phase;
 import id.meier.timetracking.domain.Project;
 import id.meier.timetracking.domain.Task;
@@ -20,4 +22,6 @@ public interface ManageProjectStructureUseCase {
     List<Phase> getPhaseByProject(SelectPhaseByProjectCommand project);
     List<Project> getProjects();
     Project getProject(SelectProjectCommand command);
+    Project saveProjectWithDependentEntities(SaveProjectCommand command);
+    Phase savePhaseWithDependentEntities(SavePhaseCommand command);
 }
