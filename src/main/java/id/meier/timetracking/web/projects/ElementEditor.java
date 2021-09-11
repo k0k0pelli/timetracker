@@ -98,9 +98,9 @@ public abstract class ElementEditor<T extends DescribedElement>  extends Vertica
 		this.changeListener.add(listener);
 	}
 
-	void fireElementModified(ElementEditorChangeListener.ChangeAction action) {
+	void fireElementModified(ElementEditorChangeListener.ChangeAction action, T element) {
 		for (ElementEditorChangeListener<T> l : changeListener) {
-			l.onChange(action);
+			l.onChange(action, element);
 		}
 	}
 
@@ -110,17 +110,17 @@ public abstract class ElementEditor<T extends DescribedElement>  extends Vertica
 			e -> {
 				saveEditedElement(element);
 				editElement(null);
-				fireElementModified(ElementEditorChangeListener.ChangeAction.SAVE);
+				fireElementModified(ElementEditorChangeListener.ChangeAction.SAVE, element);
 			}
 		);
 		Button delete = new Button(getDeleteLabel(), VaadinIcon.TRASH.create(),
 			e -> {
 				deleteEditedElement(element);
 				editElement(null);
-				fireElementModified(ElementEditorChangeListener.ChangeAction.DELETE);
+				fireElementModified(ElementEditorChangeListener.ChangeAction.DELETE, element);
 			}
 		);
-		Button cancel = new Button(getCancelLabel(), e -> { editElement(null); fireElementModified(ElementEditorChangeListener.ChangeAction.CANCEL); });
+		Button cancel = new Button(getCancelLabel(), e -> { editElement(null); fireElementModified(ElementEditorChangeListener.ChangeAction.CANCEL, element); });
 		phaseActions.add(save, delete, cancel);			
 
 		return phaseActions;
@@ -135,7 +135,7 @@ public abstract class ElementEditor<T extends DescribedElement>  extends Vertica
 	protected abstract String getDeleteLabel();
 	protected abstract String getCancelLabel();
 	protected abstract String getSaveLabel();
-	
 
-	
+
+
 }

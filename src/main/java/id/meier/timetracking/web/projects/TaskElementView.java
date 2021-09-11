@@ -3,6 +3,7 @@ package id.meier.timetracking.web.projects;
 
 import id.meier.timetracking.adapter.in.web.ManageProjectStructureController;
 import id.meier.timetracking.application.port.in.structuremanagment.commands.SaveTaskCommand;
+import id.meier.timetracking.domain.DescribedElement;
 import id.meier.timetracking.domain.Phase;
 import id.meier.timetracking.domain.Task;
 
@@ -56,11 +57,13 @@ public class TaskElementView extends SubElementView<Task, Phase> {
 	}
 
     @Override
-    public void onChange(ChangeAction action) {
+    public void onChange(ChangeAction action, Task element) {
 
     }
 
     public void setVisible(boolean visible) {
 		super.setVisible(visible);
 	}
+
+
 }

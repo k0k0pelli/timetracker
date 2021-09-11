@@ -42,15 +42,5 @@ public class TaskElementEditor extends SubElementEditor<Task> {
 		return getTranslation("time.tracking.task.management.active");
 	}
 
-	@Override
-	protected void saveElement(Task element) {
-		//projectStructureController.saveTask(SaveTaskCommand.of(element));
-	}
-
-	@Override
-	protected void deleteElement(Task element) {
-		//projectStructureController.removeTask(RemoveTaskCommand.of(element));
-	}
-
 
 }

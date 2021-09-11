@@ -12,7 +12,9 @@ import id.meier.timetracking.domain.Task;
 import org.springframework.core.annotation.Order;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @SpringComponent
 @UIScope
@@ -25,16 +27,22 @@ public class ProjectsManagementView extends VerticalLayout  {
     private PhaseElementView phaseView;
     private TaskElementView taskView;
     private PhaseElementEditor phaseEditor;
+    private TaskElementEditor taskEditor;
+    private Map<Phase, ElementEditorChangeListener.ChangeAction> phaseChanges;
+    private Map<Task, ElementEditorChangeListener.ChangeAction> taskChanges;
+
 
     public ProjectsManagementView(ManageProjectStructureController projectStructureController) {
-
+        phaseChanges = new HashMap<>();
+        taskChanges = new HashMap<>();
         projectElementEditor = new ProjectElementEditor(projectStructureController);
 		projectElementView = new ProjectElementView(projectElementEditor, projectStructureController);
 
 		this.projectStructureController = projectStructureController;
 		HorizontalLayout  phaseTaskPanel = createPhaseTaskPanel();
 		this.add(projectElementView, phaseTaskPanel);
-        createListeners();
+        registerSelectionChangeListeners();
+        registerPersistenceChangeListener();
 	}
 
 	@Override
@@ -49,14 +57,14 @@ public class ProjectsManagementView extends VerticalLayout  {
 		HorizontalLayout hl = new HorizontalLayout();
         phaseEditor = new PhaseElementEditor(projectStructureController);
 		phaseView = new PhaseElementView(phaseEditor, projectStructureController);
-        TaskElementEditor taskEditor = new TaskElementEditor(projectStructureController);
+        taskEditor = new TaskElementEditor(projectStructureController);
 		taskView = new TaskElementView(projectStructureController,taskEditor);
 		hl.add(phaseView, taskView);
 		hl.setWidthFull();
 		return hl;
 	}
 
-	private void createListeners() {
+	private void registerSelectionChangeListeners() {
         projectElementView.addListener(l -> {
             List<Phase> data = null;
             if (l != null) {
@@ -64,12 +72,34 @@ public class ProjectsManagementView extends VerticalLayout  {
             }
             setViewData(phaseView, data, l);
         });
+
 	    phaseView.addListener(l -> {
             List<Task> data = null;
             if (l != null) {
                 data = new ArrayList<>(l.getTasks());
             }
             setViewData(taskView, data, l);
+        });
+    }
+
+    private void registerPersistenceChangeListener() {
+        taskEditor.addDescribedElementModifiedListener((e,d) -> {
+            if (e != ElementEditorChangeListener.ChangeAction.CANCEL) {
+                this.taskChanges.put(d,e);
+            }
+        });
+        phaseEditor.addDescribedElementModifiedListener((e,d) -> {
+            if (e != ElementEditorChangeListener.ChangeAction.CANCEL) {
+                this.phaseChanges.put(d,e);
+            }
+        });
+        projectElementEditor.addDescribedElementModifiedListener((e,d) -> {
+            if (e != ElementEditorChangeListener.ChangeAction.CANCEL) {
+                taskChanges.clear();
+                phaseChanges.clear();
+            } else {
+
+            }
         });
     }
 

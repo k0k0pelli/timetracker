@@ -15,18 +15,12 @@ public abstract class SubElementEditor<T extends DescribedElement>  extends Elem
         if (changeListener != null && element.getId() == null) {
             baseEditorChangeHandler.addElement(element);
         }
-        saveElement(element);
     }
-
-    protected abstract void saveElement(T element);
 
     @Override
     protected void deleteEditedElement(T element) {
-        deleteElement(element);
         this.baseEditorChangeHandler.removeElement(element);
     }
-
-    protected abstract void deleteElement(T element);
 
     void setBaseEditorChangeHandler(BaseEditorChangeHandler<T> handler) {
         this.baseEditorChangeHandler = handler;

@@ -3,6 +3,7 @@ package id.meier.timetracking.web.projects;
 
 import id.meier.timetracking.adapter.in.web.ManageProjectStructureController;
 import id.meier.timetracking.application.port.in.structuremanagment.commands.SavePhaseCommand;
+import id.meier.timetracking.domain.DescribedElement;
 import id.meier.timetracking.domain.Phase;
 import id.meier.timetracking.domain.Project;
 
@@ -54,9 +55,10 @@ public class PhaseElementView extends SubElementView<Phase, Project> {
 	}
 
     @Override
-    public void onChange(ChangeAction action) {
+    public void onChange(ChangeAction action, Phase element) {
 
     }
+
 
 
 }

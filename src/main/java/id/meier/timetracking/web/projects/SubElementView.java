@@ -12,5 +12,4 @@ abstract class SubElementView<T extends DescribedElement, PARENT extends Describ
         this.parent = parent;
     }
 
-
 }

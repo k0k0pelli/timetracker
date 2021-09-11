@@ -13,16 +13,7 @@ public class PhaseElementEditor extends SubElementEditor<Phase> {
 		this.projectStructureController = projectStructureController;
 	}
 
-	@Override
-	protected void saveElement(Phase element) {
-		//projectStructureController.savePhase(SavePhaseCommand.of(element));
-	}
 
-
-	@Override
-	protected void deleteElement(Phase element) {
-		//projectStructureController.removePhase(RemovePhaseCommand.of(element));
-	}
 
 	@Override
 	protected String getNameLabel() {

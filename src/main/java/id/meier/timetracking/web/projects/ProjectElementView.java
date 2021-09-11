@@ -2,6 +2,7 @@ package id.meier.timetracking.web.projects;
 
 
 import id.meier.timetracking.adapter.in.web.ManageProjectStructureController;
+import id.meier.timetracking.domain.DescribedElement;
 import id.meier.timetracking.domain.Project;
 
 public class ProjectElementView extends ElementView<Project> {
@@ -37,7 +38,7 @@ public class ProjectElementView extends ElementView<Project> {
 	}
 
     @Override
-    public void onChange(ChangeAction action) {
+    public void onChange(ChangeAction action, Project element) {
         refresh();
     }
 
