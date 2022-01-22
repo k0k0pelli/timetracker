@@ -9,6 +9,7 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.function.ValueProvider;
 
+import id.meier.timetracking.application.port.in.structuremanagment.StructureModificationCollector;
 import id.meier.timetracking.domain.DescribedElement;
 import id.meier.timetracking.domain.NamedElement;
 
@@ -24,22 +25,20 @@ public abstract class ElementView<T extends DescribedElement>  extends VerticalL
 	private final Class<T> clazz;
 	private final ElementEditor<T> editor;
 	private final Button newElementButton;
-	final List<T> removedElements;
-	final List<T> addedElements;
-	List<T> allElements;
+	protected List<T> allElements;
 	private final List<ElementViewChangeListener<T>> changeListeners;
 
 
-	ElementView(boolean horizontalLayout,  Class<T> clazz, ElementEditor<T> editor) {
-		 removedElements = new ArrayList<>();
-		 addedElements = new ArrayList<>();
+	private final StructureModificationCollector modificationCommandsCollector;
+
+	ElementView(boolean horizontalLayout,  Class<T> clazz, ElementEditor<T> editor, StructureModificationCollector modificationCommandsCollector) {
 		 allElements = new ArrayList<>();
 		 changeListeners = new ArrayList<>();
 		 this.clazz = clazz;
 		 this.addListener(editor);
 		 this.editor = editor;
 		 this.subElementList = createSubElementGrid();
-
+		 this.modificationCommandsCollector = modificationCommandsCollector;
 		 this.newElementButton = new Button(getAddNewElementLabel(), VaadinIcon.PLUS.create(), 
 				 								e -> fireSelectedElement(createNewElement())
 				 							);
@@ -72,8 +71,8 @@ public abstract class ElementView<T extends DescribedElement>  extends VerticalL
 
 	void setData(List<T> elements) {
 		allElements = elements;
-		addedElements.clear();
-		removedElements.clear();
+		//addedElements.clear();
+		//removedElements.clear();
 		setFilteredItems(elements);
 	}
 
@@ -89,7 +88,7 @@ public abstract class ElementView<T extends DescribedElement>  extends VerticalL
 		 List<T> tempElements;
 		 if (elements != null) {
              tempElements = elements.stream().filter(
-                     p -> !this.removedElements.contains(p)
+                     p -> !this.modificationCommandsCollector.getRemovedElements(clazz).contains(p)
              ).collect(
                      Collectors.toList()
              );
@@ -97,7 +96,7 @@ public abstract class ElementView<T extends DescribedElement>  extends VerticalL
              tempElements = new ArrayList<>();
          }
 		List<T> allElements = new ArrayList<>(tempElements);
-		allElements.addAll(addedElements);
+		//allElements.addAll(addedElements);
 		subElementList.setItems(allElements);
 		subElementList.select(null);
         fireSelectedElement(null);
@@ -139,9 +138,16 @@ public abstract class ElementView<T extends DescribedElement>  extends VerticalL
 	 private Column<T> addColumnToGrid(ValueProvider<T, ?> valueProvider, String headerText) {
 	    	return subElementList.addColumn(valueProvider).setHeader(headerText);
 	 }
-	 
-	 
-	 
+
+	public StructureModificationCollector getModificationCommandsCollector() {
+		return modificationCommandsCollector;
+	}
+
+
+	public Class<T> getClazz() {
+		return clazz;
+	}
+
 	 /**
 	  * @return Returns the label of the Save button.
 	  */

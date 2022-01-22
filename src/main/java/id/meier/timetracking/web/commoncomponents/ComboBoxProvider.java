@@ -109,12 +109,6 @@ public class ComboBoxProvider<T extends NamedElement> {
 		}
 
 		@Override
-		public void setId(Long id) {
-			encapsulatedObject.setId(id);
-		}
-
-
-		@Override
 		public Boolean getActive() {
 			return encapsulatedObject.getActive();
 		}

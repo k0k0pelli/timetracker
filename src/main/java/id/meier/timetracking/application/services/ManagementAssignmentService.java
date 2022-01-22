@@ -85,9 +85,9 @@ public class ManagementAssignmentService implements ManageAssignmentUseCase {
     @Override
     public Assignment saveAssignmentWithDependentEntities(SaveAssignmentCommand assignmentCommand) {
         Assignment assignment = assignmentCommand.getAssignment();
-        manageProjectStructureService.saveTask(SaveTaskCommand.of(assignment.getTask()));
-        manageProjectStructureService.savePhaseWithDependentEntities(SavePhaseCommand.of(assignment.getPhase()));
-        manageProjectStructureService.saveProjectWithDependentEntities(SaveProjectCommand.of(assignment.getProject()));
+        manageProjectStructureService.save(SaveTaskCommand.of(assignment.getTask()));
+        manageProjectStructureService.save(SavePhaseCommand.of(assignment.getPhase()));
+        manageProjectStructureService.save(SaveProjectCommand.of(assignment.getProject()));
         return manageAssignmentPort.saveAssignment(SaveAssignmentEntityCommand.of(assignmentCommand.getAssignment()));
     }
 

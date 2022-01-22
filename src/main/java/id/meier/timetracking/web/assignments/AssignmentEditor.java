@@ -27,6 +27,7 @@ import id.meier.timetracking.application.port.in.assignmentmangement.commands.Re
 import id.meier.timetracking.application.port.in.assignmentmangement.commands.SaveAssignmentCommand;
 import id.meier.timetracking.application.port.in.assignmentmangement.commands.SelectAssignmentCommand;
 import id.meier.timetracking.application.port.in.assignmentmangement.consistency.IConsistencyMessage;
+import id.meier.timetracking.application.port.in.structuremanagment.commands.SaveCommand;
 import id.meier.timetracking.application.port.in.structuremanagment.commands.SavePhaseCommand;
 import id.meier.timetracking.application.port.in.structuremanagment.commands.SaveProjectCommand;
 import id.meier.timetracking.application.port.in.structuremanagment.commands.SaveTaskCommand;
@@ -180,7 +181,7 @@ class AssignmentEditor extends VerticalLayout implements KeyNotifier, IAssignmen
         project.setAllowCustomValue(true);
         project.addCustomValueSetListener(e -> {
         	Project p = addNewComboboxValue(e, projectProvider, project);
-        	manageProjectStructureController.saveProject(SaveProjectCommand.of(p));
+        	manageProjectStructureController.saveProjectWithDependentEntities(SaveProjectCommand.of(p));
         });
         project.addValueChangeListener(e -> {
             if (valueChangeActive) {
@@ -198,7 +199,7 @@ class AssignmentEditor extends VerticalLayout implements KeyNotifier, IAssignmen
         phase.setAllowCustomValue(true);
         phase.addCustomValueSetListener(e -> {
         	Phase p = addNewComboboxValue(e, phaseProvider, phase);
-        	this.manageProjectStructureController.savePhase(SavePhaseCommand.of(p));
+        	this.manageProjectStructureController.savePhaseWithDependentEntities(SavePhaseCommand.of(p));
         });
         phase.addValueChangeListener(e -> {
             if (valueChangeActive) {
@@ -215,7 +216,7 @@ class AssignmentEditor extends VerticalLayout implements KeyNotifier, IAssignmen
         task.setAllowCustomValue(true);
         task.addCustomValueSetListener(e -> {
         	Task t = addNewComboboxValue(e, taskProvider, task);
-        	this.manageProjectStructureController.saveTask(SaveTaskCommand.of(t));
+        	this.manageProjectStructureController.save(SaveTaskCommand.of(t));
         });
         
         FormLayout projectPhaseTaskPanel = new FormLayout(project, phase, task);
@@ -257,7 +258,7 @@ class AssignmentEditor extends VerticalLayout implements KeyNotifier, IAssignmen
             for (Phase p : phases) {
                 if (!assignment.getProject().getPhases().contains(p)) {
                     assignment.getProject().getPhases().add(p);
-                    this.manageProjectStructureController.saveProject(SaveProjectCommand.of(assignment.getProject()));
+                    this.manageProjectStructureController.saveProjectWithDependentEntities(SaveProjectCommand.of(assignment.getProject()));
                 }
             }
         }
@@ -266,7 +267,7 @@ class AssignmentEditor extends VerticalLayout implements KeyNotifier, IAssignmen
             for (Task t : tasks) {
                 if (!assignment.getPhase().getTasks().contains(t)) {
                     assignment.getPhase().getTasks().add(t);
-                    this.manageProjectStructureController.savePhase(SavePhaseCommand.of(assignment.getPhase()));
+                    this.manageProjectStructureController.savePhaseWithDependentEntities(SavePhaseCommand.of(assignment.getPhase()));
                 }
             }
         }

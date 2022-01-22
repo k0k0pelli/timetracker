@@ -71,17 +71,17 @@ public class DataImporterService implements DataImporterUseCase {
     private void save() {
         for (Map.Entry<String, PersistableElement> entry : this.importedElements.entrySet()) {
             if (entry.getValue().getClass().equals(Task.class)) {
-                projectStructureService.saveTask(SaveTaskCommand.of((Task) entry.getValue()));
+                projectStructureService.save(SaveTaskCommand.of((Task)entry.getValue()));
             }
         }
         for (Map.Entry<String, PersistableElement> entry : this.importedElements.entrySet()) {
             if (entry.getValue().getClass().equals(Phase.class)) {
-                projectStructureService.savePhase(SavePhaseCommand.of((Phase) entry.getValue()));
+                projectStructureService.save(SavePhaseCommand.of((Phase)entry.getValue()));
             }
         }
         for (Map.Entry<String, PersistableElement> entry : this.importedElements.entrySet()) {
             if (entry.getValue().getClass().equals(Project.class)) {
-                projectStructureService.saveProject(SaveProjectCommand.of((Project) entry.getValue()));
+                projectStructureService.save(SaveProjectCommand.of((Project)entry.getValue()));
             }
         }
         for (Map.Entry<String, PersistableElement> entry : this.importedElements.entrySet()) {

@@ -1,11 +1,12 @@
 package id.meier.timetracking.web.mainmenu;
 
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
-import com.vaadin.flow.router.Route;
+import com.vaadin.flow.router.*;
 
 import id.meier.timetracking.web.assignments.AssignmentManagementView;
 import id.meier.timetracking.web.projects.ProjectsManagementView;
@@ -17,7 +18,7 @@ import java.util.Map;
 
 @Route("timetracker2")
 @Order(11)
-class MainMenuView extends HorizontalLayout {
+class MainMenuView extends HorizontalLayout implements BeforeEnterListener, AfterNavigationListener, BeforeLeaveListener {
 	private final String WIDTH = "15em";
 	private Component displayedComponent = null;
 	private final Button selectedBtn=null;
@@ -31,6 +32,9 @@ class MainMenuView extends HorizontalLayout {
 	
 	public MainMenuView(AssignmentManagementView manageAssignments, ProjectsManagementView manageProjects,
                         ReportingManagementView reporting) {
+		UI.getCurrent().addBeforeEnterListener(this);
+		UI.getCurrent().addBeforeLeaveListener(this);
+		UI.getCurrent().addAfterNavigationListener(this);
 		this.manageAssignments = manageAssignments;
 		this.manageProjects = manageProjects;
 		this.reporting = reporting;
@@ -71,6 +75,19 @@ class MainMenuView extends HorizontalLayout {
 		this.displayedComponent = newPanel;
 		displayedComponent.setVisible(true);
 	}
-	
-	
+
+	@Override
+	public void beforeEnter(BeforeEnterEvent event) {
+		System.out.println();
+	}
+
+	@Override
+	public void afterNavigation(AfterNavigationEvent event) {
+		System.out.println();
+	}
+
+	@Override
+	public void beforeLeave(BeforeLeaveEvent event) {
+		System.out.println();
+	}
 }

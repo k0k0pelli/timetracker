@@ -76,9 +76,9 @@ public class ConsistencyTest extends TestBase {
         Task task = getTask();
         phase.getTasks().add(task);
         project.getPhases().add(phase);
-        projectStructureService.saveTask(SaveTaskCommand.of(task));
-        projectStructureService.savePhase(SavePhaseCommand.of(phase));
-        projectStructureService.saveProject(SaveProjectCommand.of(project));
+        projectStructureService.save(SaveTaskCommand.of(task));
+        projectStructureService.save(SavePhaseCommand.of(phase));
+        projectStructureService.save(SaveProjectCommand.of(project));
 
         Assignment a1 = createAssignment(getDate(2019,12,1), getTime(12,30, 0),
                 getDate(2019,12,1), getTime(15,30, 0),

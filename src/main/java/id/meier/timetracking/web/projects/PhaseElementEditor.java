@@ -2,8 +2,6 @@ package id.meier.timetracking.web.projects;
 
 
 import id.meier.timetracking.adapter.in.web.ManageProjectStructureController;
-import id.meier.timetracking.application.port.in.structuremanagment.commands.RemovePhaseCommand;
-import id.meier.timetracking.application.port.in.structuremanagment.commands.SavePhaseCommand;
 import id.meier.timetracking.domain.Phase;
 
 public class PhaseElementEditor extends SubElementEditor<Phase> {
@@ -12,8 +10,6 @@ public class PhaseElementEditor extends SubElementEditor<Phase> {
 		super(Phase.class);
 		this.projectStructureController = projectStructureController;
 	}
-
-
 
 	@Override
 	protected String getNameLabel() {

@@ -1,8 +1,6 @@
 package id.meier.timetracking.web.projects;
 
 import id.meier.timetracking.adapter.in.web.ManageProjectStructureController;
-import id.meier.timetracking.application.port.in.structuremanagment.commands.RemoveTaskCommand;
-import id.meier.timetracking.application.port.in.structuremanagment.commands.SaveTaskCommand;
 import id.meier.timetracking.domain.Task;
 
 public class TaskElementEditor extends SubElementEditor<Task> {

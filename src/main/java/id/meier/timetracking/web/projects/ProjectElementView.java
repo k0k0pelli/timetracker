@@ -2,7 +2,7 @@ package id.meier.timetracking.web.projects;
 
 
 import id.meier.timetracking.adapter.in.web.ManageProjectStructureController;
-import id.meier.timetracking.domain.DescribedElement;
+import id.meier.timetracking.application.port.in.structuremanagment.StructureModificationCollector;
 import id.meier.timetracking.domain.Project;
 
 public class ProjectElementView extends ElementView<Project> {
@@ -10,10 +10,12 @@ public class ProjectElementView extends ElementView<Project> {
 	private final ManageProjectStructureController projectStructureController;
 
 	ProjectElementView(ElementEditor<Project> editor,
-					   ManageProjectStructureController projectStructureController) {
-		super(true, Project.class, editor);
+					   ManageProjectStructureController projectStructureController,
+					   StructureModificationCollector modificationCommandsCollector) {
+		super(true, Project.class, editor, modificationCommandsCollector);
 		editor.addDescribedElementModifiedListener(this);
 		this.projectStructureController = projectStructureController;
+
 		refresh();
 	}
 

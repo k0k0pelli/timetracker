@@ -2,7 +2,9 @@ package id.meier.timetracking.adapter.in.web;
 
 
 import id.meier.timetracking.application.port.in.structuremanagment.ManageProjectStructureUseCase;
+import id.meier.timetracking.application.port.in.structuremanagment.StructureModificationCollector;
 import id.meier.timetracking.application.port.in.structuremanagment.commands.*;
+import id.meier.timetracking.domain.PersistableElement;
 import id.meier.timetracking.domain.Phase;
 import id.meier.timetracking.domain.Project;
 import id.meier.timetracking.domain.Task;
@@ -19,28 +21,28 @@ public class ManageProjectStructureController {
         this.manageProjectUseCase = manageProjectUseCase;
     }
 
-    public Project saveProject(SaveProjectCommand command) {
-        return this.manageProjectUseCase.saveProject(command);
+    public void remove(RemoveTaskCommand command) {
+        manageProjectUseCase.remove(command);
     }
 
-    public Task saveTask(SaveTaskCommand command) {
-        return manageProjectUseCase.saveTask(command);
+    public void remove(RemovePhaseCommand command) {
+        manageProjectUseCase.remove(command);
     }
 
-    public Phase savePhase(SavePhaseCommand command) {
-        return manageProjectUseCase.savePhase(command);
+    public void remove(RemoveProjectCommand command) {
+        manageProjectUseCase.remove(command);
     }
 
-    public void removeTask(RemoveTaskCommand command) {
-        manageProjectUseCase.removeTask(command);
+    public void save(SaveTaskCommand command) {
+        manageProjectUseCase.save(command);
     }
 
-    public void removePhase(RemovePhaseCommand command) {
-        manageProjectUseCase.removePhase(command);
+    public void save(SavePhaseCommand command) {
+        manageProjectUseCase.save(command);
     }
 
-    public void removeProject(RemoveProjectCommand command) {
-        manageProjectUseCase.removeProject(command);
+    public void save(SaveProjectCommand command) {
+        manageProjectUseCase.save(command);
     }
 
     public Task getTaskById(SelectTaskByIdCommand command) {
@@ -67,12 +69,17 @@ public class ManageProjectStructureController {
         return manageProjectUseCase.getProject(command);
     }
 
-    public Project saveProjectWithDependentEntities(SaveProjectCommand command) {
-        return manageProjectUseCase.saveProjectWithDependentEntities(command);
+    public void saveProjectWithDependentEntities(StructureModificationCollector saveCommand) {
+        manageProjectUseCase.executeCollectedCommands(saveCommand);
+    }
+
+
+    public Project saveProjectWithDependentEntities(SaveProjectCommand saveCommand) {
+        return manageProjectUseCase.saveProjectWithDependentEntities(saveCommand);
     }
 
     public Phase savePhaseWithDependentEntities(SavePhaseCommand command) {
-        return manageProjectUseCase.savePhaseWithDependentEntities(command);
+        return manageProjectUseCase.save(command);
     }
 
 }

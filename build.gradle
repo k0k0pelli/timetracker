@@ -87,8 +87,6 @@ build.dependsOn test
 bootRun.dependsOn compileAllReports
 bootRun.dependsOn test
 
-
-
 test {
 	useJUnitPlatform()
 }

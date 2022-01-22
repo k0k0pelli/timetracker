@@ -1,15 +1,18 @@
 package id.meier.timetracking.web.projects;
 
 import id.meier.timetracking.adapter.in.web.ManageProjectStructureController;
+import id.meier.timetracking.application.port.in.structuremanagment.StructureModificationCollector;
+import id.meier.timetracking.application.port.in.structuremanagment.commands.RemoveCommand;
 import id.meier.timetracking.application.port.in.structuremanagment.commands.RemoveProjectCommand;
-import id.meier.timetracking.application.port.in.structuremanagment.commands.SaveProjectCommand;
 import id.meier.timetracking.domain.Project;
 
 public class ProjectElementEditor extends ElementEditor<Project> {
 	private final ManageProjectStructureController projectStructureController;
-	ProjectElementEditor(ManageProjectStructureController projectStructureController) {
+	private final StructureModificationCollector structureModificationCollector;
+	ProjectElementEditor(ManageProjectStructureController projectStructureController, StructureModificationCollector structureModificationCollector) {
 		super(Project.class);
 		this.projectStructureController = projectStructureController;
+		this.structureModificationCollector = structureModificationCollector;
 	}
 
 	@Override
@@ -44,13 +47,17 @@ public class ProjectElementEditor extends ElementEditor<Project> {
 
     @Override
     protected void saveEditedElement(Project element) {
-		projectStructureController.saveProjectWithDependentEntities(SaveProjectCommand.of(element));
+		structureModificationCollector.addElementForSaveIfNotContained(element);
+
+		projectStructureController.saveProjectWithDependentEntities(this.structureModificationCollector);
         fireElementModified(ElementEditorChangeListener.ChangeAction.SAVE, element);
     }
 
     @Override
 	protected void deleteEditedElement(Project project) {
-		projectStructureController.removeProject(RemoveProjectCommand.of(project));
+		structureModificationCollector.addElementForRemoveIfNotContained(project);
+
+		projectStructureController.remove(RemoveProjectCommand.of(project));
 		fireElementModified(ElementEditorChangeListener.ChangeAction.DELETE, project);
 	}
 }

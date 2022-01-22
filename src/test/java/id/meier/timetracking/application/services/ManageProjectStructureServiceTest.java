@@ -2,7 +2,6 @@ package id.meier.timetracking.application.services;
 
 import id.meier.timetracking.application.port.in.structuremanagment.commands.RemoveProjectCommand;
 import id.meier.timetracking.application.port.in.structuremanagment.commands.SaveProjectCommand;
-import id.meier.timetracking.application.port.in.structuremanagment.commands.SelectProjectCommand;
 import id.meier.timetracking.domain.Phase;
 import id.meier.timetracking.domain.Project;
 import id.meier.timetracking.domain.Task;
@@ -36,7 +35,7 @@ class ManageProjectStructureServiceTest {
 
     @Test
     public void testStoreProject() {
-        testee.saveProject(SaveProjectCommand.of(getProject1()));
+        testee.save(SaveProjectCommand.of(getProject1()));
         List<Project> projects = testee.getProjects();
         Assertions.assertThat(projects).hasSize(1);
     }
@@ -46,13 +45,13 @@ class ManageProjectStructureServiceTest {
         //-- add project
         Project p = getProject1();
         SaveProjectCommand projectSave = SaveProjectCommand.of(p);
-        testee.saveProject(projectSave);
+        testee.save(projectSave);
         List<Project> projects = testee.getProjects();
         Assertions.assertThat(projects).hasSize(1);
 
         // -- remove project
         RemoveProjectCommand projectRemove = RemoveProjectCommand.of(p);
-        testee.removeProject(projectRemove);
+        testee.remove(projectRemove);
         List<Project> projects2 = testee.getProjects();
         Assertions.assertThat(projects2).hasSize(0);
     }
