@@ -18,7 +18,7 @@ import java.util.Map;
 
 @Route("timetracker2")
 @Order(11)
-class MainMenuView extends HorizontalLayout implements BeforeEnterListener, AfterNavigationListener, BeforeLeaveListener {
+class MainMenuView extends HorizontalLayout  {
 	private final String WIDTH = "15em";
 	private Component displayedComponent = null;
 	private final Button selectedBtn=null;
@@ -32,9 +32,7 @@ class MainMenuView extends HorizontalLayout implements BeforeEnterListener, Afte
 	
 	public MainMenuView(AssignmentManagementView manageAssignments, ProjectsManagementView manageProjects,
                         ReportingManagementView reporting) {
-		UI.getCurrent().addBeforeEnterListener(this);
-		UI.getCurrent().addBeforeLeaveListener(this);
-		UI.getCurrent().addAfterNavigationListener(this);
+
 		this.manageAssignments = manageAssignments;
 		this.manageProjects = manageProjects;
 		this.reporting = reporting;
@@ -76,18 +74,5 @@ class MainMenuView extends HorizontalLayout implements BeforeEnterListener, Afte
 		displayedComponent.setVisible(true);
 	}
 
-	@Override
-	public void beforeEnter(BeforeEnterEvent event) {
-		System.out.println();
-	}
 
-	@Override
-	public void afterNavigation(AfterNavigationEvent event) {
-		System.out.println();
-	}
-
-	@Override
-	public void beforeLeave(BeforeLeaveEvent event) {
-		System.out.println();
-	}
 }
